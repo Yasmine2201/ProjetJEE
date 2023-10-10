@@ -1,3 +1,16 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: maxim
+  Date: 10/10/2023
+  Time: 20:18
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -27,8 +40,11 @@
             <div class="px-6">
                 <form class="box has-text-centered px-3">
                     <div class="field">
+
+
                         <div class="label has-text-left">Nom d'utilisateur</div>
                         <div class="control">
+                            <!--envoyer vers la servlet -->
                             <label for=Username>
                                 <input id=Username class="input is-medium is-rounded" placeholder="Nom d'utilisateur"
                                        type="password"/>
@@ -38,29 +54,22 @@
                     <div class="field pt-3 pb-4">
                         <div class="label has-text-left">Mot de passe</div>
                         <div class="control">
+                            <!--envoyer vers la servlet -->
                             <label for=Password>
                                 <input id=Password class="input is-medium is-rounded" placeholder="********"
                                        type="password"/>
                             </label>
                         </div>
                     </div>
-                    <div class="field pt-3 pb-4">
-                        <div class="label has-text-left">Retaper le Mot de passe</div>
-                        <div class="control">
-                            <label for=RePassword>
-                                <input id=RePassword class="input is-medium is-rounded" placeholder="********"
-                                       type="password"/>
-                            </label>
-                        </div>
-                    </div>
-                    <button class="button is-success "> Connexion</button>
+                    <!-- declanche l'envoye -->
+
+                    <button class="button is-success" type="submit" value="Connexion"> Connexion </button>
                 </form>
-
             </div>
-
         </div>
     </div>
-
 </section>
+</body>
+</html>
 </body>
 </html>
