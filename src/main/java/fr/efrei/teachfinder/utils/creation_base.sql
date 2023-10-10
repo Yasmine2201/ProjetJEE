@@ -1,3 +1,17 @@
+START TRANSACTION;
+
+DROP TABLE Registration;
+DROP TABLE ApplicationUser;
+DROP TABLE School;
+DROP TABLE Teacher;
+DROP TABLE TeacherInterests;
+DROP TABLE Refs;
+DROP TABLE Recruiter;
+DROP TABLE Experience;
+DROP TABLE Disponibilities;
+DROP TABLE Need;
+DROP TABLE Application;
+
 CREATE TABLE Registration (
     login VARCHAR(50) NOT NULL PRIMARY KEY,
     password VARCHAR(256) NOT NULL,
@@ -103,8 +117,7 @@ CREATE TABLE Application (
     FOREIGN KEY (needId) REFERENCES Need(needId)
 );
 
+INSERT INTO `applicationuser` (`login`, `password`, `role`, `name`, `mail`, `webSite`, `phone`) VALUES
+    ('adminThibaut', '49a02abc531d047c7596bcdd3657e213db6d5d2972ca44d7699ea4accc1827c2', 'Admin', 'Thibaut COLNOT', 'thibaut.colnot@efrei.net', NULL, NULL);
 
-
-
-
-
+COMMIT;
