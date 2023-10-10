@@ -1,11 +1,14 @@
 package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Registration;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
+@Stateless
 public interface IRegistrationDAO {
 
     /**
@@ -23,7 +26,7 @@ public interface IRegistrationDAO {
      * @throws EntityExistsException If registration for the same login already exists
      * @return The created Registration
      */
-    Registration create(Registration registration) throws EntityExistsException;
+    Registration create(@NotNull Registration registration) throws EntityExistsException;
 
     /**
      * Get all the registration with the given status.
