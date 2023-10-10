@@ -1,14 +1,16 @@
 CREATE TABLE Registration (
     login VARCHAR(50) NOT NULL PRIMARY KEY,
     password VARCHAR(256) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    mail VARCHAR(100) NOT NULL,
     role ENUM ('Teacher','Recruiter') NOT NULL,
-    status ENUM('Pending', 'Accepted', 'Refused') NOT NULL
+    status ENUM('Pending', 'Accepted', 'Refused') NOT NULL DEFAULT 'PENDING'
 );
 
 CREATE TABLE ApplicationUser (
     userId INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    login VARCHAR(50) NOT NULL,
-    password VARCHAR(256) NOT NULL,
+    login VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(64) NOT NULL,
     role ENUM ('Teacher','Recruiter','Admin') NOT NULL,
     name VARCHAR(100) NOT NULL,
     mail VARCHAR(100) NOT NULL,

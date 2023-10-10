@@ -5,20 +5,23 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Applicationuser {
+public class ApplicationUser {
+    public enum Role {Admin, Teacher, Recruiter}
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "userId", nullable = false)
     private int userId;
     @Basic
-    @Column(name = "login", nullable = false, length = 50)
+    @Column(name = "login", nullable = false, length = 50, unique = true)
     private String login;
     @Basic
-    @Column(name = "password", nullable = false, length = 256)
+    @Column(name = "password", nullable = false, length = 64)
     private String password;
     @Basic
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private Object role;
+    private Role role;
     @Basic
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -56,11 +59,11 @@ public class Applicationuser {
         this.password = password;
     }
 
-    public Object getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Object role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -100,7 +103,7 @@ public class Applicationuser {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Applicationuser that = (Applicationuser) o;
+        ApplicationUser that = (ApplicationUser) o;
         return userId == that.userId && Objects.equals(login, that.login) && Objects.equals(password, that.password) && Objects.equals(role, that.role) && Objects.equals(name, that.name) && Objects.equals(mail, that.mail) && Objects.equals(webSite, that.webSite) && Objects.equals(phone, that.phone);
     }
 
