@@ -14,7 +14,7 @@ import static fr.efrei.teachfinder.utils.Constants.INSCRIPTION_PAGE;
 public class HelloServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher(INSCRIPTION_PAGE).forward(request, response);
+        request.getRequestDispatcher(INDEX_PAGE).forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
@@ -29,16 +29,9 @@ public class HelloServlet extends HttpServlet {
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response) {
         switch (request.getParameter("NavBar")) {
-            case "Connexion":
-                Connexion(request, response);
-                break;
-            case "Inscription":
-                Inscription(request, response);
-                break;
-            default:
-                request.getRequestDispatcher("index.jsp");
-
-
+            case "Connexion" -> Connexion(request, response);
+            case "Inscription" -> Inscription(request, response);
+            default -> request.getRequestDispatcher("index.jsp");
         }
     }
 

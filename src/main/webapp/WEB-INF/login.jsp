@@ -44,23 +44,11 @@
                             </label>
                         </div>
                     </div>
-                    <div class="field pt-3 pb-4">
-                        <div class="label has-text-left">Retaper le Mot de passe</div>
-                        <div class="control">
-                            <label for=RePassword>
-                                <input id=RePassword class="input is-medium is-rounded" placeholder="********"
-                                       type="password"/>
-                            </label>
-                        </div>
-                    </div>
-                    <button class="button is-success "> Connexion</button>
+                    <button class="button is-success "> Connexion </button>
                 </form>
-
             </div>
-
         </div>
     </div>
-
 </section>
 </body>
 </html>
