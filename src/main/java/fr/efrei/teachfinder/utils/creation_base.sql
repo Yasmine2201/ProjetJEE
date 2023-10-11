@@ -17,6 +17,7 @@ CREATE TABLE Registration (
     password VARCHAR(256) NOT NULL,
     name VARCHAR(100) NOT NULL,
     mail VARCHAR(100) NOT NULL,
+    phone VARCHAR(20),
     role ENUM ('Teacher','Recruiter') NOT NULL,
     status ENUM('Pending', 'Accepted', 'Refused') NOT NULL DEFAULT 'PENDING'
 );
@@ -28,7 +29,6 @@ CREATE TABLE ApplicationUser (
     role ENUM ('Teacher','Recruiter','Admin') NOT NULL,
     name VARCHAR(100) NOT NULL,
     mail VARCHAR(100) NOT NULL,
-    webSite VARCHAR(100),
     phone VARCHAR(20) 
 );
 CREATE TABLE School (
@@ -118,7 +118,7 @@ CREATE TABLE Application (
 );
 
 # Mdp : ImASuperAdmin
-INSERT INTO `applicationuser` (`login`, `password`, `role`, `name`, `mail`, `webSite`, `phone`) VALUES
-    ('adminThibaut', '49a02abc531d047c7596bcdd3657e213db6d5d2972ca44d7699ea4accc1827c2', 'Admin', 'Thibaut COLNOT', 'thibaut.colnot@efrei.net', NULL, NULL);
+INSERT INTO `applicationuser` (`login`, `password`, `role`, `name`, `mail`, `phone`) VALUES
+    ('adminThibaut', '49a02abc531d047c7596bcdd3657e213db6d5d2972ca44d7699ea4accc1827c2', 'Admin', 'Thibaut COLNOT', 'thibaut.colnot@efrei.net', NULL);
 
 COMMIT;

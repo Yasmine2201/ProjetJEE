@@ -57,6 +57,7 @@ public class SqlUserDAO implements IUserDAO {
 
         user.setMail(registration.getMail());
         user.setName(registration.getName());
+        user.setPhone(registration.getPhone());
 
         entityManager.getTransaction().begin();
         ApplicationUser userCreated = entityManager.merge(user);

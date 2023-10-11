@@ -29,6 +29,9 @@ public class Registration {
     @Basic
     @Column(name = "status", nullable = false)
     private Status status = Status.Pending;
+    @Basic
+    @Column(name = "phone", nullable = true, length = 20)
+    private String phone;
 
     public String getLogin() {
         return login;
@@ -78,16 +81,24 @@ public class Registration {
         this.status = status;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Registration that = (Registration) o;
-        return Objects.equals(login, that.login) && Objects.equals(password, that.password) && Objects.equals(name, that.name) && Objects.equals(mail, that.mail) && Objects.equals(role, that.role) && Objects.equals(status, that.status);
+        return Objects.equals(login, that.login) && Objects.equals(password, that.password) && Objects.equals(name, that.name) && Objects.equals(mail, that.mail) && Objects.equals(role, that.role) && Objects.equals(status, that.status) && Objects.equals(phone, that.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, name, mail, role, status);
+        return Objects.hash(login, password, name, mail, role, status, phone);
     }
 }
