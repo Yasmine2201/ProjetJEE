@@ -29,9 +29,6 @@ public class ApplicationUser {
     @Column(name = "mail", nullable = false, length = 100)
     private String mail;
     @Basic
-    @Column(name = "webSite", nullable = true, length = 100)
-    private String webSite;
-    @Basic
     @Column(name = "phone", nullable = true, length = 20)
     private String phone;
 
@@ -83,14 +80,6 @@ public class ApplicationUser {
         this.mail = mail;
     }
 
-    public String getWebSite() {
-        return webSite;
-    }
-
-    public void setWebSite(String webSite) {
-        this.webSite = webSite;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -104,11 +93,11 @@ public class ApplicationUser {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ApplicationUser that = (ApplicationUser) o;
-        return userId == that.userId && Objects.equals(login, that.login) && Objects.equals(password, that.password) && Objects.equals(role, that.role) && Objects.equals(name, that.name) && Objects.equals(mail, that.mail) && Objects.equals(webSite, that.webSite) && Objects.equals(phone, that.phone);
+        return userId == that.userId && Objects.equals(login, that.login) && Objects.equals(password, that.password) && Objects.equals(role, that.role) && Objects.equals(name, that.name) && Objects.equals(mail, that.mail) && Objects.equals(phone, that.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, login, password, role, name, mail, webSite, phone);
+        return Objects.hash(userId, login, password, role, name, mail, phone);
     }
 }

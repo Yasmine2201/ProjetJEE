@@ -17,6 +17,7 @@ CREATE TABLE Registration (
     password VARCHAR(256) NOT NULL,
     name VARCHAR(100) NOT NULL,
     mail VARCHAR(100) NOT NULL,
+    phone VARCHAR(20),
     role ENUM ('Teacher','Recruiter') NOT NULL,
     status ENUM('Pending', 'Accepted', 'Refused') NOT NULL DEFAULT 'PENDING'
 );
@@ -28,7 +29,6 @@ CREATE TABLE ApplicationUser (
     role ENUM ('Teacher','Recruiter','Admin') NOT NULL,
     name VARCHAR(100) NOT NULL,
     mail VARCHAR(100) NOT NULL,
-    webSite VARCHAR(100),
     phone VARCHAR(20) 
 );
 CREATE TABLE School (
@@ -117,7 +117,10 @@ CREATE TABLE Application (
     FOREIGN KEY (needId) REFERENCES Need(needId)
 );
 
-INSERT INTO `applicationuser` (`login`, `password`, `role`, `name`, `mail`, `webSite`, `phone`) VALUES
-    ('adminThibaut', '49a02abc531d047c7596bcdd3657e213db6d5d2972ca44d7699ea4accc1827c2', 'Admin', 'Thibaut COLNOT', 'thibaut.colnot@efrei.net', NULL, NULL);
+INSERT INTO `applicationuser` (`login`, `password`, `role`, `name`, `mail`, `phone`) VALUES
+    # Mdp : ImASuperAdmin
+    ('adminTest', '49a02abc531d047c7596bcdd3657e213db6d5d2972ca44d7699ea4accc1827c2', 'Admin', 'MYTZ', 'example@efrei.net', NULL),
+    # Mdp : Teacher1234
+    ('teacherTest', '2c1714cf95b64a23d5a0d9720fb078d3af6acc0cdf23afdf9797dc022d77bdc4', 'Teacher', 'Jacques Augustin', 'example@efrei.net', NULL);
 
 COMMIT;
