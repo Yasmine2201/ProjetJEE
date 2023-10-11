@@ -117,6 +117,7 @@ CREATE TABLE Application (
     FOREIGN KEY (needId) REFERENCES Need(needId)
 );
 
+# Mdp : ImASuperAdmin
 INSERT INTO `applicationuser` (`login`, `password`, `role`, `name`, `mail`, `webSite`, `phone`) VALUES
     ('adminThibaut', '49a02abc531d047c7596bcdd3657e213db6d5d2972ca44d7699ea4accc1827c2', 'Admin', 'Thibaut COLNOT', 'thibaut.colnot@efrei.net', NULL, NULL);
 
