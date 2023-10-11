@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 @Stateless
 public class SHA256HashStrategy implements IHashStrategy {
 
-    private MessageDigest digest;
+    private final MessageDigest digest;
 
     {
         try {
@@ -20,7 +20,7 @@ public class SHA256HashStrategy implements IHashStrategy {
     }
 
     @Override
-    public String hashString(String str) {
+    public synchronized String hashString(String str) {
         byte[] hasedBytes = digest.digest(str.getBytes(StandardCharsets.ISO_8859_1));
         StringBuilder hasedStringBuilder = new StringBuilder(2 * hasedBytes.length);
         for (byte b : hasedBytes) {
