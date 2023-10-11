@@ -7,7 +7,7 @@ public final class Constants {
     // endregion
 
     // region pages
-    public static final String LOGIN_PAGE = "/WEB-INF/index.jsp";
+    public static final String LOGIN_PAGE = "/WEB-INF/login.jsp";
     public static final String INSCRIPTION_PAGE = "/WEB-INF/subscribe.jsp";
     // endregion
 

@@ -1,21 +1,17 @@
-package fr.efrei.teachfinder.servlets;
+package fr.efrei.teachfinder;
 
-import fr.efrei.teachfinder.entities.ApplicationUser;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import javax.security.auth.login.LoginContext;
-import java.io.Console;
 import java.io.IOException;
 
-import static fr.efrei.teachfinder.utils.Constants.*;
+import static fr.efrei.teachfinder.utils.Constants.LOGIN_PAGE;
 
-public class HelloServlet extends HttpServlet {
+public class Controller extends HttpServlet {
 
     public void init() {
-
     }
 
     public void destroy() {
