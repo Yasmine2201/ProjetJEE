@@ -20,7 +20,7 @@ public final class Constants {
     public static final String FORBIDDEN_ERROR = "Vous n'êtes pas autorisé à réaliser cette action.";
     // endregion
 
-    // region JSPL requests
+    // region JPQL requests
 
     // ApplicationUser
     public static final String APPLICATIONUSER_FINDBYID = "SELECT u from ApplicationUser u WHERE u.userId = :id";
@@ -29,6 +29,6 @@ public final class Constants {
     // Registration
     public static final String REGISTRATION_FINDBYLOGIN = "SELECT r from Registration r WHERE r.login = :login";
     public static final String REGISTRATION_GETALLWITHSTATUS = "SELECT r from Registration r WHERE r.status = :status";
-
+    public static final String SCHOOL_FINDBYID = "SELECT s from SChool s WHERE s.idSchool = :idSchool ";
     // endregion
 }

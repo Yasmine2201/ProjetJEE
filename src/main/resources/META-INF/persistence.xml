@@ -7,11 +7,13 @@
 
         <class>fr.efrei.teachfinder.entities.ApplicationUser</class>
         <class>fr.efrei.teachfinder.entities.Registration</class>
+        <class>fr.efrei.teachfinder.entities.School</class>
+        <class>fr.efrei.teachfinder.entities.Recruiter</class>
+        <class>fr.efrei.teachfinder.entities.Teacher</class>
         <properties>
             <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/teach_finder_db"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="eclipselink.jdbc.user" value="root"/>
-            <property name="eclipselink.jdbc.password" value=""/>
         </properties>
     </persistence-unit>
 </persistence>
