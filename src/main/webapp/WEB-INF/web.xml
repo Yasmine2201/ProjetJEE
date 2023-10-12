@@ -14,17 +14,17 @@
 
     <!-- Mapping des servlets -->
     <servlet>
-        <servlet-name>helloServlet</servlet-name>
-        <servlet-class>fr.efrei.teachfinder.servlets.HelloServlet</servlet-class>
+        <servlet-name>controller</servlet-name>
+        <servlet-class>fr.efrei.teachfinder.Controller</servlet-class>
     </servlet>
     
     <servlet-mapping>
-        <servlet-name>helloServlet</servlet-name>
-        <url-pattern>/helloServlet</url-pattern>
+        <servlet-name>controller</servlet-name>
+        <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 
     <!-- La servlet est le point d'entrée de l'application -->
     <welcome-file-list>
-        <welcome-file>helloServlet</welcome-file>
+        <welcome-file>controller</welcome-file>
     </welcome-file-list>
 </web-app>
