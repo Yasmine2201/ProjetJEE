@@ -86,6 +86,7 @@ public class Controller extends HttpServlet {
 
         if (sessionUser == null) {
             request.setAttribute("errorMessage", MISSING_FIELD_ERROR);
+            request.setAttribute("login", login);
             request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
             return;
         }
@@ -106,8 +107,8 @@ public class Controller extends HttpServlet {
         String page;
         switch (sessionUser.getRole()) {
             case Admin -> page = ADMIN_HOME_PAGE;
-            case Recruiter -> page = TEACHER_HOME_PAGE;
-            case Teacher -> page = RECRUITER_HOME_PAGE;
+            case Recruiter -> page = RECRUITER_HOME_PAGE;
+            case Teacher -> page = TEACHER_HOME_PAGE;
             default -> page = LOGIN_PAGE;
         }
 
