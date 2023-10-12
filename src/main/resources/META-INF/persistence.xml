@@ -8,18 +8,6 @@
         <class>fr.efrei.teachfinder.entities.ApplicationUser</class>
         <class>fr.efrei.teachfinder.entities.Registration</class>
         <properties>
-            <property name="toplink.jdbc.url" value="jdbc:mysql://localhost:3306/teach_finder_db"/>
-            <property name="toplink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="toplink.jdbc.user" value="root"/>
-            <property name="toplink.jdbc.password" value=""/>
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/teach_finder_db"/>
-            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="hibernate.connection.username" value="root"/>
-            <property name="hibernate.connection.password" value=""/>
-            <property name="openjpa.ConnectionURL" value="jdbc:mysql://localhost:3306/teach_finder_db"/>
-            <property name="openjpa.ConnectionDriverName" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="openjpa.ConnectionUserName" value="root"/>
-            <property name="openjpa.ConnectionPassword" value=""/>
             <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/teach_finder_db"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="eclipselink.jdbc.user" value="root"/>
