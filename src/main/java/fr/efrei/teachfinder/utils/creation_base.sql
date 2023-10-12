@@ -4,7 +4,6 @@ DROP TABLE Registration;
 DROP TABLE ApplicationUser;
 DROP TABLE School;
 DROP TABLE Teacher;
-DROP TABLE TeacherInterests;
 DROP TABLE Refs;
 DROP TABLE Recruiter;
 DROP TABLE Experience;
@@ -18,8 +17,10 @@ CREATE TABLE Registration (
     name VARCHAR(100) NOT NULL,
     mail VARCHAR(100) NOT NULL,
     phone VARCHAR(20),
+    schoolId INT,
     role ENUM ('Teacher','Recruiter') NOT NULL,
-    status ENUM('Pending', 'Accepted', 'Refused') NOT NULL DEFAULT 'PENDING'
+    status ENUM('Pending', 'Accepted', 'Refused') NOT NULL DEFAULT 'PENDING',
+    FOREIGN KEY (schoolId) REFERENCES School(schoolId)
 );
 
 CREATE TABLE ApplicationUser (
@@ -45,13 +46,7 @@ CREATE TABLE Teacher(
     FOREIGN KEY (teacherId) REFERENCES ApplicationUser(userId),
     FOREIGN KEY (interestedInSchool) REFERENCES School(schoolId)
 );
-CREATE TABLE TeacherInterests(
-    teacherId INT NOT NULL,
-    schoolId INT NOT NULL,
-    FOREIGN KEY (teacherId) REFERENCES Teacher(teacherId),
-    FOREIGN KEY (schoolId) REFERENCES School(schoolId),
-    PRIMARY KEY (teacherId, schoolId)
-);
+
 CREATE TABLE Refs(
     teacherId INT NOT NULL,
     schoolId INT NOT NULL,
