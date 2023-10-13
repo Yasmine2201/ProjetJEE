@@ -98,7 +98,7 @@ CREATE TABLE Need (
     FOREIGN KEY (recruiterId) REFERENCES Recruiter(recruiterId),
     FOREIGN KEY (schoolId) REFERENCES School(schoolId)
 );
-CREATE TABLE Application (
+CREATE TABLE Candidature (
     teacherId INT NOT NULL,
     needId INT NOT NULL,
     desiredLevel VARCHAR(100),
