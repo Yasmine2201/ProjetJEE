@@ -4,6 +4,8 @@ import fr.efrei.teachfinder.entities.ApplicationUser;
 import fr.efrei.teachfinder.entities.School;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 import static fr.efrei.teachfinder.utils.Constants.*;
 
 public class SqlSchoolDAO implements ISchoolDAO {
@@ -13,7 +15,7 @@ public class SqlSchoolDAO implements ISchoolDAO {
 
 
     @Override
-    public School SCHOOL_FINDBYID(int schoolId) {
+    public School findById(int schoolId) {
         TypedQuery<School> query = entityManager
                 .createQuery(SCHOOL_FINDBYID, School.class)
                 .setParameter("schoolId", schoolId);
@@ -24,5 +26,16 @@ public class SqlSchoolDAO implements ISchoolDAO {
             return null;
         }
 
+
+    }
+
+    @Override
+    public School create(School school) throws EntityExistsException {
+        return null;
+    }
+
+    @Override
+    public List<School> getAll() {
+        return null;
     }
 }

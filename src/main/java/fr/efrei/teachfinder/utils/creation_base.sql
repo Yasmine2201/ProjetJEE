@@ -50,6 +50,7 @@ CREATE TABLE Teacher(
 CREATE TABLE Refs(
     teacherId INT NOT NULL,
     schoolId INT NOT NULL,
+    rating VARCHAR(50),
     PRIMARY KEY(teacherId,schoolId),
     FOREIGN KEY (teacherId) REFERENCES Teacher(teacherId),
     FOREIGN KEY (schoolId) REFERENCES School(schoolId)
@@ -59,7 +60,7 @@ CREATE TABLE Recruiter(
     recruiterId INT PRIMARY KEY NOT NULL,
     recruitingMethod VARCHAR(100),
     recruitingTools VARCHAR(100),
-    schoolId INT,
+    schoolId INT NOT NULL,
     FOREIGN KEY (recruiterId) REFERENCES ApplicationUser(userId),
     FOREIGN KEY (schoolId) REFERENCES School(schoolId)
 );
@@ -91,14 +92,11 @@ CREATE TABLE Need (
     subject VARCHAR(100),
     teachingMethod VARCHAR(100),
     schoolId INT NOT NULL,
-    recruiterId INT,
-    preferedCandidate INT,
+    recruiterId INT NOT NULL,
     workingTime INT,
     description TEXT,
     FOREIGN KEY (recruiterId) REFERENCES Recruiter(recruiterId),
-    FOREIGN KEY (schoolId) REFERENCES School(schoolId),
-    FOREIGN KEY (preferedCandidate) REFERENCES Teacher(teacherId)
-    
+    FOREIGN KEY (schoolId) REFERENCES School(schoolId)
 );
 CREATE TABLE Application (
     teacherId INT NOT NULL,

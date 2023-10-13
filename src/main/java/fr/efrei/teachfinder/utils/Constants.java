@@ -29,6 +29,6 @@ public final class Constants {
     // Registration
     public static final String REGISTRATION_FINDBYLOGIN = "SELECT r from Registration r WHERE r.login = :login";
     public static final String REGISTRATION_GETALLWITHSTATUS = "SELECT r from Registration r WHERE r.status = :status";
-    public static final String SCHOOL_FINDBYID = "SELECT s from SChool s WHERE s.idSchool = :idSchool ";
+    public static final String SCHOOL_FINDBYID = "SELECT s from School s WHERE s.schoolId = :schoolId ";
     // endregion
 }
