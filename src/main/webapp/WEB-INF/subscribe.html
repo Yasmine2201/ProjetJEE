@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<head>
+    <title>TeachFinder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+<section class="section">
+    <div class="columns is-centered">
+        <div class="column is-10 ">
+            <div class="title is-1 has-text-dark">
+                Connexion
+            </div>
+            <div class="px-6">
+                <form class="box has-text-centered px-3" method="post" action="controller">
+                    <div class="field">
+                        <div class="label has-text-left">Nom d'utilisateur</div>
+                        <div class="control">
+                            <label for=Login>
+                                <input id="Login" name="login" class="input is-medium is-rounded"
+                                       placeholder="Nom d'utilisateur"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="field pt-3">
+                        <div class="label has-text-left">Mot de passe</div>
+                        <div class="control">
+                            <label for="Password">
+                                <input id="Password" name="password" class="input is-medium is-rounded"
+                                       placeholder="********"
+                                       type="password"/>
+                            </label>
+                        </div>
+                        <div class="field pt-3">
+                            <div class="label has-text-left">Retaper votre mot de passe</div>
+                            <div class="control">
+                                <label for="SecondPassword">
+                                    <input id="SecondPassword" name="password" class="input is-medium is-rounded"
+                                           placeholder="********"
+                                           type="password"/>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="control pb-4  pt-3">
+                            <label class="radio">
+                                <input type="radio" name="role" value="teacher" checked onclick="Change(true)">
+                                Ensignant
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="role" value="recruteur" onclick="Change(false)">
+                                Recruteur
+                            </label>
+                        </div>
+
+                        <div id="dropSchool" style="display: none" class="pb-3">
+                            <div class="dropdown is-active pb-3" id="dropdown">
+                                <div class="dropdown-trigger">
+                                    <div class="button"
+                                         onclick="dropdown()">
+                                        <span>Afficher les ecoles</span>
+                                    </div>
+                                </div>
+                                <div class='dropdown-menu' id='dropdown-menu' role='menu' style="overflow-y: scroll;>
+                                    <div class='dropdown-content'>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" name="action" value="subscribe" class="button is-success">
+                            Inscription
+                        </button>
+                        <div class="pt-3">
+                            <p>deja un compte ?</p>
+                            <button type="submit" name="action" value="loginPage"
+                                    class="button is-transparent has-text-info"
+                                    style="border: none"> Connextez-vous
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+
+<script>
+
+    function afficheEcole() {
+        let school = [[1, "za"], [2, "dfgnhza"], [3, "zaikjhg"], [3, "zghfthjna"], [4, "zsfdgsa"], [5, "rytthrgf"], [6, "tyjuhtgr"], [7, "ergfrefd"], [0, "erddgd"]]
+        //recuperer la list des écoles
+        const dropdownContent = document.querySelector("#dropdown-menu > .dropdown-content");
+
+        const divToAdd = document.createElement("div");
+        divToAdd.classList.add("dropdown-item");
+
+
+        for (let element in school) {
+            dropdownContent.innerHTML += `<div class="dropdown-item has-text-left"><label><input class="radio" type="radio" name="school" value="${school[element][0]}">&nbsp; ${school[element][1]}</label></div>`
+        }
+    }
+
+    let id = document.getElementById("dropdown")
+
+    document.addEventListener("DOMContentLoaded", () => {
+        afficheEcole();
+    })
+
+    function Change(set) {
+        let dropSchool = document.getElementById("dropSchool")
+        if (set) {
+            dropSchool.style.display = "none"
+        } else {
+            dropSchool.style.display = "block"
+        }
+    }
+
+    function dropdown() {
+        if (id.classList.contains("is-active")) {
+            id.classList.remove("is-active");
+        } else {
+            id.classList.add("is-active");
+        }
+    }
+</script>

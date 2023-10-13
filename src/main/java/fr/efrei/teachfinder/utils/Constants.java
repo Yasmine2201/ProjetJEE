@@ -8,7 +8,7 @@ public final class Constants {
 
     // region pages
     public static final String LOGIN_PAGE = "/WEB-INF/login.jsp";
-    public static final String INSCRIPTION_PAGE = "/WEB-INF/subscribe.jsp";
+    public static final String INSCRIPTION_PAGE = "/WEB-INF/subscribe.html";
     public static final String ADMIN_HOME_PAGE = "/WEB-INF/admin/home.jsp";
     public static final String TEACHER_HOME_PAGE = "/WEB-INF/teacher/home.jsp";
     public static final String RECRUITER_HOME_PAGE = "/WEB-INF/recruiter/home.jsp";
