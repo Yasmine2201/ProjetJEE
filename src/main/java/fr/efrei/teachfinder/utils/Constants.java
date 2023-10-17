@@ -27,8 +27,11 @@ public final class Constants {
     public static final String APPLICATIONUSER_FINDBYLOGIN = "SELECT u from ApplicationUser u WHERE u.login = :login";
 
     // Registration
+    public static final String REGISTRATION_FINDBYID = "SELECT r from Registration r WHERE r.registrationId = :registrationId";
     public static final String REGISTRATION_FINDBYLOGIN = "SELECT r from Registration r WHERE r.login = :login";
     public static final String REGISTRATION_GETALLWITHSTATUS = "SELECT r from Registration r WHERE r.status = :status";
-    public static final String SCHOOL_FINDBYID = "SELECT s from School s WHERE s.schoolId = :schoolId ";
+
+    // School
+    public static final String SCHOOL_FINDBYNAME = "SELECT s from School s WHERE s.schoolName = :schoolName ";
     // endregion
 }

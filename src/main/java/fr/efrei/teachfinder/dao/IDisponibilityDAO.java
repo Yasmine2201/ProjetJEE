@@ -7,10 +7,14 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 public interface IDisponibilityDAO {
-    Disponibility create(Disponibility disponibilities)throws EntityExistsException;
-    List<Disponibility> findAllByTeacher(int teacherId );
+
+    Disponibility findById(int disponibilityId);
+
+    Disponibility create(Disponibility disponibilities) throws EntityExistsException;
+
+    List<Disponibility> findAllByTeacher(int teacherId);
+
+    Disponibility update(Disponibility disponibility) throws EntityNotFoundException;
 
     void delete(Disponibility disponibilities) throws EntityNotFoundException;
-
-
 }

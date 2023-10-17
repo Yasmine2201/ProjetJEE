@@ -9,6 +9,7 @@ import java.util.List;
 public interface IRecruiterDAO {
 
     Recruiter findById(int recruiterId);
+    
     Recruiter create(Recruiter recruiter) throws EntityExistsException;
 
     Recruiter update(Recruiter recruiter) throws EntityNotFoundException;

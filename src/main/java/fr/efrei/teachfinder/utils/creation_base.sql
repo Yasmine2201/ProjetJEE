@@ -25,7 +25,7 @@ CREATE TABLE School (
 
 CREATE TABLE Registration (
     registrationId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    login VARCHAR(32) NOT NULL UNIQUE,
+    login VARCHAR(32) NOT NULL,
     password VARCHAR(64) NOT NULL,
     firstname VARCHAR(32) NOT NULL,
     lastname VARCHAR(32) NOT NULL,

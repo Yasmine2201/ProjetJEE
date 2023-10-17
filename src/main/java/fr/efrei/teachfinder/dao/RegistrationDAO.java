@@ -11,10 +11,23 @@ import java.util.List;
 import static fr.efrei.teachfinder.utils.Constants.*;
 
 @Stateless
-public class SqlRegistrationDAO implements IRegistrationDAO {
+public class RegistrationDAO implements IRegistrationDAO {
 
     private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     private final EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+    @Override
+    public Registration findById(int registrationId) {
+        TypedQuery<Registration> query = entityManager
+                .createQuery(REGISTRATION_FINDBYID, Registration.class)
+                .setParameter("registrationId", registrationId);
+
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
 
     @Override
     public Registration findByLogin(String login) {
@@ -27,7 +40,6 @@ public class SqlRegistrationDAO implements IRegistrationDAO {
         } catch (NoResultException ex) {
             return null;
         }
-        // Todo + BYName
     }
 
     @Override

@@ -13,10 +13,18 @@ import java.util.List;
 public interface IRegistrationDAO {
 
     /**
-     * Find the Registration with the unique login.
+     * Find the Registration with the unique id.
      *
-     * @param login Unique login of the Registration record to find
-     * @return Registration with unique login or null
+     * @param registrationId Unique id of the Registration record to find
+     * @return Registration with unique id or null
+     */
+    Registration findById(int registrationId);
+
+    /**
+     * Find a Registration with the login.
+     *
+     * @param login login of the Registration record to find
+     * @return Registration with login or null
      */
     Registration findByLogin(String login);
 
