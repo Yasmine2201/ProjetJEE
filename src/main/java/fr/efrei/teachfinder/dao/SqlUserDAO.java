@@ -2,6 +2,7 @@ package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.ApplicationUser;
 import fr.efrei.teachfinder.entities.Registration;
+import fr.efrei.teachfinder.entities.RoleType;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -51,12 +52,12 @@ public class SqlUserDAO implements IUserDAO {
         user.setPassword(registration.getPassword());
 
         switch (registration.getRole()) {
-            case Teacher -> user.setRole(ApplicationUser.Role.Teacher);
-            case Recruiter -> user.setRole(ApplicationUser.Role.Recruiter);
+            case Teacher -> user.setRole(RoleType.Teacher);
+            case Recruiter -> user.setRole(RoleType.Recruiter);
         }
 
-        user.setMail(registration.getMail());
-        user.setName(registration.getName());
+        user.setEmail(registration.getEmail());
+        // TODO MAPPING
         user.setPhone(registration.getPhone());
 
         entityManager.getTransaction().begin();

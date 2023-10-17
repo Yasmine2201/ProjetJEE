@@ -1,6 +1,7 @@
 package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Registration;
+import fr.efrei.teachfinder.entities.StatusType;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,7 +35,7 @@ public interface IRegistrationDAO {
      * @param status Status filter
      * @return List of the Registrations with the specified status
      */
-    List<Registration> getAllWithStatus(Registration.Status status);
+    List<Registration> getAllWithStatus(StatusType status);
 
     /**
      * Change the status of a specific Registration (with specified login).
@@ -43,5 +44,5 @@ public interface IRegistrationDAO {
      * @param status New status
      * @throws EntityNotFoundException If no Registration with the specified login exists
      */
-    void changeStatus(String login, Registration.Status status) throws EntityNotFoundException;
+    void changeStatus(String login, StatusType status) throws EntityNotFoundException;
 }

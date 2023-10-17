@@ -1,15 +1,13 @@
 package fr.efrei.teachfinder.entities;
 
-import fr.efrei.teachfinder.entities.ApplicationUser.Role;
-
 public class SessionUser {
 
     private final int userId;
     private final String login;
-    private final Role role;
+    private final RoleType role;
 
     public SessionUser(ApplicationUser user) {
-        userId = user.getUserId();
+        userId = user.getId();
         login = user.getLogin();
         role = user.getRole();
     }
@@ -22,7 +20,7 @@ public class SessionUser {
         return login;
     }
 
-    public Role getRole() {
+    public RoleType getRole() {
         return role;
     }
 }

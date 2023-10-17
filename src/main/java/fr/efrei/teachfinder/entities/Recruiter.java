@@ -1,67 +1,63 @@
 package fr.efrei.teachfinder.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
-import java.util.Objects;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "recruiter", schema = "teach_finder_db", indexes = {
+        @Index(name = "schoolName", columnList = "schoolName")
+})
 public class Recruiter {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "recruiterId")
-    private int recruiterId;
-    @Basic
-    @Column(name = "recruitingMethod")
-    private String recruitingMethod;
-    @Basic
-    @Column(name = "recruitingTools")
-    private String recruitingTools;
-    @Basic
-    @Column(name = "schoolId")
-    private Integer schoolId;
+    @Column(name = "recruiterId", nullable = false)
+    private Integer id;
 
-    public int getRecruiterId() {
-        return recruiterId;
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "recruiterId", nullable = false)
+    private ApplicationUser applicationuser;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "schoolName", nullable = false)
+    private School schoolName;
+
+    @OneToMany(mappedBy = "recruiter")
+    private Set<Candidature> candidatures = new LinkedHashSet<>();
+
+    public Set<Candidature> getCandidatures() {
+        return candidatures;
     }
 
-    public void setRecruiterId(int recruiterId) {
-        this.recruiterId = recruiterId;
+    public void setCandidatures(Set<Candidature> candidatures) {
+        this.candidatures = candidatures;
     }
 
-    public String getRecruitingMethod() {
-        return recruitingMethod;
+    public Integer getId() {
+        return id;
     }
 
-    public void setRecruitingMethod(String recruitingMethod) {
-        this.recruitingMethod = recruitingMethod;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getRecruitingTools() {
-        return recruitingTools;
+    public ApplicationUser getApplicationuser() {
+        return applicationuser;
     }
 
-    public void setRecruitingTools(String recruitingTools) {
-        this.recruitingTools = recruitingTools;
+    public void setApplicationuser(ApplicationUser applicationuser) {
+        this.applicationuser = applicationuser;
     }
 
-    public Integer getSchoolId() {
-        return schoolId;
+    public School getSchoolName() {
+        return schoolName;
     }
 
-    public void setSchoolId(Integer schoolId) {
-        this.schoolId = schoolId;
+    public void setSchoolName(School schoolName) {
+        this.schoolName = schoolName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Recruiter recruiter = (Recruiter) o;
-        return recruiterId == recruiter.recruiterId && Objects.equals(recruitingMethod, recruiter.recruitingMethod) && Objects.equals(recruitingTools, recruiter.recruitingTools) && Objects.equals(schoolId, recruiter.schoolId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(recruiterId, recruitingMethod, recruitingTools, schoolId);
-    }
 }

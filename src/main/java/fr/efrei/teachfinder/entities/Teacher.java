@@ -1,45 +1,117 @@
 package fr.efrei.teachfinder.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-import java.util.Objects;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "teacher", schema = "teach_finder_db")
 public class Teacher {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "teacherId")
-    private int teacherId;
-    @Basic
-    @Column(name = "subjectExpertise")
-    private String subjectExpertise;
-    @Basic
-    @Column(name = "skills")
+    @Column(name = "teacherId", nullable = false)
+    private Integer id;
+
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "teacherId", nullable = false)
+    private ApplicationUser applicationuser;
+
+    @Lob
+    @Column(name = "experiences")
+    private String experiences;
+
+    @Size(max = 256)
+    @Column(name = "skills", length = 256)
     private String skills;
-    @Basic
-    @Column(name = "academicCertification")
-    private String academicCertification;
-    @Basic
+
+    @Size(max = 256)
+    @Column(name = "personnalInterests", length = 256)
+    private String personnalInterests;
+
+    @Size(max = 256)
+    @Column(name = "schoolInterests", length = 256)
+    private String schoolInterests;
+
+    @Size(max = 64)
+    @Column(name = "desiredLevels", length = 64)
+    private String desiredLevels;
+
+    @NotNull
+    @Lob
+    @Enumerated(EnumType.STRING)
+    @Column(name = "contractType", nullable = false)
+    private ContractType contractType;
+
+    @Size(max = 256)
+    @Column(name = "academicCertifications", length = 256)
+    private String academicCertifications;
+
+    @Lob
     @Column(name = "otherInformations")
     private String otherInformations;
-    @Basic
-    @Column(name = "interestedInSchool")
-    private Integer interestedInSchool;
 
-    public int getTeacherId() {
-        return teacherId;
+    @Size(max = 256)
+    @Column(name = "recommendations", length = 256)
+    private String recommendations;
+
+    @OneToMany(mappedBy = "teacher")
+    private Set<Candidature> candidatures = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "teacher")
+    private Set<Disponibility> disponibilities = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "teacher")
+    private Set<Evaluation> evaluations = new LinkedHashSet<>();
+
+    public Set<Evaluation> getEvaluations() {
+        return evaluations;
     }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+    public void setEvaluations(Set<Evaluation> evaluations) {
+        this.evaluations = evaluations;
     }
 
-    public String getSubjectExpertise() {
-        return subjectExpertise;
+    public Set<Disponibility> getDisponibilities() {
+        return disponibilities;
     }
 
-    public void setSubjectExpertise(String subjectExpertise) {
-        this.subjectExpertise = subjectExpertise;
+    public void setDisponibilities(Set<Disponibility> disponibilities) {
+        this.disponibilities = disponibilities;
+    }
+
+    public Set<Candidature> getCandidatures() {
+        return candidatures;
+    }
+
+    public void setCandidatures(Set<Candidature> candidatures) {
+        this.candidatures = candidatures;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public ApplicationUser getApplicationuser() {
+        return applicationuser;
+    }
+
+    public void setApplicationuser(ApplicationUser applicationuser) {
+        this.applicationuser = applicationuser;
+    }
+
+    public String getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(String experiences) {
+        this.experiences = experiences;
     }
 
     public String getSkills() {
@@ -50,12 +122,44 @@ public class Teacher {
         this.skills = skills;
     }
 
-    public String getAcademicCertification() {
-        return academicCertification;
+    public String getPersonnalInterests() {
+        return personnalInterests;
     }
 
-    public void setAcademicCertification(String academicCertification) {
-        this.academicCertification = academicCertification;
+    public void setPersonnalInterests(String personnalInterests) {
+        this.personnalInterests = personnalInterests;
+    }
+
+    public String getSchoolInterests() {
+        return schoolInterests;
+    }
+
+    public void setSchoolInterests(String schoolInterests) {
+        this.schoolInterests = schoolInterests;
+    }
+
+    public String getDesiredLevels() {
+        return desiredLevels;
+    }
+
+    public void setDesiredLevels(String desiredLevels) {
+        this.desiredLevels = desiredLevels;
+    }
+
+    public ContractType getContractType() {
+        return contractType;
+    }
+
+    public void setContractType(ContractType contractType) {
+        this.contractType = contractType;
+    }
+
+    public String getAcademicCertifications() {
+        return academicCertifications;
+    }
+
+    public void setAcademicCertifications(String academicCertifications) {
+        this.academicCertifications = academicCertifications;
     }
 
     public String getOtherInformations() {
@@ -66,24 +170,12 @@ public class Teacher {
         this.otherInformations = otherInformations;
     }
 
-    public Integer getInterestedInSchool() {
-        return interestedInSchool;
+    public String getRecommendations() {
+        return recommendations;
     }
 
-    public void setInterestedInSchool(Integer interestedInSchool) {
-        this.interestedInSchool = interestedInSchool;
+    public void setRecommendations(String recommendations) {
+        this.recommendations = recommendations;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Teacher teacher = (Teacher) o;
-        return teacherId == teacher.teacherId && Objects.equals(subjectExpertise, teacher.subjectExpertise) && Objects.equals(skills, teacher.skills) && Objects.equals(academicCertification, teacher.academicCertification) && Objects.equals(otherInformations, teacher.otherInformations) && Objects.equals(interestedInSchool, teacher.interestedInSchool);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(teacherId, subjectExpertise, skills, academicCertification, otherInformations, interestedInSchool);
-    }
 }

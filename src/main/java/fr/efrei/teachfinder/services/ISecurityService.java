@@ -1,6 +1,6 @@
 package fr.efrei.teachfinder.services;
 
-import fr.efrei.teachfinder.entities.ApplicationUser;
+import fr.efrei.teachfinder.entities.RoleType;
 import fr.efrei.teachfinder.entities.SessionUser;
 
 
@@ -10,5 +10,5 @@ public interface ISecurityService {
 
     SessionUser authentificate(String login, String password);
 
-    boolean checkAuthorization(ApplicationUser.Role role, String action);
+    boolean checkAuthorization(RoleType role, String action);
 }
