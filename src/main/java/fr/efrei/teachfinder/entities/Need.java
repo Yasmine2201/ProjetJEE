@@ -49,6 +49,19 @@ public class Need {
     @OneToMany(mappedBy = "need")
     private Set<Candidature> candidatures = new LinkedHashSet<>();
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "recruiterId", nullable = false)
+    private Recruiter recruiter;
+
+    public Recruiter getRecruiter() {
+        return recruiter;
+    }
+
+    public void setRecruiter(Recruiter recruiter) {
+        this.recruiter = recruiter;
+    }
+
     public Set<Candidature> getCandidatures() {
         return candidatures;
     }

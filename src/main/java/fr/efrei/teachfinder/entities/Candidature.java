@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "candidature", schema = "teach_finder_db", indexes = {
         @Index(name = "needId", columnList = "needId"),
-        @Index(name = "recruiterId", columnList = "recruiterId"),
         @Index(name = "schoolName", columnList = "schoolName")
 })
 public class Candidature {
@@ -24,11 +23,6 @@ public class Candidature {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "needId", nullable = false)
     private Need need;
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "recruiterId", nullable = false)
-    private Recruiter recruiter;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -79,14 +73,6 @@ public class Candidature {
 
     public void setNeed(Need need) {
         this.need = need;
-    }
-
-    public Recruiter getRecruiter() {
-        return recruiter;
-    }
-
-    public void setRecruiter(Recruiter recruiter) {
-        this.recruiter = recruiter;
     }
 
     public School getSchoolName() {
