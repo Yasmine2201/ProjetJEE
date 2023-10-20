@@ -4,7 +4,6 @@ DROP TABLE Registration;
 DROP TABLE ApplicationUser;
 DROP TABLE School;
 DROP TABLE Teacher;
-DROP TABLE TeacherInterests;
 DROP TABLE Refs;
 DROP TABLE Recruiter;
 DROP TABLE Experience;
@@ -18,8 +17,10 @@ CREATE TABLE Registration (
     name VARCHAR(100) NOT NULL,
     mail VARCHAR(100) NOT NULL,
     phone VARCHAR(20),
+    schoolId INT,
     role ENUM ('Teacher','Recruiter') NOT NULL,
-    status ENUM('Pending', 'Accepted', 'Refused') NOT NULL DEFAULT 'PENDING'
+    status ENUM('Pending', 'Accepted', 'Refused') NOT NULL DEFAULT 'PENDING',
+    FOREIGN KEY (schoolId) REFERENCES School(schoolId)
 );
 
 CREATE TABLE ApplicationUser (
@@ -45,16 +46,11 @@ CREATE TABLE Teacher(
     FOREIGN KEY (teacherId) REFERENCES ApplicationUser(userId),
     FOREIGN KEY (interestedInSchool) REFERENCES School(schoolId)
 );
-CREATE TABLE TeacherInterests(
-    teacherId INT NOT NULL,
-    schoolId INT NOT NULL,
-    FOREIGN KEY (teacherId) REFERENCES Teacher(teacherId),
-    FOREIGN KEY (schoolId) REFERENCES School(schoolId),
-    PRIMARY KEY (teacherId, schoolId)
-);
+
 CREATE TABLE Refs(
     teacherId INT NOT NULL,
     schoolId INT NOT NULL,
+    rating VARCHAR(50),
     PRIMARY KEY(teacherId,schoolId),
     FOREIGN KEY (teacherId) REFERENCES Teacher(teacherId),
     FOREIGN KEY (schoolId) REFERENCES School(schoolId)
@@ -64,7 +60,7 @@ CREATE TABLE Recruiter(
     recruiterId INT PRIMARY KEY NOT NULL,
     recruitingMethod VARCHAR(100),
     recruitingTools VARCHAR(100),
-    schoolId INT,
+    schoolId INT NOT NULL,
     FOREIGN KEY (recruiterId) REFERENCES ApplicationUser(userId),
     FOREIGN KEY (schoolId) REFERENCES School(schoolId)
 );
@@ -96,16 +92,13 @@ CREATE TABLE Need (
     subject VARCHAR(100),
     teachingMethod VARCHAR(100),
     schoolId INT NOT NULL,
-    recruiterId INT,
-    preferedCandidate INT,
+    recruiterId INT NOT NULL,
     workingTime INT,
     description TEXT,
     FOREIGN KEY (recruiterId) REFERENCES Recruiter(recruiterId),
-    FOREIGN KEY (schoolId) REFERENCES School(schoolId),
-    FOREIGN KEY (preferedCandidate) REFERENCES Teacher(teacherId)
-    
+    FOREIGN KEY (schoolId) REFERENCES School(schoolId)
 );
-CREATE TABLE Application (
+CREATE TABLE Candidature (
     teacherId INT NOT NULL,
     needId INT NOT NULL,
     desiredLevel VARCHAR(100),
