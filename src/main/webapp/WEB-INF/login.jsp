@@ -8,7 +8,7 @@
 </head>
 <body>
 <div style=" position: relative;
-  min-height: 100vh;">
+          min-height: 100vh;">
     <div style="padding-bottom: 2.5rem;">
         <section class="section">
             <div class="columns is-centered">
@@ -19,29 +19,24 @@
                     <div class="px-6">
                         <form class="box has-text-centered px-3" method="post" action="controller">
                             <div class="field">
-                                <div class="label has-text-left">Nom d'utilisateur</div>
                                 <div class="control">
+                                    <div class="label has-text-left">Nom d'utilisateur</div>
                                     <label for="login">
                                         <input id="login" name="login" type="text"
                                                class="input is-medium is-rounded"
                                                placeholder="Nom d'utilisateur"/>
                                     </label>
-
                                 </div>
                             </div>
                             <div class="field pt-3 ">
-                                <div class="label has-text-left">Mot de passe</div>
                                 <div class="control">
+                                    <div class="label has-text-left">Mot de passe</div>
                                     <label for="Password">
                                         <input id="Password" name="password" type="password"
                                                class="input is-medium is-rounded"
                                                placeholder="********"/>
                                     </label>
                                 </div>
-                            </div>
-                            <div class="notification is-danger">
-                                <div class="delete"></div>
-                                <b>Identifiant</b> ou <b>mot de passe </b> incorect(s)
                             </div>
                             <button type="submit" name="action" value="login" class="button is-success"> Connexion
                             </button>
@@ -57,19 +52,7 @@
                 </div>
             </div>
         </section>
-        <footer class="footer" style="  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 2.5rem;   ">
-            <div class="content has-text-centered">
-                <p>
-                    <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is
-                    licensed
-                    <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-                    is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
-                </p>
-            </div>
-        </footer>
+
     </div>
 </div>
 </body>
