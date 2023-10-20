@@ -43,7 +43,7 @@
                             <div class="pt-3">
                                 <p>Pas de compte ?</p>
                                 <button type="submit" name="action" value="goToRegistration"
-                                        class="button is-transparent has-text-info"
+                                        class="button fantom has-text-info"
                                         style="border: none"> Inscrivez-vous
                                 </button>
                             </div>
@@ -52,7 +52,6 @@
                 </div>
             </div>
         </section>
-
     </div>
 </div>
 </body>

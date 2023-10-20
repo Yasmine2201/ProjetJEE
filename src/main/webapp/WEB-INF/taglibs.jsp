@@ -6,5 +6,4 @@
         <%@include file="/WEB-INF/css/style.scss" %>
         <%@include file="/WEB-INF/css/bulma/css/bulma.min.css" %>
     </style>
-
 </html>

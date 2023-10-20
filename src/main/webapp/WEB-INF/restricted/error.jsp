@@ -38,16 +38,16 @@
             </div>
         </div>
     </div>
+</form>
 
     <div class="box">
         <div class="notification is-danger">
-           <p class="title is-1">Erreur cdoe <b>{Error code}</b>:</p>
+           <p class="title is-1">Erreur cdoe <b>Error code</b>:</p>
             <p>
-                {Error Message}
+                Error Message
             </p>
 
         </div>
         </div>
-</form>
 </body>
 </html>
