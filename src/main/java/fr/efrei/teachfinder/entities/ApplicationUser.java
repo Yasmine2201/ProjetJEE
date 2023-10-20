@@ -1,43 +1,66 @@
 package fr.efrei.teachfinder.entities;
 
 import jakarta.persistence.*;
-
-import java.util.Objects;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
+@Table(name = "applicationuser", schema = "teach_finder_db")
 public class ApplicationUser {
-    public enum Role {Admin, Teacher, Recruiter}
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userId", nullable = false)
-    private int userId;
-    @Basic
-    @Column(name = "login", nullable = false, length = 50, unique = true)
+    private Integer id;
+
+    @Size(max = 32)
+    @NotNull
+    @Column(name = "login", nullable = false, length = 32)
     private String login;
-    @Basic
+
+    @Size(max = 64)
+    @NotNull
     @Column(name = "password", nullable = false, length = 64)
     private String password;
-    @Basic
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private Role role;
-    @Basic
-    @Column(name = "name", nullable = false, length = 100)
-    private String name;
-    @Basic
-    @Column(name = "mail", nullable = false, length = 100)
-    private String mail;
-    @Basic
-    @Column(name = "phone", nullable = true, length = 20)
+
+    @Size(max = 32)
+    @NotNull
+    @Column(name = "firstname", nullable = false, length = 32)
+    private String firstname;
+
+    @Size(max = 32)
+    @NotNull
+    @Column(name = "lastname", nullable = false, length = 32)
+    private String lastname;
+
+    @Size(max = 64)
+    @NotNull
+    @Column(name = "email", nullable = false, length = 64)
+    private String email;
+
+    @Size(max = 16)
+    @Column(name = "phone", length = 16)
     private String phone;
 
-    public int getUserId() {
-        return userId;
+    @NotNull
+    @Lob
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private RoleType role;
+
+    public RoleType getRole() {
+        return role;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setRole(RoleType role) {
+        this.role = role;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getLogin() {
@@ -56,28 +79,28 @@ public class ApplicationUser {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getName() {
-        return name;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
@@ -88,16 +111,4 @@ public class ApplicationUser {
         this.phone = phone;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ApplicationUser that = (ApplicationUser) o;
-        return userId == that.userId && Objects.equals(login, that.login) && Objects.equals(password, that.password) && Objects.equals(role, that.role) && Objects.equals(name, that.name) && Objects.equals(mail, that.mail) && Objects.equals(phone, that.phone);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId, login, password, role, name, mail, phone);
-    }
 }

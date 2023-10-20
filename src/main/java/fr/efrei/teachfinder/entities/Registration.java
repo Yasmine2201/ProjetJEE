@@ -1,84 +1,94 @@
 package fr.efrei.teachfinder.entities;
 
 import jakarta.persistence.*;
-
-import java.util.Objects;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
+@Table(name = "registration", schema = "teach_finder_db", indexes = {
+        @Index(name = "schoolName", columnList = "schoolName")
+})
 public class Registration {
-    public enum Role {Teacher, Recruiter}
-    public enum Status {Pending, Accepted, Refused}
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "login", nullable = false, length = 50)
+    @Size(max = 32)
+    @NotNull
+    @Column(name = "login", nullable = false, length = 32)
     private String login;
-    @Basic
-    @Column(name = "password", nullable = false, length = 256)
+
+    @Size(max = 64)
+    @NotNull
+    @Column(name = "password", nullable = false, length = 64)
     private String password;
-    @Basic
-    @Column(name = "name", nullable = false, length = 100)
-    private String name;
-    @Basic
-    @Column(name = "mail", nullable = false, length = 100)
-    private String mail;
-    @Basic
-    @Column(name = "role", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Role role;
-    @Basic
-    @Column(name = "status", nullable = false)
-    private Status status = Status.Pending;
-    @Basic
-    @Column(name = "phone", nullable = true, length = 20)
+
+    @Size(max = 32)
+    @NotNull
+    @Column(name = "firstname", nullable = false, length = 32)
+    private String firstname;
+
+    @Size(max = 32)
+    @NotNull
+    @Column(name = "lastname", nullable = false, length = 32)
+    private String lastname;
+
+    @Size(max = 64)
+    @NotNull
+    @Column(name = "email", nullable = false, length = 64)
+    private String email;
+
+    @Size(max = 16)
+    @Column(name = "phone", length = 16)
     private String phone;
 
-    public String getLogin() {
-        return login;
+    @NotNull
+    @Lob
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private RoleType role;
+
+    @NotNull
+    @Lob
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private StatusType status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "schoolName")
+    private School schoolName;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "registrationId", nullable = false)
+    private Integer registrationId;
+
+    public void setRegistrationId(Integer registrationId) {
+        this.registrationId = registrationId;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public Integer getRegistrationId() {
+        return registrationId;
     }
 
-    public String getPassword() {
-        return password;
+    public School getSchoolName() {
+        return schoolName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setSchoolName(School schoolName) {
+        this.schoolName = schoolName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Status getStatus() {
+    public StatusType getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusType status) {
         this.status = status;
+    }
+
+    public RoleType getRole() {
+        return role;
+    }
+
+    public void setRole(RoleType role) {
+        this.role = role;
     }
 
     public String getPhone() {
@@ -89,16 +99,43 @@ public class Registration {
         this.phone = phone;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Registration that = (Registration) o;
-        return Objects.equals(login, that.login) && Objects.equals(password, that.password) && Objects.equals(name, that.name) && Objects.equals(mail, that.mail) && Objects.equals(role, that.role) && Objects.equals(status, that.status) && Objects.equals(phone, that.phone);
+    public String getEmail() {
+        return email;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(login, password, name, mail, role, status, phone);
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 }

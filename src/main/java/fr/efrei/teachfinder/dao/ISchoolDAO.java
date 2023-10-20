@@ -1,16 +1,16 @@
 package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.School;
+import jakarta.persistence.EntityExistsException;
 
 import java.util.List;
-import jakarta.persistence.EntityExistsException;
 
 
 public interface ISchoolDAO {
-    School findById(int schoolId);
+
+    School findByName(String schoolName);
+
     School create(School school )throws EntityExistsException;
 
     List<School> getAll();
-
-
 }

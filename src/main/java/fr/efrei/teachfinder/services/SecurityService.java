@@ -2,6 +2,7 @@ package fr.efrei.teachfinder.services;
 
 import fr.efrei.teachfinder.dao.IUserDAO;
 import fr.efrei.teachfinder.entities.ApplicationUser;
+import fr.efrei.teachfinder.entities.RoleType;
 import fr.efrei.teachfinder.entities.SessionUser;
 import fr.efrei.teachfinder.utils.IHashStrategy;
 import jakarta.ejb.EJB;
@@ -28,7 +29,7 @@ public class SecurityService implements ISecurityService {
     }
 
     @Override
-    public boolean checkAuthorization(ApplicationUser.Role role, String action) {
+    public boolean checkAuthorization(RoleType role, String action) {
         return true;
     }
 }
