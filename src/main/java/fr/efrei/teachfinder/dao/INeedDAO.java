@@ -1,5 +1,29 @@
 package fr.efrei.teachfinder.dao;
 
+import fr.efrei.teachfinder.entities.Evaluation;
+import fr.efrei.teachfinder.entities.EvaluationId;
+import fr.efrei.teachfinder.entities.Need;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
+
+import java.util.List;
+
 public interface INeedDAO {
-    // TODO
+
+    Need findById(int needId);
+
+    Need create(Need need) throws EntityExistsException;
+
+    Need update(Need need) throws EntityNotFoundException;
+
+    List<Need> findAllBySchool(String schoolName);
+    List<Need> findAllByRecruiter(int recruiterId);
+
+    List<Need> getAll();
+
+
+
+
+
+
 }
