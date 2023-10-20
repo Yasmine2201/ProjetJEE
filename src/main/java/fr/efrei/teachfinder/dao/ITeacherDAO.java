@@ -8,13 +8,12 @@ import java.util.List;
 
 
 public interface ITeacherDAO {
+
     Teacher findById(int teacherId);
+
     Teacher create(Teacher teacher) throws EntityExistsException;
 
     Teacher update(Teacher teacher) throws EntityNotFoundException;
 
     List<Teacher> getAll ();
-
-
-
 }

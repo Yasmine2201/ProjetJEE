@@ -1,45 +1,60 @@
 package fr.efrei.teachfinder.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
-import java.util.Objects;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "school", schema = "teach_finder_db")
 public class School {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "schoolId")
-    private int schoolId;
-    @Basic
-    @Column(name = "officialName")
-    private String officialName;
+    @Size(max = 128)
+    @Column(name = "schoolName", nullable = false, length = 128)
+    private String schoolName;
 
-    public int getSchoolId() {
-        return schoolId;
+    @Size(max = 256)
+    @Column(name = "address", length = 256)
+    private String address;
+
+    @Size(max = 256)
+    @Column(name = "specializations", length = 256)
+    private String specializations;
+
+    @OneToMany(mappedBy = "schoolName")
+    private Set<Need> needs = new LinkedHashSet<>();
+
+    public Set<Need> getNeeds() {
+        return needs;
     }
 
-    public void setSchoolId(int schoolId) {
-        this.schoolId = schoolId;
+    public void setNeeds(Set<Need> needs) {
+        this.needs = needs;
     }
 
-    public String getOfficialName() {
-        return officialName;
+    public String getSchoolName() {
+        return schoolName;
     }
 
-    public void setOfficialName(String officialName) {
-        this.officialName = officialName;
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        School school = (School) o;
-        return schoolId == school.schoolId && Objects.equals(officialName, school.officialName);
+    public String getAddress() {
+        return address;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(schoolId, officialName);
+    public void setAddress(String address) {
+        this.address = address;
     }
+
+    public String getSpecializations() {
+        return specializations;
+    }
+
+    public void setSpecializations(String specializations) {
+        this.specializations = specializations;
+    }
+
 }

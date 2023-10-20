@@ -1,119 +1,125 @@
 START TRANSACTION;
 
-DROP TABLE Registration;
-DROP TABLE ApplicationUser;
-DROP TABLE School;
-DROP TABLE Teacher;
-DROP TABLE Refs;
-DROP TABLE Recruiter;
-DROP TABLE Experience;
-DROP TABLE Disponibilities;
-DROP TABLE Need;
-DROP TABLE Application;
+CREATE DATABASE IF NOT EXISTS teach_finder_db;
+USE teach_finder_db;
+
+DROP TABLE IF EXISTS Candidature;
+DROP TABLE IF EXISTS Need;
+DROP TABLE IF EXISTS Evaluation;
+DROP TABLE IF EXISTS Disponibility;
+DROP TABLE IF EXISTS Registration;
+DROP TABLE IF EXISTS Recruiter;
+DROP TABLE IF EXISTS School;
+DROP TABLE IF EXISTS Teacher;
+DROP TABLE IF EXISTS ApplicationUser;
+DROP TABLE IF EXISTS Refs;
+DROP TABLE IF EXISTS Experience;
+DROP TABLE IF EXISTS Disponibilities;
+DROP TABLE IF EXISTS Application;
+
+CREATE TABLE School (
+    schoolName VARCHAR(128) NOT NULL PRIMARY KEY,
+    address VARCHAR(256),
+    specializations VARCHAR(256)
+) ENGINE=InnoDB;
 
 CREATE TABLE Registration (
-    login VARCHAR(50) NOT NULL PRIMARY KEY,
-    password VARCHAR(256) NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    mail VARCHAR(100) NOT NULL,
-    phone VARCHAR(20),
-    schoolId INT,
-    role ENUM ('Teacher','Recruiter') NOT NULL,
-    status ENUM('Pending', 'Accepted', 'Refused') NOT NULL DEFAULT 'PENDING',
-    FOREIGN KEY (schoolId) REFERENCES School(schoolId)
-);
+    registrationId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    login VARCHAR(32) NOT NULL,
+    password VARCHAR(64) NOT NULL,
+    firstname VARCHAR(32) NOT NULL,
+    lastname VARCHAR(32) NOT NULL,
+    email VARCHAR(64) NOT NULL,
+    phone VARCHAR(16),
+    role ENUM('Admin', 'Teacher', 'Recruiter') NOT NULL ,
+    status ENUM('Accepted', 'Refused', 'Pending') NOT NULL DEFAULT 'PENDING',
+    schoolName VARCHAR(128),
+    FOREIGN KEY (schoolName) REFERENCES School(schoolName)
+) ENGINE=InnoDB;
 
 CREATE TABLE ApplicationUser (
-    userId INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    login VARCHAR(50) NOT NULL UNIQUE,
+    userId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    login VARCHAR(32) NOT NULL UNIQUE,
     password VARCHAR(64) NOT NULL,
-    role ENUM ('Teacher','Recruiter','Admin') NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    mail VARCHAR(100) NOT NULL,
-    phone VARCHAR(20) 
-);
-CREATE TABLE School (
-    schoolId INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    officialName VARCHAR(100)
-);
+    firstname VARCHAR(32) NOT NULL,
+    lastname VARCHAR(32) NOT NULL,
+    email VARCHAR(64) NOT NULL,
+    phone VARCHAR(16),
+    role ENUM('ADMIN', 'Teacher', 'Recruiter') NOT NULL
+) ENGINE=InnoDB;
+
 CREATE TABLE Teacher(
-    teacherId INT PRIMARY KEY NOT NULL,
-    subjectExpertise VARCHAR(100),
-    skills VARCHAR(100),
-    academicCertification VARCHAR(100),
+    teacherId INT NOT NULL PRIMARY KEY,
+    experiences TEXT,
+    skills VARCHAR(256),
+    personnalInterests VARCHAR(256),
+    schoolInterests VARCHAR(256),
+    desiredLevels VARCHAR(64),
+    contractType ENUM('Temporary', 'Continous') NOT NULL DEFAULT 'Temporary',
+    academicCertifications VARCHAR(256),
     otherInformations TEXT,
-    interestedInSchool INT,
-    FOREIGN KEY (teacherId) REFERENCES ApplicationUser(userId),
-    FOREIGN KEY (interestedInSchool) REFERENCES School(schoolId)
-);
+    recommendations VARCHAR(256),
+    FOREIGN KEY (teacherId) REFERENCES ApplicationUser(userId)
+) ENGINE=InnoDB;
 
-CREATE TABLE Refs(
-    teacherId INT NOT NULL,
-    schoolId INT NOT NULL,
-    rating VARCHAR(50),
-    PRIMARY KEY(teacherId,schoolId),
-    FOREIGN KEY (teacherId) REFERENCES Teacher(teacherId),
-    FOREIGN KEY (schoolId) REFERENCES School(schoolId)
-);
-
-CREATE TABLE Recruiter(
-    recruiterId INT PRIMARY KEY NOT NULL,
-    recruitingMethod VARCHAR(100),
-    recruitingTools VARCHAR(100),
-    schoolId INT NOT NULL,
+CREATE TABLE Recruiter (
+    recruiterId INT NOT NULL PRIMARY KEY,
+    schoolName VARCHAR(128) NOT NULL,
     FOREIGN KEY (recruiterId) REFERENCES ApplicationUser(userId),
-    FOREIGN KEY (schoolId) REFERENCES School(schoolId)
-);
+    FOREIGN KEY (schoolName) REFERENCES School(schoolName)
+) ENGINE=InnoDB;
 
-
-CREATE TABLE Experience (
-    startingDate DATE NOT NULL,
-    endingDate DATE NOT NULL,
+CREATE TABLE Disponibility (
+    disponibilityId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     teacherId INT NOT NULL,
-    schoolId INT NOT NULL,
-    PRIMARY KEY (startingDate, endingDate,teacherId, schoolId),
-    FOREIGN KEY (teacherId) REFERENCES Teacher(teacherId),
-    FOREIGN KEY (schoolId) REFERENCES School(schoolId)
-);
-
-
-CREATE TABLE Disponibilities (
-    teacherId INT NOT NULL,
-    startDateTime DATETIME NOT NULL,
-    endDateTime DATETIME NOT NULL,
-    PRIMARY KEY (teacherId, startDateTime, endDateTime), 
+    startDate DATETIME NOT NULL,
+    endDate DATETIME NOT NULL,
     FOREIGN KEY (teacherId) REFERENCES Teacher(teacherId)
-    
-);
+) ENGINE=InnoDB;
+
+CREATE TABLE Evaluation (
+    teacherId INT NOT NULL,
+    schoolName VARCHAR(128) NOT NULL,
+    rating TINYINT NOT NULL,
+    comment TEXT,
+    PRIMARY KEY (teacherId, schoolName),
+    FOREIGN KEY (teacherId) REFERENCES Teacher(teacherId),
+    FOREIGN KEY (schoolName) REFERENCES School(schoolName)
+) ENGINE=InnoDB;
 
 CREATE TABLE Need (
-    needId INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    contractType VARCHAR(50),
-    subject VARCHAR(100),
-    teachingMethod VARCHAR(100),
-    schoolId INT NOT NULL,
-    recruiterId INT NOT NULL,
-    workingTime INT,
-    description TEXT,
-    FOREIGN KEY (recruiterId) REFERENCES Recruiter(recruiterId),
-    FOREIGN KEY (schoolId) REFERENCES School(schoolId)
-);
+    needId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    schoolName VARCHAR(128) NOT NULL,
+    contractType ENUM('Temporary', 'Continous') NOT NULL DEFAULT 'Temporary',
+    subject VARCHAR(64) NOT NULL,
+    requirements TEXT,
+    timePeriod VARCHAR(32) NOT NULL,
+    notes TEXT,
+    FOREIGN KEY (schoolName) REFERENCES School(schoolName)
+) ENGINE=InnoDB;
+
 CREATE TABLE Candidature (
     teacherId INT NOT NULL,
     needId INT NOT NULL,
-    desiredLevel VARCHAR(100),
-    status ENUM('In progress', 'Accepted', 'Refused') NOT NULL,
-    isValidatedByTeacher BOOLEAN,
-    isValidatedByRecruiter BOOLEAN,
-    PRIMARY KEY (teacherId,needId),
+    recruiterId INT NOT NULL,
+    schoolName VARCHAR(128) NOT NULL,
+    createdOn DATETIME NOT NULL,
+    isInitiatedByTeacher BOOLEAN NOT NULL DEFAULT TRUE,
+    isValidatedByTeacher BOOLEAN NOT NULL DEFAULT FALSE,
+    isValidatedByRecruiter BOOLEAN NOT NULL DEFAULT FALSE,
+    status ENUM('Pending', 'Accepted', 'Refused') NOT NULL DEFAULT 'Pending',
+    PRIMARY KEY (teacherId, needId),
     FOREIGN KEY (teacherId) REFERENCES Teacher(teacherId),
-    FOREIGN KEY (needId) REFERENCES Need(needId)
-);
+    FOREIGN KEY (needId) REFERENCES Need(needId),
+    FOREIGN KEY (recruiterId) REFERENCES Recruiter(recruiterId),
+    FOREIGN KEY (schoolName) REFERENCES School(schoolName)
+) ENGINE=InnoDB;
 
-INSERT INTO `applicationuser` (`login`, `password`, `role`, `name`, `mail`, `phone`) VALUES
+
+INSERT INTO `applicationuser` (`login`, `password`, `role`, `firstname`, `lastname`, `email`) VALUES
     # Mdp : ImASuperAdmin
-    ('adminTest', '49a02abc531d047c7596bcdd3657e213db6d5d2972ca44d7699ea4accc1827c2', 'Admin', 'MYTZ', 'example@efrei.net', NULL),
+    ('adminTest', '49a02abc531d047c7596bcdd3657e213db6d5d2972ca44d7699ea4accc1827c2', 'Admin', 'MYTZ', 'BACB', 'example@efrei.net'),
     # Mdp : Teacher1234
-    ('teacherTest', '2c1714cf95b64a23d5a0d9720fb078d3af6acc0cdf23afdf9797dc022d77bdc4', 'Teacher', 'Jacques Augustin', 'example@efrei.net', NULL);
+    ('teacherTest', '2c1714cf95b64a23d5a0d9720fb078d3af6acc0cdf23afdf9797dc022d77bdc4', 'Teacher', 'Jacques', 'Augustin', 'example@efrei.net');
 
 COMMIT;
