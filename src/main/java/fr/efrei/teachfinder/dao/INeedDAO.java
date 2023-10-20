@@ -17,12 +17,16 @@ public interface INeedDAO {
     Need update(Need need) throws EntityNotFoundException;
 
     List<Need> findAllBySchool(String schoolName);
+
     List<Need> findAllByRecruiter(int recruiterId);
 
     List<Need> getAll();
 
-
-
+    /**
+     * @param research : schoolName or subject
+     * @return corresponding Needs
+     */
+    List<Need> searchWithString(String research);
 
 
 

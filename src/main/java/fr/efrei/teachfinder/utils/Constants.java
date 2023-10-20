@@ -34,4 +34,6 @@ public final class Constants {
     // School
     public static final String SCHOOL_FINDBYNAME = "SELECT s from School s WHERE s.schoolName = :schoolName ";
     // endregion
+    public static final String TEACHER_FINDBYID="SELECT t from Teacher t WHERE t.teacherId = :teacherId";
+    public static final String TEACHER_GETALL="SELECT * from Teacher";
 }
