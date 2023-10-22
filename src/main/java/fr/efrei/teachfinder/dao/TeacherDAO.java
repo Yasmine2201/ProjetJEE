@@ -1,6 +1,5 @@
 package fr.efrei.teachfinder.dao;
 
-import fr.efrei.teachfinder.entities.Registration;
 import fr.efrei.teachfinder.entities.Teacher;
 import jakarta.persistence.*;
 
@@ -28,39 +27,32 @@ public class TeacherDAO implements ITeacherDAO {
 
     @Override
     public Teacher create(Teacher teacher) throws EntityExistsException {
-        if (findById(teacher.getId()) != null)
+        try {
+            entityManager.getTransaction().begin();
+            Teacher createdTeacher = entityManager.merge(teacher);
+            entityManager.getTransaction().commit();
+            return createdTeacher;
+        } catch (EntityExistsException ex) {
             throw new EntityExistsException("Teacher already exists");
+        }
 
-        entityManager.getTransaction().begin();
-        Teacher createdTeacher = entityManager.merge(teacher);
-        entityManager.getTransaction().commit();
 
-        return createdTeacher;
     }
 
     @Override
     public Teacher update(Teacher teacher) throws EntityNotFoundException {
-        try {
-            Teacher existingTeacher = findById(teacher.getId());
 
-            if (existingTeacher == null) {
-                throw new EntityNotFoundException("Teacher with ID " + teacher.getId() + " not found");
-            }
+        Teacher existingTeacher = findById(teacher.getId());
 
-            entityManager.getTransaction().begin();
-            Teacher updatedTeacher = entityManager.merge(existingTeacher);
-            entityManager.getTransaction().commit();
-            return updatedTeacher;
-        } catch (EntityNotFoundException ex) {
-            throw ex;
-        } catch (Exception ex) {
-            entityManager.getTransaction().rollback();
-            throw ex;
-        } finally {
-            entityManager.close();
+        if (existingTeacher == null) {
+            throw new EntityNotFoundException("Teacher with ID " + teacher.getId() + " not found");
         }
-    }
 
+        entityManager.getTransaction().begin();
+        Teacher updatedTeacher = entityManager.merge(existingTeacher);
+        entityManager.getTransaction().commit();
+        return updatedTeacher;
+    }
 
     @Override
     public List<Teacher> getAll() {

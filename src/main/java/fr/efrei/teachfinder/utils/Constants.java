@@ -34,6 +34,15 @@ public final class Constants {
     // School
     public static final String SCHOOL_FINDBYNAME = "SELECT s from School s WHERE s.schoolName = :schoolName ";
     // endregion
-    public static final String TEACHER_FINDBYID="SELECT t from Teacher t WHERE t.teacherId = :teacherId";
-    public static final String TEACHER_GETALL="SELECT * from Teacher";
+    public static final String TEACHER_FINDBYID= "SELECT t from Teacher t WHERE t.teacherId = :teacherId";
+    public static final String TEACHER_GETALL= "SELECT * from Teacher";
+    public static final String RECRUITER_FINDBYID= "SELECT r from Recruiter r WHERE r.recruiterId= :recruiterId";
+    public static final String FINDALL_RECRUITERS = "SELECT r FROM Recruiter r WHERE r.schoolName = :schoolName" ;
+    public static final String SCHOOL_GETALL = "SELECT * from School";
+
+    public static final String NEED_FINDBYID = "SELECT n from Need n WHERE n.needId = :needId" ;
+    public static final String FINDALL_BY_SCHOOL = "SELECT n from Nedd WHERE n.schoolName= :schoolName" ;
+    public static final String FINDALL_BY_RECRUITER = "SELECT n from Need WHERE n.recruiterId= :recruiterId";
+    public static final String NEED_GETALL = "SELECT * from Need";
+    public static final String NEED_SEARCHWITH_STRING = "SELECT n FROM Need n WHERE n.schoolName LIKE :search OR n.subject LIKE :search" ;
 }

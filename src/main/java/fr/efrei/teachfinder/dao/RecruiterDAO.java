@@ -1,29 +1,59 @@
 package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Recruiter;
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.*;
 
 import java.util.List;
 
-public class RecruiterDAO implements IRecruiterDAO{
+import static fr.efrei.teachfinder.utils.Constants.*;
+
+public class RecruiterDAO implements IRecruiterDAO {
+
+    private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+    private final EntityManager entityManager = entityManagerFactory.createEntityManager();
+
     @Override
     public Recruiter findById(int recruiterId) {
-        return null;
+        TypedQuery<Recruiter> query = entityManager
+                .createQuery(RECRUITER_FINDBYID, Recruiter.class)
+                .setParameter("recruiterId", recruiterId);
+
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
     public Recruiter create(Recruiter recruiter) throws EntityExistsException {
-        return null;
+        try {
+            entityManager.getTransaction().begin();
+            Recruiter createdRecruiter = entityManager.merge(recruiter);
+            entityManager.getTransaction().commit();
+
+            return createdRecruiter;
+        } catch (EntityExistsException ex) {
+            throw new EntityExistsException("Recruiter already exists");
+        }
+
     }
 
     @Override
     public Recruiter update(Recruiter recruiter) throws EntityNotFoundException {
-        return null;
+            Recruiter existingRecruiter = findById(recruiter.getId());
+
+            if (existingRecruiter == null) {
+                throw new EntityNotFoundException("Recruiter with ID " + recruiter.getId() + " not found");
+            }
+            entityManager.getTransaction().begin();
+            Recruiter updatedRecruiter = entityManager.merge(existingRecruiter);
+            entityManager.getTransaction().commit();
+            return updatedRecruiter;
+
     }
 
-    @Override
-    public List<Recruiter> findAllBySchool(int schoolId) {
-        return null;
-    }
+
+
 }
+
