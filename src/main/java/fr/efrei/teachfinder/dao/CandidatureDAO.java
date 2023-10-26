@@ -2,7 +2,6 @@ package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Candidature;
 import fr.efrei.teachfinder.entities.CandidatureId;
-import fr.efrei.teachfinder.entities.Need;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -64,7 +63,11 @@ public class CandidatureDAO implements ICandidatureDAO{
 
     @Override
     public List<Candidature> findAllByRecruiter(int recruiterId) {
-        return null;
+        TypedQuery<Candidature> query = entityManager.createQuery(
+                        FINDALL_BY_RECRUITER_CANDIDATURE, Candidature.class)
+                .setParameter("recruiterId", recruiterId);
+
+        return query.getResultList();
 
     }
 
@@ -75,7 +78,6 @@ public class CandidatureDAO implements ICandidatureDAO{
                 .setParameter("needId", needId);
 
         return query.getResultList();
-
 
     }
 }
