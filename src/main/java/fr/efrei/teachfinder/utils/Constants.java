@@ -45,4 +45,7 @@ public final class Constants {
     public static final String FINDALL_BY_RECRUITER = "SELECT n from Need WHERE n.recruiterId= :recruiterId";
     public static final String NEED_GETALL = "SELECT * from Need";
     public static final String NEED_SEARCHWITH_STRING = "SELECT n FROM Need n WHERE n.schoolName LIKE :search OR n.subject LIKE :search" ;
+    public static final String CANDIDATURE_FINDBYID = "SELECT c FROM Candidature WHERE c.candidatureId= :candidatureId" ;
+    public static final String FINDALL_BY_TEACHER = "SELECT c FROM Candidature WHERE c.teacherId= :teacherId";
+    public static final String FINDALL_BY_NEED = "SELECT c FROM Candidature WHERE c.needId= :needId";
 }
