@@ -17,7 +17,7 @@
                         Connexion
                     </div>
                     <div class="px-6">
-                        <form class="box has-text-centered px-3" method="post" action="controller">
+                        <form class="box has-text-centered px-3" method="post" action="${pageContext.request.contextPath}/login">
                             <div class="field">
                                 <div class="control">
                                     <div class="label has-text-left">Nom d'utilisateur</div>
@@ -38,6 +38,7 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="has-text-danger error-div">${errorMessage}</div>
                             <button type="submit" name="action" value="login" class="button is-success"> Connexion
                             </button>
                             <div class="pt-3">

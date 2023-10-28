@@ -77,7 +77,7 @@ public class Controller extends HttpServlet {
         String password = request.getParameter("password");
 
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
-            request.setAttribute("errorMessage", MISSING_FIELD_ERROR);
+            request.setAttribute("errorMessage", CREDENTIALS_KO_ERROR);
             request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
             return;
         }
@@ -85,7 +85,7 @@ public class Controller extends HttpServlet {
         SessionUser sessionUser = securityService.authentificate(login, password);
 
         if (sessionUser == null) {
-            request.setAttribute("errorMessage", MISSING_FIELD_ERROR);
+            request.setAttribute("errorMessage", CREDENTIALS_KO_ERROR);
             request.setAttribute("login", login);
             request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
             return;
