@@ -41,13 +41,8 @@ public class Controller extends HttpServlet {
         SessionUser sessionUser = getSessionUser(request);
         String action = request.getParameter("action");
 
-        if (action != null && action.equals("login")) {
-            login(request, response);
-            return;
-        }
-
-        if (sessionUser == null || action == null) {
-            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
+        if (action == null || (isActionRestricted(action) && sessionUser == null)) {
+            goToLogin(request, response);
             return;
         }
 
@@ -60,6 +55,14 @@ public class Controller extends HttpServlet {
                         && m.getAnnotation(Action.class).action().equals(action))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public boolean isActionRestricted(String action) {
+        Method method = findActionMethod(action);
+        if (method == null)
+            return false;
+
+        return !Arrays.asList(method.getAnnotation(Action.class).roles()).isEmpty();
     }
 
     public void doAction(String action, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -128,28 +131,28 @@ public class Controller extends HttpServlet {
             case Admin -> action = GO_TO_ADMIN_HOME_ACTION;
             case Recruiter -> action = GO_TO_RECRUITER_HOME_ACTION;
             case Teacher -> action = GO_TO_TEACHER_HOME_ACTION;
-            default -> action = GO_TO_LOGIN_PAGE_ACTION;
+            default -> action = GO_TO_LOGIN_ACTION;
         }
 
         doAction(action, request, response);
     }
 
-    @Action(action = "goToLogin")
+    @Action(action = GO_TO_LOGIN_ACTION)
     public void goToLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
     }
 
-    @Action(action = "goToAdminHome", roles = {RoleType.Admin})
+    @Action(action = GO_TO_ADMIN_HOME_ACTION, roles = {RoleType.Admin})
     public void goToAdminHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(ADMIN_HOME_PAGE).forward(request, response);
     }
 
-    @Action(action = "goToRecruiterHome", roles = {RoleType.Recruiter})
+    @Action(action = GO_TO_RECRUITER_HOME_ACTION, roles = {RoleType.Recruiter})
     public void goToRecruiterHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(RECRUITER_HOME_PAGE).forward(request, response);
     }
 
-    @Action(action = "goToTeacherHome", roles = {RoleType.Teacher})
+    @Action(action = GO_TO_TEACHER_HOME_ACTION, roles = {RoleType.Teacher})
     public void goToTeacherHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(TEACHER_HOME_PAGE).forward(request, response);
     }

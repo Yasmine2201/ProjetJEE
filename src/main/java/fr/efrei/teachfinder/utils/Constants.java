@@ -11,12 +11,12 @@ public final class Constants {
     public static final String LOGOUT_ACTION = "logout";
     public static final String REGISTER_ACTION = "register";
 
-    public static final String GO_TO_LOGIN_PAGE_ACTION = "goToLogin";
+    public static final String GO_TO_LOGIN_ACTION = "goToLogin";
     public static final String GO_TO_HOME_ACTION = "goToHome";
     public static final String GO_TO_ADMIN_HOME_ACTION = "goToAdminHome";
     public static final String GO_TO_RECRUITER_HOME_ACTION = "goToRecruiterHome";
     public static final String GO_TO_TEACHER_HOME_ACTION = "goToTeacherHome";
-    public static final String GO_TO_REGISTER_PAGE_ACTION = "goToRegister";
+    public static final String GO_TO_REGISTER_ACTION = "goToRegister";
     // endregion actions
 
     // region pages
