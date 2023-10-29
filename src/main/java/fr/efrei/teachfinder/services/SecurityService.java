@@ -1,5 +1,6 @@
 package fr.efrei.teachfinder.services;
 
+import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.dao.IUserDAO;
 import fr.efrei.teachfinder.entities.ApplicationUser;
 import fr.efrei.teachfinder.entities.RoleType;
@@ -7,9 +8,12 @@ import fr.efrei.teachfinder.entities.SessionUser;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 
+import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.List;
 
 @Stateless
 public class SecurityService implements ISecurityService {
@@ -40,13 +44,20 @@ public class SecurityService implements ISecurityService {
     }
 
     public SessionUser authentificate(String login, String password) {
+        if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
+            return null;
+        }
+
         ApplicationUser user = userDAO.findByLogin(login);
         return (user != null && hashPassword(password).equals(user.getPassword())) ? new SessionUser(user) : null;
     }
 
-    public boolean checkAuthorization(RoleType role, String action) {
-        return true;
+    public boolean checkAuthorization(Method method, SessionUser sessionUser) {
+        if (method == null) {
+            return false;
+        }
+
+        List<RoleType> roles = Arrays.asList(method.getAnnotation(Action.class).roles());
+        return (roles.isEmpty() || roles.contains(sessionUser.getRole()));
     }
-
-
 }

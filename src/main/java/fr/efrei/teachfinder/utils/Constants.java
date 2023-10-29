@@ -6,9 +6,22 @@ public final class Constants {
     public static final String PERSISTENCE_UNIT_NAME = "default";
     // endregion
 
+    // region actions
+    public static final String LOGIN_ACTION = "login";
+    public static final String LOGOUT_ACTION = "logout";
+    public static final String REGISTER_ACTION = "register";
+
+    public static final String GO_TO_LOGIN_PAGE_ACTION = "goToLogin";
+    public static final String GO_TO_HOME_ACTION = "goToHome";
+    public static final String GO_TO_ADMIN_HOME_ACTION = "goToAdminHome";
+    public static final String GO_TO_RECRUITER_HOME_ACTION = "goToRecruiterHome";
+    public static final String GO_TO_TEACHER_HOME_ACTION = "goToTeacherHome";
+    public static final String GO_TO_REGISTER_PAGE_ACTION = "goToRegister";
+    // endregion actions
+
     // region pages
     public static final String LOGIN_PAGE = "/WEB-INF/login.jsp";
-    public static final String INSCRIPTION_PAGE = "/WEB-INF/subscribe.html";
+    public static final String REGISTRATION_PAGE = "/WEB-INF/subscribe.html";
     public static final String ADMIN_HOME_PAGE = "/WEB-INF/restricted/admin/home.jsp";
     public static final String TEACHER_HOME_PAGE = "/WEB-INF/restricted/teacher/home.jsp";
     public static final String RECRUITER_HOME_PAGE = "/WEB-INF/restricted/recruiter/home.jsp";
