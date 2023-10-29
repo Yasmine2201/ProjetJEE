@@ -38,37 +38,19 @@ public class Controller extends HttpServlet {
     }
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SessionUser sessionUser = getSessionUser(request);
         String action = request.getParameter("action");
+        doAction(action, request, response);
+    }
+
+    public void doAction(String action, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        Method method = findActionMethod(action);
+        SessionUser sessionUser = getSessionUser(request);
 
         if (action == null || (isActionRestricted(action) && sessionUser == null)) {
             goToLogin(request, response);
             return;
         }
 
-        doAction(action, request, response);
-    }
-
-    public Method findActionMethod(String action) {
-        return Arrays.stream(getClass().getDeclaredMethods())
-                .filter(m -> m.getAnnotation(Action.class) != null
-                        && m.getAnnotation(Action.class).action().equals(action))
-                .findFirst()
-                .orElse(null);
-    }
-
-    public boolean isActionRestricted(String action) {
-        Method method = findActionMethod(action);
-        if (method == null)
-            return false;
-
-        return !Arrays.asList(method.getAnnotation(Action.class).roles()).isEmpty();
-    }
-
-    public void doAction(String action, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Method method = findActionMethod(action);
-        SessionUser sessionUser = getSessionUser(request);
-        
         if (method == null) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
@@ -83,6 +65,22 @@ public class Controller extends HttpServlet {
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Method findActionMethod(String action) {
+        return Arrays.stream(getClass().getDeclaredMethods())
+                .filter(m -> m.getAnnotation(Action.class) != null
+                        && m.getAnnotation(Action.class).action().equals(action))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public boolean isActionRestricted(String action) {
+        Method method = findActionMethod(action);
+        if (method == null)
+            return true;
+
+        return !Arrays.asList(method.getAnnotation(Action.class).roles()).isEmpty();
     }
 
     public SessionUser getSessionUser(HttpServletRequest request) {
@@ -123,7 +121,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = GO_TO_HOME_ACTION)
-    public void goToHome(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void goToHome(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         SessionUser sessionUser = getSessionUser(request);
 
         String action;
