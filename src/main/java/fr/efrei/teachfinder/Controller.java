@@ -4,11 +4,12 @@ import fr.efrei.teachfinder.entities.SessionUser;
 import fr.efrei.teachfinder.services.ISecurityService;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Optional;
 
 import static fr.efrei.teachfinder.utils.Constants.*;
 
@@ -41,7 +42,7 @@ public class Controller extends HttpServlet {
         }
 
         if (sessionUser == null || action == null) {
-            request.getRequestDispatcher(ADMIN_HOME_PAGE).forward(request, response);
+            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
             return;
         }
 
@@ -61,18 +62,11 @@ public class Controller extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session == null) return null;
 
-        // Search JSessionId in Cookies
-        Cookie[] cookies = request.getCookies();
-        Optional<String> jSessionId = Arrays.stream(cookies)
-                .filter(cookie -> cookie.getName().equals("JSESSIONID"))
-                .map(Cookie::getValue)
-                .findAny();
-        if (jSessionId.isEmpty() || !jSessionId.get().equals(session.getId())) return null;
-
         return (SessionUser) session.getAttribute("sessionUser");
     }
 
     public void loginAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Check credentials
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
@@ -91,13 +85,17 @@ public class Controller extends HttpServlet {
             return;
         }
 
+        // Create session
         HttpSession session = request.getSession(true);
         session.setAttribute("sessionUser", sessionUser);
         redirectToHome(request, response);
     }
 
     public void logoutAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getSession().invalidate();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
     }
 

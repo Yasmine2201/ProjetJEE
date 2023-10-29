@@ -17,7 +17,7 @@
                         Connexion
                     </div>
                     <div class="px-6">
-                        <form class="box has-text-centered px-3" method="post" action="${pageContext.request.contextPath}/login">
+                        <form class="box has-text-centered px-3" method="post" action="controller">
                             <div class="field">
                                 <div class="control">
                                     <div class="label has-text-left">Nom d'utilisateur</div>
