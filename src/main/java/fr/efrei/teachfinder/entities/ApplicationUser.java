@@ -42,7 +42,6 @@ public class ApplicationUser {
     private String phone;
 
     @NotNull
-    @Lob
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private RoleType role;
@@ -110,5 +109,4 @@ public class ApplicationUser {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
 }

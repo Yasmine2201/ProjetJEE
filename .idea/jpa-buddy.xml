@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JpaBuddyIdeaProjectConfig" migrateIndexesAndConstraints="true" reUseTableSchema="true">
+    <option name="defaultUnitInitialized" value="true" />
     <option name="renamerInitialized" value="true" />
     <option name="reverseEngineeringLastDbConnectionId" value="e49abb33-3a60-41c1-938c-f5312d7e2ff9" />
     <option name="reLastEntityCreationPackage" value="src/main/java/fr/efrei/teachfinder/entities" />

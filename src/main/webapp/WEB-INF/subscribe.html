@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<head>
+    <title>TeachFinder</title>
+    <link rel="stylesheet" href="/WEB-INF/css/style.scss">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"/>
+</head>
+<body>
+<section class="section">
+
+    <div class="columns is-centered">
+        <div class="column is-10 ">
+            <div class="title is-1 has-text-dark">
+                Inscription
+            </div>
+            <div class="px-6">
+                <form class="box has-text-centered px-3" method="post" action="controller">
+                    <div class="field">
+                        <div class="control pb-3">
+                        <div class="label has-text-left">Identifiant<sup>*</sup></div>
+                            <label for=login>
+                                <input id="login" name="login" type="text" class="input is-medium is-rounded"
+                                       placeholder="Identifiant"/>
+                            </label>
+                        </div>
+                        <div class="control pb-3">
+                            <div class="label has-text-left">Prenom<sup>*</sup></div>
+                            <label for=firstName>
+                                <input id="firstName" name="firstName" type="text" class="input is-medium is-rounded"
+                                       placeholder="Prenom"/>
+                            </label>
+                        </div>
+                        <div class="control pb-3">
+                        <div class="label has-text-left">Nom<sup>*</sup></div>
+                            <label for=lastName>
+                                <input id="lastName" name="lastName" type="text" class="input is-medium is-rounded"
+                                       placeholder="Nom"/>
+                            </label>
+                        </div>
+                        <div class="control pb-3">
+                        <div class="label has-text-left">Email<sup>*</sup></div>
+                            <label for=email>
+                                <input id="email" name="email" type="email" class="input is-medium is-rounded"
+                                       placeholder="Email"/>
+                            </label>
+                        </div>
+                        <div class="control pb-3">
+                        <div class="label has-text-left">Numero de telephone<sup>*</sup></div>
+                            <label for=phone>
+                                <input id="phone" name="phone" type="tel" class="input is-medium is-rounded"
+                                       inputmode="numeric" maxlength="10"
+                                       onkeypress="return (event.charCode !==8 && event.charCode ===0 || (event.charCode >= 48 && event.charCode <= 57))"
+                                       placeholder="XX-XX-XX-XX-XX"/>
+                            </label>
+                        </div>
+                        <div class="control pb-3">
+                            <label class="radio">
+                                <input type="radio" name="role" value="teacher" checked onclick="Change(true)">
+                                Ensignant
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="role" value="recruiter" onclick="Change(false)">
+                                Recruteur<sup>*</sup>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="role" value="admin" onclick="Change(true)">
+                                Recruteur<sup>*</sup>
+                            </label>
+                        </div>
+                        <div id="dropSchool" style="display: none" class="pb-3">
+                            <div class="dropdown pb-3" id="dropdown">
+                                <div class="dropdown-trigger">
+                                    <div class="button"
+                                         onclick="dropdown()">
+                                        <span>Ecoles <sup>*</sup></span>
+                                        <span class="material-symbols-outlined">
+                                              arrow_drop_down
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class='dropdown-menu' id='dropdown-menu' role='menu'>
+                                    <div class='dropdown-content' style="overflow: auto;max-height: 13em">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control pb-3">
+                        <div class="label has-text-left">Mot de passe<sup>*</sup></div>
+                            <label for="password">
+                                <input id="password" name="password" class="input is-medium is-rounded"
+                                       placeholder="********"
+                                       type="password"/>
+                            </label>
+                        </div>
+
+                        <div class="control pb-3">
+                        <div class="label has-text-left">Retaper votre mot de passe<sup>*</sup></div>
+                            <label for="passwordVerification">
+                                <input id="passwordVerification" name="password" class="input is-medium is-rounded"
+                                       placeholder="********"
+                                       type="password"/>
+                            </label>
+                        </div>
+
+                    </div>
+
+
+                    <div class="has-text-left">
+                        <div class="title is-6">
+                            * : obligatoire
+                        </div>
+                    </div>
+                    <button type="submit" name="action" value="register" class="button is-success">
+                        Inscription
+                    </button>
+                    <div class="pt-3">
+                        <p>deja un compte ?</p>
+                        <button type="submit" name="action" value="goToLogin"
+                                class="button is-transparent has-text-info"
+                                style="border: none"> Connextez-vous
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+
+<script>
+
+    function afficheEcole() {
+        let school = [[1, "za"], [2, "dfgnhza"], [3, "zaikjhg"], [3, "zghfthjna"], [4, "zsfdgsa"], [5, "rytthrgf"], [6, "tyjuhtgr"], [7, "ergfrefd"], [0, "erddgd"]]
+        //recuperer la list des écoles
+        const dropdownContent = document.querySelector("#dropdown-menu > .dropdown-content");
+
+        const divToAdd = document.createElement("div");
+        divToAdd.classList.add("dropdown-item");
+
+        for (let element in school) {
+            dropdownContent.innerHTML += `<div class="dropdown-item has-text-left"><label><input class="radio" type="radio" name="recruiterSchool" value="${school[element][0]}">&nbsp; ${school[element][1]}</label></div>`
+        }
+    }
+
+    let id = document.getElementById("dropdown")
+
+    document.addEventListener("DOMContentLoaded", () => {
+        afficheEcole();
+    })
+
+    function Change(set) {
+        let dropSchool = document.getElementById("dropSchool")
+        if (set) {
+            dropSchool.style.display = "none"
+        } else {
+            dropSchool.style.display = "block"
+        }
+    }
+
+    function dropdown() {
+        if (id.classList.contains("is-active")) {
+            id.classList.remove("is-active");
+        } else {
+            id.classList.add("is-active");
+        }
+    }
+</script>
+

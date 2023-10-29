@@ -45,7 +45,7 @@ CREATE TABLE ApplicationUser (
     lastname VARCHAR(32) NOT NULL,
     email VARCHAR(64) NOT NULL,
     phone VARCHAR(16),
-    role ENUM('ADMIN', 'Teacher', 'Recruiter') NOT NULL
+    role ENUM('Admin', 'Teacher', 'Recruiter') NOT NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE Teacher(
