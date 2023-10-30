@@ -26,14 +26,14 @@ public class Recruiter {
     private School schoolName;
 
     @OneToMany(mappedBy = "recruiter")
-    private Set<Candidature> candidatures = new LinkedHashSet<>();
+    private Set<Need> needs = new LinkedHashSet<>();
 
-    public Set<Candidature> getCandidatures() {
-        return candidatures;
+    public Set<Need> getNeeds() {
+        return needs;
     }
 
-    public void setCandidatures(Set<Candidature> candidatures) {
-        this.candidatures = candidatures;
+    public void setNeeds(Set<Need> needs) {
+        this.needs = needs;
     }
 
     public Integer getId() {

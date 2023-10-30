@@ -44,14 +44,15 @@ public class RegistrationDAO implements IRegistrationDAO {
 
     @Override
     public Registration create(@NotNull Registration registration) throws EntityExistsException {
-        if (findByLogin(registration.getLogin()) != null)
+        try {
+            entityManager.getTransaction().begin();
+            Registration createdRegistration = entityManager.merge(registration);
+            entityManager.getTransaction().commit();
+
+            return createdRegistration;
+        } catch (EntityExistsException ex) {
             throw new EntityExistsException("Registration already exists for this login.");
-
-        entityManager.getTransaction().begin();
-        Registration createdRegistration = entityManager.merge(registration);
-        entityManager.getTransaction().commit();
-
-        return createdRegistration;
+        }
     }
 
     @Override

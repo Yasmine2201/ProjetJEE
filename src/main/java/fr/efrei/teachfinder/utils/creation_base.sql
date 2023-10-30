@@ -45,7 +45,7 @@ CREATE TABLE ApplicationUser (
     lastname VARCHAR(32) NOT NULL,
     email VARCHAR(64) NOT NULL,
     phone VARCHAR(16),
-    role ENUM('ADMIN', 'Teacher', 'Recruiter') NOT NULL
+    role ENUM('Admin', 'Teacher', 'Recruiter') NOT NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE Teacher(
@@ -89,19 +89,20 @@ CREATE TABLE Evaluation (
 
 CREATE TABLE Need (
     needId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    recruiterId INT NOT NULL,
     schoolName VARCHAR(128) NOT NULL,
     contractType ENUM('Temporary', 'Continous') NOT NULL DEFAULT 'Temporary',
     subject VARCHAR(64) NOT NULL,
     requirements TEXT,
     timePeriod VARCHAR(32) NOT NULL,
     notes TEXT,
-    FOREIGN KEY (schoolName) REFERENCES School(schoolName)
+    FOREIGN KEY (schoolName) REFERENCES School(schoolName),
+    FOREIGN KEY (recruiterId) REFERENCES Recruiter(recruiterId)
 ) ENGINE=InnoDB;
 
 CREATE TABLE Candidature (
     teacherId INT NOT NULL,
     needId INT NOT NULL,
-    recruiterId INT NOT NULL,
     schoolName VARCHAR(128) NOT NULL,
     createdOn DATETIME NOT NULL,
     isInitiatedByTeacher BOOLEAN NOT NULL DEFAULT TRUE,
@@ -111,7 +112,6 @@ CREATE TABLE Candidature (
     PRIMARY KEY (teacherId, needId),
     FOREIGN KEY (teacherId) REFERENCES Teacher(teacherId),
     FOREIGN KEY (needId) REFERENCES Need(needId),
-    FOREIGN KEY (recruiterId) REFERENCES Recruiter(recruiterId),
     FOREIGN KEY (schoolName) REFERENCES School(schoolName)
 ) ENGINE=InnoDB;
 

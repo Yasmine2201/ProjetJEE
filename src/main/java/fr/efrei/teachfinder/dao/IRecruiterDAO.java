@@ -14,7 +14,4 @@ public interface IRecruiterDAO {
 
     Recruiter update(Recruiter recruiter) throws EntityNotFoundException;
 
-    List<Recruiter> findAllBySchool(int schoolId);
-
-
 }

@@ -38,6 +38,7 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="has-text-danger error-div">${errorMessage}</div>
                             <button type="submit" name="action" value="login" class="button is-success"> Connexion
                             </button>
                             <div class="pt-3">

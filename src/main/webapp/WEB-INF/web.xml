@@ -17,7 +17,7 @@
         <servlet-name>controller</servlet-name>
         <servlet-class>fr.efrei.teachfinder.Controller</servlet-class>
     </servlet>
-    
+
     <servlet-mapping>
         <servlet-name>controller</servlet-name>
         <url-pattern>/controller</url-pattern>
@@ -27,4 +27,5 @@
     <welcome-file-list>
         <welcome-file>controller</welcome-file>
     </welcome-file-list>
+
 </web-app>
