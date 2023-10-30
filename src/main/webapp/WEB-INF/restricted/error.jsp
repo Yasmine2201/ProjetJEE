@@ -11,43 +11,18 @@
     <title>Error</title>
 </head>
 <body>
-<form method="post" action="controller">
-    <div class="level">
-        <div class="level-left">
-            <div class="level-item">
-                <button type="submit" name="action" value="goToHome"
-                        class="button is-primary">
-                    <span class="material-symbols-outlined">
-                        home
-                    </span>
-                </button>
-            </div>
-            <div class="level-item">
-            <button type="submit" name="action" value="back"
-                    class="button">
-                    Revenir en arriere
-            </button>
-        </div>
-        </div>
-        <div class="level-left">
-            <div class="level-item">
-                <button type="submit" name="action" value="goToHome"
-                        class="button is-danger">
-                    Deconnexion
-                </button>
-            </div>
-        </div>
-    </div>
-</form>
+<jsp:include page="./navbar/error.jsp"/>
 
-    <div class="box">
+<section class="section">
+    <div class="box px-6">
         <div class="notification is-danger">
-           <p class="title is-1">Erreur cdoe <b>Error code</b>:</p>
-            <p>
+            <p class="title is-1">Erreur cdoe <b>Error code</b>:</p>
+            <p class="text is-size-3">
                 Error Message
             </p>
 
         </div>
-        </div>
+    </div>
+</section>
 </body>
 </html>

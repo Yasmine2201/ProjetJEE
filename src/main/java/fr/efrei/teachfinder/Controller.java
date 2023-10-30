@@ -41,7 +41,7 @@ public class Controller extends HttpServlet {
         }
 
         if (sessionUser == null || action == null) {
-            request.getRequestDispatcher(ADMIN_HOME_PAGE).forward(request, response);
+            request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
             return;
         }
 

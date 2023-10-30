@@ -11,6 +11,70 @@
     <title>Title</title>
 </head>
 <body>
+<jsp:include page="../navbar/recruter.jsp"/>
+
+<form method="post" action="controller">
+    <section class="section">
+        <div class="level">
+
+            <div class="level-item pr-3">
+                <table class="table is-bordered is-striped
+                                  is-narrow is-hoverable is-fullwidth ">
+                    <thead>
+                    <tr>
+                        <th colspan="6">
+                            Besoins en cours
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            identifiant du bensoin
+                        </th>
+                        <th>
+                            Ecole
+                        </th>
+                        <th>
+                            Matiere
+                        </th>
+                        <th>
+                            Enseignement
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="level-item pl-3">
+                <table class="table is-bordered is-striped
+                                  is-narrow is-hoverable is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th colspan="6">
+                            Offre postule
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            identifiant du bensoin
+                        </th>
+                        <th>
+                            Ecole
+                        </th>
+                        <th>
+                            Matiere
+                        </th>
+                        <th>
+                            Accepter?
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </section>
+</form>
 
 </body>
 </html>
