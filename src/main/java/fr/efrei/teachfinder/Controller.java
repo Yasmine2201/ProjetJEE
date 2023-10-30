@@ -62,8 +62,10 @@ public class Controller extends HttpServlet {
             } else {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN);
             }
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new ServletException(e);
+        } catch (InvocationTargetException e) {
+            throw new ServletException(e.getCause());
         }
     }
 
