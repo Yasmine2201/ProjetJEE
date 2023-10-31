@@ -14,12 +14,12 @@ public final class Constants {
     public static final String LOGOUT_ACTION = "logout";
     public static final String REGISTER_ACTION = "register";
 
-    public static final String GO_TO_LOGIN_PAGE_ACTION = "goToLogin";
+    public static final String GO_TO_LOGIN_ACTION = "goToLogin";
     public static final String GO_TO_HOME_ACTION = "goToHome";
     public static final String GO_TO_ADMIN_HOME_ACTION = "goToAdminHome";
     public static final String GO_TO_RECRUITER_HOME_ACTION = "goToRecruiterHome";
     public static final String GO_TO_TEACHER_HOME_ACTION = "goToTeacherHome";
-    public static final String GO_TO_REGISTER_PAGE_ACTION = "goToRegister";
+    public static final String GO_TO_REGISTER_ACTION = "goToRegister";
     // endregion actions
 
     // region pages
@@ -49,4 +49,21 @@ public final class Constants {
     // School
     public static final String SCHOOL_FINDBYNAME = "SELECT s from School s WHERE s.schoolName = :schoolName ";
     // endregion
+    public static final String TEACHER_FINDBYID= "SELECT t from Teacher t WHERE t.teacherId = :teacherId";
+    public static final String TEACHER_GETALL= "SELECT * from Teacher";
+    public static final String RECRUITER_FINDBYID= "SELECT r from Recruiter r WHERE r.recruiterId= :recruiterId";
+    public static final String FINDALL_RECRUITERS = "SELECT r FROM Recruiter r WHERE r.schoolName = :schoolName" ;
+    public static final String SCHOOL_GETALL = "SELECT * from School";
+
+    public static final String NEED_FINDBYID = "SELECT n from Need n WHERE n.needId = :needId" ;
+    public static final String FINDALL_BY_SCHOOL = "SELECT n from Need n WHERE n.schoolName= :schoolName" ;
+    public static final String FINDALL_BY_RECRUITER = "SELECT n from Need n WHERE n.recruiterId= :recruiterId";
+    public static final String NEED_GETALL = "SELECT * from Need";
+    public static final String NEED_SEARCHWITH_STRING = "SELECT n FROM Need n WHERE n.schoolName LIKE :search OR n.subject LIKE :search" ;
+    public static final String CANDIDATURE_FINDBYID = "SELECT c FROM Candidature c WHERE c.candidatureId = :candidatureId" ;
+    public static final String FINDALL_BY_TEACHER = "SELECT c FROM Candidature c WHERE c.teacherId = :teacherId";
+    public static final String FINDALL_BY_NEED = "SELECT c FROM Candidature c WHERE c.needId = :needId";
+    public static final String FINDALL_BY_RECRUITER_CANDIDATURE = "SELECT c FROM Candidature c, Need n WHERE c.needId = n.needId and n.recruiterId= :recruiterId";
+    public static final String EVALUATION_FINDBYID = "SELECT ev FROM Evaluation ev WHERE ev.evalutionId = :evalutionId";
+    public static final String FINDALL_BY_TEACHER_EVALUATION = "SELECT ev FROM Evaluation ev WHERE ev.teacherId = :teacherId";
 }
