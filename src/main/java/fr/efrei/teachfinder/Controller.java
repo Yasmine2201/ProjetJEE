@@ -143,7 +143,7 @@ public class Controller extends HttpServlet {
         request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
     }
 
-    @Action(action = GO_TO_ADMIN_HOME_ACTION, roles = {RoleType.Admin})
+    @Action(action = GO_TO_ADMIN_HOME_ACTION, roles = {RoleType.Teacher})
     public void goToAdminHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(ADMIN_HOME_PAGE).forward(request, response);
     }
@@ -156,5 +156,10 @@ public class Controller extends HttpServlet {
     @Action(action = GO_TO_TEACHER_HOME_ACTION, roles = {RoleType.Teacher})
     public void goToTeacherHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(TEACHER_HOME_PAGE).forward(request, response);
+    }
+
+    @Action(action= GO_TO_REGISTER_ACTION)
+    public void goToRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher(REGISTRATION_PAGE).forward(request, response);
     }
 }

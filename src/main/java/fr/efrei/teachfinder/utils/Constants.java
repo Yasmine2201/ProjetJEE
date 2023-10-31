@@ -16,7 +16,7 @@ public final class Constants {
     public static final String GO_TO_ADMIN_HOME_ACTION = "goToAdminHome";
     public static final String GO_TO_RECRUITER_HOME_ACTION = "goToRecruiterHome";
     public static final String GO_TO_TEACHER_HOME_ACTION = "goToTeacherHome";
-    public static final String GO_TO_REGISTER_ACTION = "goToRegister";
+    public static final String GO_TO_REGISTER_ACTION = "goToRegistration";
     // endregion actions
 
     // region pages
