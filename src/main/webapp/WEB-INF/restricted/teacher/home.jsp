@@ -11,67 +11,67 @@
     <title>Title</title>
 </head>
 <body>
+
+<jsp:include page="../navbar/teacher.jsp"/>
+
 <form method="post" action="controller">
     <section class="section">
-        <div class="level px-6">
-            <div class="level-left">
-                <div class="level-item">
-                    <table class="table is-bordered is-striped
-                                  is-narrow is-hoverable is-fullwidth">
-                        <thead>
-                        <tr>
-                            <th colspan="6">
-                                Offre interesant(s)
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                identifiant du bensoin
-                            </th>
-                            <th>
-                                Ecole
-                            </th>
-                            <th>
-                                Matiere
-                            </th>
-                            <th>
-                                Enseignement
-                            </th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
+        <div class="level">
+
+            <div class="level-item pr-3">
+                <table class="table is-bordered is-striped
+                                  is-narrow is-hoverable is-fullwidth ">
+                    <thead>
+                    <tr>
+                        <th colspan="6">
+                            Offre interesant(s)
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            identifiant du bensoin
+                        </th>
+                        <th>
+                            Ecole
+                        </th>
+                        <th>
+                            Matiere
+                        </th>
+                        <th>
+                            Enseignement
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
-            <div class="level-right">
-                <div class="level-item">
-                    <table class="table is-bordered is-striped
+            <div class="level-item pl-3">
+                <table class="table is-bordered is-striped
                                   is-narrow is-hoverable is-fullwidth">
-                        <thead>
-                        <tr>
-                            <th colspan="6">
-                                Offre postule
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                identifiant du bensoin
-                            </th>
-                            <th>
-                                Ecole
-                            </th>
-                            <th>
-                                Matiere
-                            </th>
-                            <th>
-                                Accepter?
-                            </th>
-                            <th>
-                                Status
-                            </th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
+                    <thead>
+                    <tr>
+                        <th colspan="6">
+                            Offre postule
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            identifiant du bensoin
+                        </th>
+                        <th>
+                            Ecole
+                        </th>
+                        <th>
+                            Matiere
+                        </th>
+                        <th>
+                            Accepter?
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </section>

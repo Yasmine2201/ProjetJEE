@@ -2,6 +2,9 @@ package fr.efrei.teachfinder.utils;
 
 public final class Constants {
 
+    // region temporaire
+    public static final String ERROR_PAGE = "/WEB-INF/restricted/error.jsp";
+
     // region config
     public static final String PERSISTENCE_UNIT_NAME = "default";
     // endregion

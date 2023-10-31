@@ -11,6 +11,8 @@
     <title>Title</title>
 </head>
 <body>
+<jsp:include page="../navbar/admin.jsp"/>
+
 <section class="section">
     <div class="columns is-centered">
         <div class="column is-10 ">
@@ -53,5 +55,6 @@
 </html>
 
 <script>
-    var test;
+
+
 </script>
