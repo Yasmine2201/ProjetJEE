@@ -25,6 +25,18 @@ public final class Constants {
     public static final String ADMIN_HOME_PAGE = "/WEB-INF/restricted/admin/home.jsp";
     public static final String TEACHER_HOME_PAGE = "/WEB-INF/restricted/teacher/home.jsp";
     public static final String RECRUITER_HOME_PAGE = "/WEB-INF/restricted/recruiter/home.jsp";
+    public static final String SCHOOL_VIEW_PAGE = "/WEB-INF/school/readSchool.jsp";
+    public static final String SCHOOL_EDIT_PAGE = "/WEB-INF/school/editSchool.jsp";
+    public static final String NEED_VIEW_PAGE = "/WEB-INF/need/readNeed.jsp";
+    public static final String NEED_EDIT_PAGE = "/WEB-INF/need/editNeed.jsp";
+    public static final String TEACHER_VIEW_PAGE = "/WEB-INF/teacher/readTeacher.jsp";
+    public static final String TEACHER_EDIT_PAGE = "/WEB-INF/teacher/editTeacher.jsp";
+    public static final String USER_VIEW_PAGE = "/WEB-INF/user/readProfile.jsp";
+    public static final String USER_EDIT_PAGE = "/WEB-INF/user/editProfile.jsp";
+    public static final String CANDIDATURE_PAGE = "/WEB-INF/candidature/candidature.jsp";
+    public static final String EVALUATION_PAGE = "/WEB-INF/evaluation/evaluation.jsp";
+    public static final String DISPONIBILITY_PAGE = "/WEB-INF/disponibility/disponibility.jsp";
+    public static final String RESEARCH_PAGE = "/WEB-INF/research.jsp";
     // endregion
 
     // region Error messages
@@ -34,7 +46,6 @@ public final class Constants {
     // endregion
 
     // region JPQL requests
-
     // ApplicationUser
     public static final String APPLICATIONUSER_FINDBYID = "SELECT u from ApplicationUser u WHERE u.userId = :id";
     public static final String APPLICATIONUSER_FINDBYLOGIN = "SELECT u from ApplicationUser u WHERE u.login = :login";
@@ -46,7 +57,7 @@ public final class Constants {
 
     // School
     public static final String SCHOOL_FINDBYNAME = "SELECT s from School s WHERE s.schoolName = :schoolName ";
-    // endregion
+
     public static final String TEACHER_FINDBYID= "SELECT t from Teacher t WHERE t.teacherId = :teacherId";
     public static final String TEACHER_GETALL= "SELECT * from Teacher";
     public static final String RECRUITER_FINDBYID= "SELECT r from Recruiter r WHERE r.recruiterId= :recruiterId";
@@ -66,4 +77,5 @@ public final class Constants {
     public static final String FINDALL_BY_TEACHER_EVALUATION = "SELECT ev FROM Evaluation ev WHERE ev.teacherId = :teacherId";
     public static final String DISPONIBILITY_FINDBYID = "SELECT d from Disponibility d WHERE d.disponibilityId = :disponibilityId";
     public static final String FINDALL_BY_TEACHER_DISPONIBILITY = "SELECT d from Disponibility WHERE d.teacherId = :teacherId";
+    // endregion
 }
