@@ -44,7 +44,6 @@ public class Controller extends HttpServlet {
             request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
             return;
         }
-
         if (!securityService.checkAuthorization(sessionUser.getRole(), action)) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
