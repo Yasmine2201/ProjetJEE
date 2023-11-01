@@ -30,16 +30,12 @@ public class RegistrationDAO implements IRegistrationDAO {
     }
 
     @Override
-    public Registration findByLogin(String login) {
+    public List<Registration> findAllWithLogin(String login) {
         TypedQuery<Registration> query = entityManager
                 .createQuery(QueryRequests.REGISTRATION_FINDBYLOGIN, Registration.class)
                 .setParameter("login", login);
 
-        try {
-            return query.getSingleResult();
-        } catch (NoResultException ex) {
-            return null;
-        }
+        return query.getResultList();
     }
 
     @Override
@@ -65,9 +61,9 @@ public class RegistrationDAO implements IRegistrationDAO {
     }
 
     @Override
-    public void changeStatus(String login, StatusType status) throws EntityNotFoundException {
-        Registration registrationToUpdate = findByLogin(login);
-        if (registrationToUpdate == null) throw new EntityNotFoundException("No Registration found with login " + login);
+    public void changeStatus(int registrationId, StatusType status) throws EntityNotFoundException {
+        Registration registrationToUpdate = findById(registrationId);
+        if (registrationToUpdate == null) throw new EntityNotFoundException("No Registration found with id " + registrationId);
         registrationToUpdate.setStatus(status);
 
         entityManager.getTransaction().begin();

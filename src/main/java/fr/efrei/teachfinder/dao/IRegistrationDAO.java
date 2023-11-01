@@ -19,12 +19,12 @@ public interface IRegistrationDAO {
     Registration findById(int registrationId);
 
     /**
-     * Find a Registration with the login.
+     * Find all registrations with the login.
      *
-     * @param login login of the Registration record to find
-     * @return Registration with login or null
+     * @param login login of the Registrations record to find
+     * @return Registrations with login
      */
-    Registration findByLogin(String login);
+    List<Registration> findAllWithLogin(String login);
 
     /**
      * Create a Registration.
@@ -44,11 +44,11 @@ public interface IRegistrationDAO {
     List<Registration> getAllWithStatus(StatusType status);
 
     /**
-     * Change the status of a specific Registration (with specified login).
+     * Change the status of a specific Registration.
      *
-     * @param login Unique login of the Registration to change
+     * @param registrationId Id of the registration to change.
      * @param status New status
-     * @throws EntityNotFoundException If no Registration with the specified login exists
+     * @throws EntityNotFoundException If no Registration with the specified id exists
      */
-    void changeStatus(String login, StatusType status) throws EntityNotFoundException;
+    void changeStatus(int registrationId, StatusType status) throws EntityNotFoundException;
 }
