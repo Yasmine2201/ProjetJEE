@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-import static fr.efrei.teachfinder.utils.Constants.*;
+import static fr.efrei.teachfinder.utils.Constants.PERSISTENCE_UNIT_NAME;
+import static fr.efrei.teachfinder.utils.Constants.QueryRequests;
 
 public class TeacherDAO implements ITeacherDAO {
     private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -14,7 +15,7 @@ public class TeacherDAO implements ITeacherDAO {
     @Override
     public Teacher findById(int teacherId) {
         TypedQuery<Teacher> query = entityManager
-                .createQuery(TEACHER_FINDBYID, Teacher.class)
+                .createQuery(QueryRequests.TEACHER_FINDBYID, Teacher.class)
                 .setParameter("teacherId", teacherId);
 
         try {
@@ -54,7 +55,7 @@ public class TeacherDAO implements ITeacherDAO {
     @Override
     public List<Teacher> getAll() {
 
-        TypedQuery<Teacher> query = entityManager.createQuery(TEACHER_GETALL, Teacher.class);
+        TypedQuery<Teacher> query = entityManager.createQuery(QueryRequests.TEACHER_GETALL, Teacher.class);
 
         return query.getResultList();
     }

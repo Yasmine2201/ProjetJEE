@@ -6,7 +6,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-import static fr.efrei.teachfinder.utils.Constants.*;
+import static fr.efrei.teachfinder.utils.Constants.PERSISTENCE_UNIT_NAME;
+import static fr.efrei.teachfinder.utils.Constants.QueryRequests;
 
 public class EvaluationDAO implements IEvaluationDAO{
 
@@ -16,7 +17,7 @@ public class EvaluationDAO implements IEvaluationDAO{
     public Evaluation findById(EvaluationId evaluationId)
     {
         TypedQuery<Evaluation> query = entityManager
-                .createQuery(EVALUATION_FINDBYID, Evaluation.class)
+                .createQuery(QueryRequests.EVALUATION_FINDBYID, Evaluation.class)
                 .setParameter("evaluationId", evaluationId);
 
         try {
@@ -54,7 +55,7 @@ public class EvaluationDAO implements IEvaluationDAO{
     @Override
     public List<Evaluation> findAllByTeacher(int teacherId) {
         TypedQuery<Evaluation> query = entityManager.createQuery(
-                        FINDALL_BY_TEACHER_EVALUATION, Evaluation.class)
+                        QueryRequests.EVALUATION_FINDALL_BY_TEACHER, Evaluation.class)
                 .setParameter("teacherId", teacherId);
 
         return query.getResultList();

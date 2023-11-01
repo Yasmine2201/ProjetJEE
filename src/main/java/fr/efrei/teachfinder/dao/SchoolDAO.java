@@ -6,7 +6,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-import static fr.efrei.teachfinder.utils.Constants.*;
+import static fr.efrei.teachfinder.utils.Constants.PERSISTENCE_UNIT_NAME;
+import static fr.efrei.teachfinder.utils.Constants.QueryRequests;
 
 public class SchoolDAO implements ISchoolDAO {
 
@@ -16,7 +17,7 @@ public class SchoolDAO implements ISchoolDAO {
     @Override
     public School findByName(String schoolName) {
         TypedQuery<School> query = entityManager
-                .createQuery(SCHOOL_FINDBYNAME, School.class)
+                .createQuery(QueryRequests.SCHOOL_FINDBYNAME, School.class)
                 .setParameter("schoolName", schoolName);
 
         try {
@@ -41,7 +42,7 @@ public class SchoolDAO implements ISchoolDAO {
 
     @Override
     public List<School> getAll() {
-        TypedQuery<School> query = entityManager.createQuery(SCHOOL_GETALL, School.class);
+        TypedQuery<School> query = entityManager.createQuery(QueryRequests.SCHOOL_GETALL, School.class);
 
         return query.getResultList();
     }
@@ -49,7 +50,7 @@ public class SchoolDAO implements ISchoolDAO {
     @Override
     public List<Recruiter> findAllRecruiters(String schoolName) {
         TypedQuery<Recruiter> query = entityManager.createQuery(
-                        FINDALL_RECRUITERS, Recruiter.class)
+                        QueryRequests.RECRUITER_FINDALL, Recruiter.class)
                 .setParameter("schoolName", schoolName);
 
         return query.getResultList();

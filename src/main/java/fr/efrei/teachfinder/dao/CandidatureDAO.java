@@ -6,7 +6,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-import static fr.efrei.teachfinder.utils.Constants.*;
+import static fr.efrei.teachfinder.utils.Constants.PERSISTENCE_UNIT_NAME;
+import static fr.efrei.teachfinder.utils.Constants.QueryRequests;
 
 public class CandidatureDAO implements ICandidatureDAO {
     private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -15,7 +16,7 @@ public class CandidatureDAO implements ICandidatureDAO {
     @Override
     public Candidature findById(CandidatureId candidatureId) {
         TypedQuery<Candidature> query = entityManager
-                .createQuery(CANDIDATURE_FINDBYID, Candidature.class)
+                .createQuery(QueryRequests.CANDIDATURE_FINDBYID, Candidature.class)
                 .setParameter("candidatureId", candidatureId);
 
         try {
@@ -54,7 +55,7 @@ public class CandidatureDAO implements ICandidatureDAO {
     @Override
     public List<Candidature> findAllByTeacher(int teacherId) {
         TypedQuery<Candidature> query = entityManager.createQuery(
-                        FINDALL_BY_TEACHER, Candidature.class)
+                        QueryRequests.CANDIDATURE_FINDALL_BY_TEACHER, Candidature.class)
                 .setParameter("teacherId", teacherId);
 
         return query.getResultList();
@@ -63,7 +64,7 @@ public class CandidatureDAO implements ICandidatureDAO {
     @Override
     public List<Candidature> findAllByRecruiter(int recruiterId) {
         TypedQuery<Candidature> query = entityManager.createQuery(
-                        FINDALL_BY_RECRUITER_CANDIDATURE, Candidature.class)
+                        QueryRequests.CANDIDATURE_FINDALL_BY_RECRUITER, Candidature.class)
                 .setParameter("recruiterId", recruiterId);
 
         return query.getResultList();
@@ -72,7 +73,7 @@ public class CandidatureDAO implements ICandidatureDAO {
     @Override
     public List<Candidature> findAllByNeed(int needId) {
         TypedQuery<Candidature> query = entityManager.createQuery(
-                        FINDALL_BY_NEED, Candidature.class)
+                        QueryRequests.CANDIDATURE_FINDALL_BY_NEED, Candidature.class)
                 .setParameter("needId", needId);
 
         return query.getResultList();

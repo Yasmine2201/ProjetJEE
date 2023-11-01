@@ -5,7 +5,8 @@ import fr.efrei.teachfinder.entities.Registration;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import static fr.efrei.teachfinder.utils.Constants.*;
+import static fr.efrei.teachfinder.utils.Constants.PERSISTENCE_UNIT_NAME;
+import static fr.efrei.teachfinder.utils.Constants.QueryRequests;
 
 public class UserDAO implements IUserDAO {
 
@@ -15,7 +16,7 @@ public class UserDAO implements IUserDAO {
     @Override
     public ApplicationUser findById(int userId) {
         TypedQuery<ApplicationUser> query = entityManager
-                .createQuery(APPLICATIONUSER_FINDBYID, ApplicationUser.class)
+                .createQuery(QueryRequests.APPLICATIONUSER_FINDBYID, ApplicationUser.class)
                 .setParameter("id", userId);
 
         try {
@@ -28,7 +29,7 @@ public class UserDAO implements IUserDAO {
     @Override
     public ApplicationUser findByLogin(String login) {
         TypedQuery<ApplicationUser> query = entityManager
-                .createQuery(APPLICATIONUSER_FINDBYLOGIN, ApplicationUser.class)
+                .createQuery(QueryRequests.APPLICATIONUSER_FINDBYLOGIN, ApplicationUser.class)
                 .setParameter("login", login);
 
         try {

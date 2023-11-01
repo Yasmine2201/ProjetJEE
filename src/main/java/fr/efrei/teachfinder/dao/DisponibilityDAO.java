@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-import static fr.efrei.teachfinder.utils.Constants.*;
+import static fr.efrei.teachfinder.utils.Constants.PERSISTENCE_UNIT_NAME;
+import static fr.efrei.teachfinder.utils.Constants.QueryRequests;
 
 public class DisponibilityDAO implements IDisponibilityDAO {
     private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -14,7 +15,7 @@ public class DisponibilityDAO implements IDisponibilityDAO {
     @Override
     public Disponibility findById(int disponibilityId) {
         TypedQuery<Disponibility> query = entityManager
-                .createQuery(DISPONIBILITY_FINDBYID, Disponibility.class)
+                .createQuery(QueryRequests.DISPONIBILITY_FINDBYID, Disponibility.class)
                 .setParameter("disponibilityId", disponibilityId);
         try {
             return query.getSingleResult();
@@ -39,7 +40,7 @@ public class DisponibilityDAO implements IDisponibilityDAO {
     @Override
     public List<Disponibility> findAllByTeacher(int teacherId) {
         TypedQuery<Disponibility> query = entityManager.createQuery(
-                        FINDALL_BY_TEACHER_DISPONIBILITY, Disponibility.class)
+                        QueryRequests.DISPONIBILITY_FINDALL_BY_TEACHER, Disponibility.class)
                 .setParameter("teacherId", teacherId);
 
         return query.getResultList();

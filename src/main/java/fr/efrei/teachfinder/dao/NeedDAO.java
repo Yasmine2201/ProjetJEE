@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-import static fr.efrei.teachfinder.utils.Constants.*;
+import static fr.efrei.teachfinder.utils.Constants.PERSISTENCE_UNIT_NAME;
+import static fr.efrei.teachfinder.utils.Constants.QueryRequests;
 
 public class NeedDAO implements INeedDAO {
     private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -14,7 +15,7 @@ public class NeedDAO implements INeedDAO {
     @Override
     public Need findById(int needId) {
         TypedQuery<Need> query = entityManager
-                .createQuery(NEED_FINDBYID, Need.class)
+                .createQuery(QueryRequests.NEED_FINDBYID, Need.class)
                 .setParameter("needId", needId);
 
         try {
@@ -55,7 +56,7 @@ public class NeedDAO implements INeedDAO {
     @Override
     public List<Need> findAllBySchool(String schoolName) {
         TypedQuery<Need> query = entityManager.createQuery(
-                        FINDALL_BY_SCHOOL, Need.class)
+                        QueryRequests.NEED_FINDALL_BY_SCHOOL, Need.class)
                 .setParameter("schoolName", schoolName);
 
         return query.getResultList();
@@ -64,7 +65,7 @@ public class NeedDAO implements INeedDAO {
     @Override
     public List<Need> findAllByRecruiter(int recruiterId) {
         TypedQuery<Need> query = entityManager.createQuery(
-                        FINDALL_BY_RECRUITER, Need.class)
+                        QueryRequests.NEED_FINDALL_BY_RECRUITER, Need.class)
                 .setParameter("recruiterId", recruiterId);
 
         return query.getResultList();
@@ -72,7 +73,7 @@ public class NeedDAO implements INeedDAO {
 
     @Override
     public List<Need> getAll() {
-        TypedQuery<Need> query = entityManager.createQuery(NEED_GETALL, Need.class);
+        TypedQuery<Need> query = entityManager.createQuery(QueryRequests.NEED_GETALL, Need.class);
 
         return query.getResultList();
     }
@@ -80,7 +81,7 @@ public class NeedDAO implements INeedDAO {
     @Override
     public List<Need> searchWithString(String research) {
         TypedQuery<Need> query = entityManager.createQuery(
-                        NEED_SEARCHWITH_STRING, Need.class)
+                        QueryRequests.NEED_SEARCHWITH_STRING, Need.class)
                 .setParameter("search", "%" + research + "%");
 
         return query.getResultList();

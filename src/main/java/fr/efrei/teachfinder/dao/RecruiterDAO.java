@@ -1,10 +1,10 @@
 package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Recruiter;
+import fr.efrei.teachfinder.utils.Constants;
 import jakarta.persistence.*;
 
 import static fr.efrei.teachfinder.utils.Constants.PERSISTENCE_UNIT_NAME;
-import static fr.efrei.teachfinder.utils.Constants.RECRUITER_FINDBYID;
 
 public class RecruiterDAO implements IRecruiterDAO {
 
@@ -14,7 +14,7 @@ public class RecruiterDAO implements IRecruiterDAO {
     @Override
     public Recruiter findById(int recruiterId) {
         TypedQuery<Recruiter> query = entityManager
-                .createQuery(RECRUITER_FINDBYID, Recruiter.class)
+                .createQuery(Constants.QueryRequests.RECRUITER_FINDBYID, Recruiter.class)
                 .setParameter("recruiterId", recruiterId);
 
         try {

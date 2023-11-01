@@ -7,7 +7,8 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-import static fr.efrei.teachfinder.utils.Constants.*;
+import static fr.efrei.teachfinder.utils.Constants.PERSISTENCE_UNIT_NAME;
+import static fr.efrei.teachfinder.utils.Constants.QueryRequests;
 
 
 public class RegistrationDAO implements IRegistrationDAO {
@@ -18,7 +19,7 @@ public class RegistrationDAO implements IRegistrationDAO {
     @Override
     public Registration findById(int registrationId) {
         TypedQuery<Registration> query = entityManager
-                .createQuery(REGISTRATION_FINDBYID, Registration.class)
+                .createQuery(QueryRequests.REGISTRATION_FINDBYID, Registration.class)
                 .setParameter("registrationId", registrationId);
 
         try {
@@ -31,7 +32,7 @@ public class RegistrationDAO implements IRegistrationDAO {
     @Override
     public Registration findByLogin(String login) {
         TypedQuery<Registration> query = entityManager
-                .createQuery(REGISTRATION_FINDBYLOGIN, Registration.class)
+                .createQuery(QueryRequests.REGISTRATION_FINDBYLOGIN, Registration.class)
                 .setParameter("login", login);
 
         try {
@@ -57,7 +58,7 @@ public class RegistrationDAO implements IRegistrationDAO {
     @Override
     public List<Registration> getAllWithStatus(StatusType status) {
         TypedQuery<Registration> query = entityManager
-                .createQuery(REGISTRATION_GETALLWITHSTATUS, Registration.class)
+                .createQuery(QueryRequests.REGISTRATION_GETALLWITHSTATUS, Registration.class)
                 .setParameter("status", status);
 
         return query.getResultList();
