@@ -8,9 +8,10 @@ import java.util.List;
 
 import static fr.efrei.teachfinder.utils.Constants.*;
 
-public class CandidatureDAO implements ICandidatureDAO{
+public class CandidatureDAO implements ICandidatureDAO {
     private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     private final EntityManager entityManager = entityManagerFactory.createEntityManager();
+
     @Override
     public Candidature findById(CandidatureId candidatureId) {
         TypedQuery<Candidature> query = entityManager
@@ -24,7 +25,6 @@ public class CandidatureDAO implements ICandidatureDAO{
         }
     }
 
-
     @Override
     public Candidature create(Candidature candidature) throws EntityExistsException {
         try {
@@ -36,7 +36,6 @@ public class CandidatureDAO implements ICandidatureDAO{
         } catch (EntityExistsException ex) {
             throw new EntityExistsException("Candidature already exists");
         }
-
     }
 
     @Override
@@ -68,7 +67,6 @@ public class CandidatureDAO implements ICandidatureDAO{
                 .setParameter("recruiterId", recruiterId);
 
         return query.getResultList();
-
     }
 
     @Override
@@ -78,6 +76,5 @@ public class CandidatureDAO implements ICandidatureDAO{
                 .setParameter("needId", needId);
 
         return query.getResultList();
-
     }
 }

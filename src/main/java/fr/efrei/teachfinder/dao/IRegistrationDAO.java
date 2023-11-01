@@ -2,14 +2,12 @@ package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Registration;
 import fr.efrei.teachfinder.entities.StatusType;
-import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-@Stateless
 public interface IRegistrationDAO {
 
     /**

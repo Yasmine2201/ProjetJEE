@@ -2,7 +2,6 @@ package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Registration;
 import fr.efrei.teachfinder.entities.StatusType;
-import jakarta.ejb.Stateless;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,7 +9,7 @@ import java.util.List;
 
 import static fr.efrei.teachfinder.utils.Constants.*;
 
-@Stateless
+
 public class RegistrationDAO implements IRegistrationDAO {
 
     private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);

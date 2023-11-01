@@ -22,7 +22,6 @@ public class TeacherDAO implements ITeacherDAO {
         } catch (NoResultException ex) {
             return null;
         }
-
     }
 
     @Override
@@ -35,8 +34,6 @@ public class TeacherDAO implements ITeacherDAO {
         } catch (EntityExistsException ex) {
             throw new EntityExistsException("Teacher already exists");
         }
-
-
     }
 
     @Override
@@ -60,7 +57,5 @@ public class TeacherDAO implements ITeacherDAO {
         TypedQuery<Teacher> query = entityManager.createQuery(TEACHER_GETALL, Teacher.class);
 
         return query.getResultList();
-
     }
-
 }

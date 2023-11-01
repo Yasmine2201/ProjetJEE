@@ -3,9 +3,8 @@ package fr.efrei.teachfinder.dao;
 import fr.efrei.teachfinder.entities.Recruiter;
 import jakarta.persistence.*;
 
-import java.util.List;
-
-import static fr.efrei.teachfinder.utils.Constants.*;
+import static fr.efrei.teachfinder.utils.Constants.PERSISTENCE_UNIT_NAME;
+import static fr.efrei.teachfinder.utils.Constants.RECRUITER_FINDBYID;
 
 public class RecruiterDAO implements IRecruiterDAO {
 
@@ -52,8 +51,4 @@ public class RecruiterDAO implements IRecruiterDAO {
             return updatedRecruiter;
 
     }
-
-
-
 }
-

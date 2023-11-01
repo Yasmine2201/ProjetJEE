@@ -3,7 +3,9 @@ package fr.efrei.teachfinder.dao;
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.School;
 import jakarta.persistence.*;
+
 import java.util.List;
+
 import static fr.efrei.teachfinder.utils.Constants.*;
 
 public class SchoolDAO implements ISchoolDAO {
@@ -52,5 +54,4 @@ public class SchoolDAO implements ISchoolDAO {
 
         return query.getResultList();
     }
-
 }

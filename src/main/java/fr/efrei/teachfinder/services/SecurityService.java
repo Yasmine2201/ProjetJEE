@@ -5,8 +5,8 @@ import fr.efrei.teachfinder.dao.IUserDAO;
 import fr.efrei.teachfinder.entities.ApplicationUser;
 import fr.efrei.teachfinder.entities.RoleType;
 import fr.efrei.teachfinder.entities.SessionUser;
-import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
@@ -27,7 +27,7 @@ public class SecurityService implements ISecurityService {
         }
     }
 
-    @EJB
+    @Inject
     IUserDAO userDAO;
 
     public String hashPassword(String password) {

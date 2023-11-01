@@ -2,13 +2,11 @@ package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.ApplicationUser;
 import fr.efrei.teachfinder.entities.Registration;
-import jakarta.ejb.Stateless;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import static fr.efrei.teachfinder.utils.Constants.*;
 
-@Stateless
 public class UserDAO implements IUserDAO {
 
     private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);

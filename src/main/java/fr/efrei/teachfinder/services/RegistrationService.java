@@ -3,14 +3,16 @@ package fr.efrei.teachfinder.services;
 import fr.efrei.teachfinder.dao.IRegistrationDAO;
 import fr.efrei.teachfinder.entities.Registration;
 import fr.efrei.teachfinder.entities.StatusType;
-import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 
 import java.util.List;
 
+@Stateless
 public class RegistrationService implements IRegistrationService{
 
-    @EJB
-    IRegistrationDAO registrationDAO;
+    @Inject
+    private IRegistrationDAO registrationDAO;
 
     @Override
     public List<Registration> getPendingRegistration() {

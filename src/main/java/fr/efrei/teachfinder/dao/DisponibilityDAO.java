@@ -1,9 +1,6 @@
 package fr.efrei.teachfinder.dao;
 
-import fr.efrei.teachfinder.entities.Candidature;
-import fr.efrei.teachfinder.entities.CandidatureId;
 import fr.efrei.teachfinder.entities.Disponibility;
-import fr.efrei.teachfinder.entities.Evaluation;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -19,7 +16,6 @@ public class DisponibilityDAO implements IDisponibilityDAO {
         TypedQuery<Disponibility> query = entityManager
                 .createQuery(DISPONIBILITY_FINDBYID, Disponibility.class)
                 .setParameter("disponibilityId", disponibilityId);
-
         try {
             return query.getSingleResult();
         } catch (NoResultException ex) {
@@ -52,7 +48,7 @@ public class DisponibilityDAO implements IDisponibilityDAO {
     @Override
     public Disponibility update(Disponibility disponibility) throws EntityNotFoundException {
         Disponibility existingDisponibility = findById(disponibility.getId());
-        if (existingDisponibility  == null) {
+        if (existingDisponibility == null) {
             throw new EntityNotFoundException("Disponibility with ID " + disponibility.getId() + " not found");
         }
         entityManager.getTransaction().begin();
@@ -72,6 +68,5 @@ public class DisponibilityDAO implements IDisponibilityDAO {
         }
         entityManager.remove(existingDisponibility);
         entityManager.getTransaction().commit();
-
     }
 }

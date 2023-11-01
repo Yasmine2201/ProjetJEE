@@ -1,7 +1,5 @@
 package fr.efrei.teachfinder.dao;
 
-import fr.efrei.teachfinder.entities.Evaluation;
-import fr.efrei.teachfinder.entities.EvaluationId;
 import fr.efrei.teachfinder.entities.Need;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,7 +25,4 @@ public interface INeedDAO {
      * @return corresponding Needs
      */
     List<Need> searchWithString(String research);
-
-
-
 }
