@@ -176,5 +176,8 @@ public class Controller extends HttpServlet {
         request.getRequestDispatcher(TEACHER_HOME_PAGE).forward(request, response);
     }
 
-
+    @Action(action= GO_TO_REGISTER_ACTION)
+    public void goToRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher(REGISTRATION_PAGE).forward(request, response);
+    }
 }

@@ -2,9 +2,6 @@ package fr.efrei.teachfinder.utils;
 
 public final class Constants {
 
-    // region temporaire
-    public static final String ERROR_PAGE = "/WEB-INF/restricted/error.jsp";
-
     // region config
     public static final String PERSISTENCE_UNIT_NAME = "default";
     // endregion
@@ -19,7 +16,7 @@ public final class Constants {
     public static final String GO_TO_ADMIN_HOME_ACTION = "goToAdminHome";
     public static final String GO_TO_RECRUITER_HOME_ACTION = "goToRecruiterHome";
     public static final String GO_TO_TEACHER_HOME_ACTION = "goToTeacherHome";
-    public static final String GO_TO_REGISTER_ACTION = "goToRegister";
+    public static final String GO_TO_REGISTER_ACTION = "goToRegistration";
     // endregion actions
 
     // region pages
@@ -32,6 +29,7 @@ public final class Constants {
 
     // region Error messages
     public static final String CREDENTIALS_KO_ERROR = "Identifiants invalides.";
+    public static final String MISSING_FIELD_ERROR = "Un champ requis du formulaire n'est pas renseigné.";
     public static final String FORBIDDEN_ERROR = "Vous n'êtes pas autorisé à réaliser cette action.";
     // endregion
 
