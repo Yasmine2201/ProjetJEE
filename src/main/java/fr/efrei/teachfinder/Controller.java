@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -22,6 +24,8 @@ public class Controller extends HttpServlet {
 
     @EJB
     ISecurityService securityService;
+
+    public static final Logger log = LogManager.getLogger(Controller.class);
 
     public void init() {
     }
@@ -43,8 +47,17 @@ public class Controller extends HttpServlet {
     }
 
     public void doAction(String action, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String path = request.getServletPath();
+        String httpMethod = request.getMethod();
+
         Method method = findActionMethod(action);
         SessionUser sessionUser = getSessionUser(request);
+
+        log.info("HTTP request. \n\tSERVLET: " + path +
+                "\n\tMETHOD: " + httpMethod +
+                "\n\tACTION: " + action +
+                "\n\tUSER: " + sessionUser
+        );
 
         if (action == null || (isActionRestricted(action) && sessionUser == null)) {
             goToLogin(request, response);
@@ -127,11 +140,17 @@ public class Controller extends HttpServlet {
         SessionUser sessionUser = getSessionUser(request);
 
         String action;
-        switch (sessionUser.getRole()) {
-            case Admin -> action = GO_TO_ADMIN_HOME_ACTION;
-            case Recruiter -> action = GO_TO_RECRUITER_HOME_ACTION;
-            case Teacher -> action = GO_TO_TEACHER_HOME_ACTION;
-            default -> action = GO_TO_LOGIN_ACTION;
+
+        if (sessionUser == null)
+        {
+            action = GO_TO_LOGIN_ACTION;
+        } else {
+            switch (sessionUser.getRole()) {
+                case Admin -> action = GO_TO_ADMIN_HOME_ACTION;
+                case Recruiter -> action = GO_TO_RECRUITER_HOME_ACTION;
+                case Teacher -> action = GO_TO_TEACHER_HOME_ACTION;
+                default -> action = GO_TO_LOGIN_ACTION;
+            }
         }
 
         doAction(action, request, response);
@@ -156,4 +175,6 @@ public class Controller extends HttpServlet {
     public void goToTeacherHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(TEACHER_HOME_PAGE).forward(request, response);
     }
+
+
 }
