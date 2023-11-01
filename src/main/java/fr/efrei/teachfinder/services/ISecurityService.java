@@ -1,6 +1,6 @@
 package fr.efrei.teachfinder.services;
 
-import fr.efrei.teachfinder.entities.SessionUser;
+import fr.efrei.teachfinder.beans.SessionUser;
 
 import java.lang.reflect.Method;
 

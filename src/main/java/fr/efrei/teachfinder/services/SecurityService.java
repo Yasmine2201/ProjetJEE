@@ -1,10 +1,10 @@
 package fr.efrei.teachfinder.services;
 
 import fr.efrei.teachfinder.annotations.Action;
+import fr.efrei.teachfinder.beans.SessionUser;
 import fr.efrei.teachfinder.dao.IUserDAO;
 import fr.efrei.teachfinder.entities.ApplicationUser;
 import fr.efrei.teachfinder.entities.RoleType;
-import fr.efrei.teachfinder.entities.SessionUser;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 

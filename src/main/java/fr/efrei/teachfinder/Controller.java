@@ -1,8 +1,8 @@
 package fr.efrei.teachfinder;
 
 import fr.efrei.teachfinder.annotations.Action;
+import fr.efrei.teachfinder.beans.SessionUser;
 import fr.efrei.teachfinder.entities.RoleType;
-import fr.efrei.teachfinder.entities.SessionUser;
 import fr.efrei.teachfinder.services.ISecurityService;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
