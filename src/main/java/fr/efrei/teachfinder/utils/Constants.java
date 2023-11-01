@@ -63,4 +63,6 @@ public final class Constants {
     public static final String FINDALL_BY_RECRUITER_CANDIDATURE = "SELECT c FROM Candidature c, Need n WHERE c.needId = n.needId and n.recruiterId= :recruiterId";
     public static final String EVALUATION_FINDBYID = "SELECT ev FROM Evaluation ev WHERE ev.evalutionId = :evalutionId";
     public static final String FINDALL_BY_TEACHER_EVALUATION = "SELECT ev FROM Evaluation ev WHERE ev.teacherId = :teacherId";
+    public static final String DISPONIBILITY_FINDBYID = "SELECT d from Disponibility d WHERE d.disponibilityId = :disponibilityId";
+    public static final String FINDALL_BY_TEACHER_DISPONIBILITY = "SELECT d from Disponibility WHERE d.teacherId = :teacherId";
 }
