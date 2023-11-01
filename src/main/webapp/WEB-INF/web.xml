@@ -28,4 +28,14 @@
         <welcome-file>controller</welcome-file>
     </welcome-file-list>
 
+    <!-- Gestion des erreurs -->
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/error403.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/error404.jsp</location>
+    </error-page>
 </web-app>
