@@ -48,8 +48,8 @@
                         <div class="label has-text-left">Numero de telephone<sup>*</sup></div>
                             <label for=phone>
                                 <input id="phone" name="phone" type="tel" class="input is-medium is-rounded"
-                                       inputmode="numeric" maxlength="10"
-                                       onkeypress="return (event.charCode !==8 && event.charCode ===0 || (event.charCode >= 48 && event.charCode <= 57))"
+                                       inputmode="numeric" maxlength="30"
+                                       onkeypress="return (event.charCode !==8 && event.charCode ===0 || event.charCode ===43 || event.charCode ===32 || event.charCode ===127 || (event.charCode >= 48 && event.charCode <= 57))"
                                        placeholder="XX-XX-XX-XX-XX"/>
                             </label>
                         </div>
@@ -60,11 +60,11 @@
                             </label>
                             <label class="radio">
                                 <input type="radio" name="role" value="recruiter" onclick="Change(false)">
-                                Recruteur<sup>*</sup>
+                                Recruteur
                             </label>
                             <label class="radio">
                                 <input type="radio" name="role" value="admin" onclick="Change(true)">
-                                Recruteur<sup>*</sup>
+                                Admin<sup>*</sup>
                             </label>
                         </div>
                         <div id="dropSchool" style="display: none" class="pb-3">

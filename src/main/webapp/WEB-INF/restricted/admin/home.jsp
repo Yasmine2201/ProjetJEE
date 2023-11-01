@@ -8,9 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Page admin</title>
 </head>
 <body>
+<jsp:include page="../navbar/admin.jsp"/>
+
 <section class="section">
     <div class="columns is-centered">
         <div class="column is-10 ">
@@ -53,5 +55,6 @@
 </html>
 
 <script>
-    var test;
+
+
 </script>

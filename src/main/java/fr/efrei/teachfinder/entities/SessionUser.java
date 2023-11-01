@@ -23,4 +23,13 @@ public class SessionUser {
     public RoleType getRole() {
         return role;
     }
+
+    @Override
+    public String toString() {
+        return "SessionUser{" +
+                "userId=" + userId +
+                ", login='" + login + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

@@ -120,6 +120,8 @@ INSERT INTO `applicationuser` (`login`, `password`, `role`, `firstname`, `lastna
     # Mdp : ImASuperAdmin
     ('adminTest', '49a02abc531d047c7596bcdd3657e213db6d5d2972ca44d7699ea4accc1827c2', 'Admin', 'MYTZ', 'BACB', 'example@efrei.net'),
     # Mdp : Teacher1234
-    ('teacherTest', '2c1714cf95b64a23d5a0d9720fb078d3af6acc0cdf23afdf9797dc022d77bdc4', 'Teacher', 'Jacques', 'Augustin', 'example@efrei.net');
+    ('teacherTest', '2c1714cf95b64a23d5a0d9720fb078d3af6acc0cdf23afdf9797dc022d77bdc4', 'Teacher', 'Jacques', 'Augustin', 'example@efrei.net'),
+    # Mdp : Teacher1234
+    ('recruiterTest', '2c1714cf95b64a23d5a0d9720fb078d3af6acc0cdf23afdf9797dc022d77bdc4', 'Recruiter', 'Dupond', 'Dupont', 'dd@efrei.net');
 
 COMMIT;
