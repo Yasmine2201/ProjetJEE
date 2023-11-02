@@ -34,7 +34,7 @@ public final class Constants {
 
     public static final class Pages {
         public static final String LOGIN = "/WEB-INF/login.jsp";
-        public static final String REGISTRATION = "/WEB-INF/subscribe.html";
+        public static final String REGISTRATION = "/WEB-INF/subscribe.jsp";
         public static final String ADMIN_HOME = "/WEB-INF/restricted/admin/home.jsp";
         public static final String TEACHER_HOME = "/WEB-INF/restricted/teacher/home.jsp";
         public static final String RECRUITER_HOME = "/WEB-INF/restricted/recruiter/home.jsp";
@@ -52,10 +52,13 @@ public final class Constants {
         public static final String RESEARCH = "/WEB-INF/research.jsp";
     }
 
-    public static final class ErrorMessages {
+    public static final class Messages {
         public static final String CREDENTIALS_KO = "Identifiants invalides.";
         public static final String MISSING_FIELD = "Un champ requis du formulaire n'est pas renseigné.";
         public static final String FORBIDDEN = "Vous n'êtes pas autorisé à réaliser cette action.";
+        public static final String PASSWORD_MISMATCH = "Mot de passe de confirmation non conforme.";
+        public static final String UNAVAILABLE_LOGIN = "Cet identifiant est déjà utilisé par un autre utilisateur.";
+        public static final String SUCCESSFUL_REGISTRATION = "Inscription envoyée.";
     }
 
     public static final class QueryRequests {

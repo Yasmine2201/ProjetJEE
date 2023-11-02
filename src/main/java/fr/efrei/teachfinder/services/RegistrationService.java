@@ -24,8 +24,6 @@ public class RegistrationService implements IRegistrationService {
 
     @EJB
     private ISecurityService securityService;
-    @EJB
-    private IUserService userService;
 
     @Override
     public Registration createRegistration(RegistrationBean registration) throws InvalidRegistrationException, UnavailableLoginException {
@@ -39,8 +37,9 @@ public class RegistrationService implements IRegistrationService {
                 registration.getRole()
         );
 
-        if (registration.getRole() != null && registration.getRole().equals("Teacher"))
+        if (registration.getRole() != null && registration.getRole().equals("Recruiter")) {
             shouldNotBeNullFields.add(registration.getSchoolName());
+        }
 
         boolean isRegistrationValid = shouldNotBeNullFields.stream().allMatch(StringUtils::isNotNullOrEmpty);
         if (!isRegistrationValid) {
