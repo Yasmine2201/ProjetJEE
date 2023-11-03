@@ -25,6 +25,8 @@ public class RegistrationService implements IRegistrationService {
     @EJB
     private ISecurityService securityService;
 
+    @EJB IUserService userService;
+
     @Override
     public Registration createRegistration(RegistrationBean registration) throws InvalidRegistrationException, UnavailableLoginException {
 
@@ -37,7 +39,10 @@ public class RegistrationService implements IRegistrationService {
                 registration.getRole()
         );
 
-        if (registration.getRole() != null && registration.getRole().equals("Recruiter")) {
+        String login = registration.getLogin();
+        String roleString = registration.getRole();
+
+        if (roleString != null && roleString.equals("Recruiter")) {
             shouldNotBeNullFields.add(registration.getSchoolName());
         }
 
@@ -46,7 +51,7 @@ public class RegistrationService implements IRegistrationService {
             throw new InvalidRegistrationException();
         }
 
-        if (registrationWithLoginExists(registration.getLogin())) {
+        if (registrationWithLoginExists(login) || userService.userWithLoginExists(login)) {
             throw new UnavailableLoginException();
         }
 
@@ -63,7 +68,7 @@ public class RegistrationService implements IRegistrationService {
         registrationToCreate.setLastname(registration.getLastname());
         registrationToCreate.setEmail(registration.getEmail());
         registrationToCreate.setPhone(registration.getPhone());
-        registrationToCreate.setRole(RoleType.valueOf(registration.getRole()));
+        registrationToCreate.setRole(RoleType.valueOf(roleString));
         registrationToCreate.setSchoolName(school);
         registrationToCreate.setStatus(StatusType.Pending);
 

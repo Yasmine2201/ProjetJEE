@@ -28,7 +28,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean userExistsWithLogin(String login) {
+    public boolean userWithLoginExists(String login) {
         return userDAO.findByLogin(login) != null;
     }
 }

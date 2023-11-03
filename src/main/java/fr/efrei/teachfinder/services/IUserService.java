@@ -9,5 +9,5 @@ public interface IUserService {
 
     void updateUser(ApplicationUser user);
 
-    boolean userExistsWithLogin(String login);
+    boolean userWithLoginExists(String login);
 }
