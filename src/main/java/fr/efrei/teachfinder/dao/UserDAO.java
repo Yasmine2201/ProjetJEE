@@ -62,13 +62,11 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public void changePassword(int userId, String newPassword) throws EntityNotFoundException {
-        ApplicationUser userToUpdate = findById(userId);
-        if (userToUpdate == null) throw new EntityNotFoundException("No ApplicationUser found with id " + userId);
-        userToUpdate.setPassword(newPassword);
+    public void update(ApplicationUser user) throws EntityNotFoundException {
+        if (findById(user.getId()) == null) throw new EntityNotFoundException("No ApplicationUser found with id " + user.getId());
 
         entityManager.getTransaction().begin();
-        entityManager.merge(userToUpdate);
+        entityManager.merge(user);
         entityManager.getTransaction().commit();
     }
 }

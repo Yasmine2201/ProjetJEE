@@ -34,11 +34,10 @@ public interface IUserDAO {
     ApplicationUser create(@NotNull Registration registration) throws EntityExistsException;
 
     /**
-     * Change the password of an ApplicationUser.
+     * Update an ApplicationUser.
      *
-     * @param userId Unique identifier of the user whose password is changed
-     * @param newPassword Hash of the new password
-     * @throws EntityNotFoundException If ApplicationUser with id userId does not exist.
+     * @param user user containing id and fields to update
+     * @throws EntityNotFoundException If ApplicationUser does not exist.
      */
-    void changePassword(int userId, String newPassword) throws EntityNotFoundException;
+    void update(ApplicationUser user) throws EntityNotFoundException;
 }
