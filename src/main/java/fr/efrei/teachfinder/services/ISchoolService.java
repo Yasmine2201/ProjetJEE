@@ -3,16 +3,23 @@ package fr.efrei.teachfinder.services;
 import fr.efrei.teachfinder.entities.Need;
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.School;
+import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 
 public interface ISchoolService {
 
-    School getSchool(String schoolName);
+    School createSchool(School school) throws EntityExistsException, IncompleteEntityException;
 
-    List<Need> getSchoolRunningNeeds(String schoolName);
+    School getSchool(String schoolName) throws EntityNotFoundException;
 
-    List<Recruiter> getSchoolRecruiters(String schoolName);
+    List<School> getAllSchools();
 
-    School updateSchool(School school);
+    List<Need> getSchoolRunningNeeds(String schoolName) throws EntityNotFoundException;
+
+    List<Recruiter> getSchoolRecruiters(String schoolName) throws EntityNotFoundException;
+
+    School updateSchool(School school) throws EntityNotFoundException, IncompleteEntityException;
 }

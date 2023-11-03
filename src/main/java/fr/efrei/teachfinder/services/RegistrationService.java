@@ -6,7 +6,7 @@ import fr.efrei.teachfinder.entities.Registration;
 import fr.efrei.teachfinder.entities.RoleType;
 import fr.efrei.teachfinder.entities.School;
 import fr.efrei.teachfinder.entities.StatusType;
-import fr.efrei.teachfinder.exceptions.InvalidRegistrationException;
+import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
 import fr.efrei.teachfinder.exceptions.UnavailableLoginException;
 import fr.efrei.teachfinder.utils.StringUtils;
 import jakarta.ejb.EJB;
@@ -28,7 +28,7 @@ public class RegistrationService implements IRegistrationService {
     @EJB IUserService userService;
 
     @Override
-    public Registration createRegistration(RegistrationBean registration) throws InvalidRegistrationException, UnavailableLoginException {
+    public Registration createRegistration(RegistrationBean registration) throws IncompleteEntityException, UnavailableLoginException {
 
         List<String> shouldNotBeNullFields = Arrays.asList(
                 registration.getLogin(),
@@ -48,7 +48,7 @@ public class RegistrationService implements IRegistrationService {
 
         boolean isRegistrationValid = shouldNotBeNullFields.stream().allMatch(StringUtils::isNotNullOrEmpty);
         if (!isRegistrationValid) {
-            throw new InvalidRegistrationException();
+            throw new IncompleteEntityException();
         }
 
         if (registrationWithLoginExists(login) || userService.userWithLoginExists(login)) {

@@ -4,7 +4,7 @@ import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.RegistrationBean;
 import fr.efrei.teachfinder.beans.SessionUser;
 import fr.efrei.teachfinder.entities.RoleType;
-import fr.efrei.teachfinder.exceptions.InvalidRegistrationException;
+import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
 import fr.efrei.teachfinder.exceptions.UnavailableLoginException;
 import fr.efrei.teachfinder.services.IRegistrationService;
 import fr.efrei.teachfinder.services.ISecurityService;
@@ -221,7 +221,7 @@ public class Controller extends HttpServlet {
 
         try {
             registrationService.createRegistration(registration);
-        } catch (InvalidRegistrationException e) {
+        } catch (IncompleteEntityException e) {
             errorMessage = Messages.MISSING_FIELD;
         } catch (UnavailableLoginException e) {
             errorMessage = Messages.UNAVAILABLE_LOGIN;
