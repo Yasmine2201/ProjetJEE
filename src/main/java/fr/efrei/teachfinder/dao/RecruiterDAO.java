@@ -4,6 +4,8 @@ import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.utils.Constants;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 import static fr.efrei.teachfinder.utils.Constants.PERSISTENCE_UNIT_NAME;
 
 public class RecruiterDAO implements IRecruiterDAO {
@@ -49,6 +51,14 @@ public class RecruiterDAO implements IRecruiterDAO {
             Recruiter updatedRecruiter = entityManager.merge(existingRecruiter);
             entityManager.getTransaction().commit();
             return updatedRecruiter;
+    }
 
+    @Override
+    public List<Recruiter> findAllBySchool(String schoolName) {
+        TypedQuery<Recruiter> query = entityManager.createQuery(
+                        Constants.QueryRequests.RECRUITER_FINDALL_BY_SCHOOL, Recruiter.class)
+                .setParameter("schoolName", schoolName);
+
+        return query.getResultList();
     }
 }

@@ -77,6 +77,7 @@ public final class Constants {
 
         public static final String RECRUITER_FINDBYID = "SELECT r from Recruiter r WHERE r.recruiterId= :recruiterId";
         public static final String RECRUITER_FINDALL = "SELECT r FROM Recruiter r WHERE r.schoolName = :schoolName";
+        public static final String RECRUITER_FINDALL_BY_SCHOOL = "SELECT r from Recruiter r WHERE r.schoolName= :schoolName";
 
         public static final String NEED_FINDBYID = "SELECT n from Need n WHERE n.needId = :needId";
         public static final String NEED_FINDALL_BY_SCHOOL = "SELECT n from Need n WHERE n.schoolName= :schoolName";

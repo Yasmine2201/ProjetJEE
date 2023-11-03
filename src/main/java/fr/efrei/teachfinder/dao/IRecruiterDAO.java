@@ -4,6 +4,8 @@ import fr.efrei.teachfinder.entities.Recruiter;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
+import java.util.List;
+
 public interface IRecruiterDAO {
 
     Recruiter findById(int recruiterId);
@@ -11,4 +13,6 @@ public interface IRecruiterDAO {
     Recruiter create(Recruiter recruiter) throws EntityExistsException;
 
     Recruiter update(Recruiter recruiter) throws EntityNotFoundException;
+
+    List<Recruiter> findAllBySchool(String schoolName);
 }
