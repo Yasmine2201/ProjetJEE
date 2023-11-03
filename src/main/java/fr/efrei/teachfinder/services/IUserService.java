@@ -1,10 +1,13 @@
 package fr.efrei.teachfinder.services;
 
 import fr.efrei.teachfinder.entities.ApplicationUser;
+import jakarta.persistence.EntityNotFoundException;
 
 public interface IUserService {
 
-    ApplicationUser getUser(int userId);
+    ApplicationUser getUser(int userId) throws EntityNotFoundException;
 
-    ApplicationUser updateUser(int userId);
+    void updateUser(ApplicationUser user);
+
+    boolean userExistsWithLogin(String login);
 }
