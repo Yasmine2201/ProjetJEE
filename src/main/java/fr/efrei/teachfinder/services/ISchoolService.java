@@ -21,5 +21,7 @@ public interface ISchoolService {
 
     List<Recruiter> getSchoolRecruiters(String schoolName) throws EntityNotFoundException;
 
-    School updateSchool(School school) throws EntityNotFoundException, IncompleteEntityException;
+    void updateSchool(School school) throws EntityNotFoundException, IncompleteEntityException;
+
+    boolean schoolExists(String schoolName);
 }

@@ -6,6 +6,7 @@ import fr.efrei.teachfinder.dao.ISchoolDAO;
 import fr.efrei.teachfinder.entities.Need;
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.School;
+import fr.efrei.teachfinder.entities.StatusType;
 import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
 import fr.efrei.teachfinder.utils.StringUtils;
 import jakarta.inject.Inject;
@@ -46,18 +47,37 @@ public class SchoolService implements ISchoolService {
     }
 
     @Override
-    public List<Need> getSchoolRunningNeeds(String schoolName) {
+    public List<Need> getSchoolRunningNeeds(String schoolName) throws EntityNotFoundException {
+        if (!schoolExists(schoolName)) {
+            throw new EntityNotFoundException("No school found with name " + schoolName);
+        }
 
-        return null;
+        List<Need> schoolNeeds = needDAO.findAllBySchool(schoolName);
+
+        return schoolNeeds.stream()
+                .filter(
+                        need -> need.getCandidatures()
+                                .stream()
+                                .noneMatch(candidature -> candidature.getStatus() == StatusType.Accepted))
+                .toList();
     }
 
     @Override
     public List<Recruiter> getSchoolRecruiters(String schoolName) {
-        return null;
+        if (!schoolExists(schoolName)) {
+            throw new EntityNotFoundException("No school found with name " + schoolName);
+        }
+
+        return recruiterDAO.findAllBySchool(schoolName);
     }
 
     @Override
-    public School updateSchool(School school) {
-        return null;
+    public void updateSchool(School school) throws EntityNotFoundException {
+        schoolDAO.update(school);
+    }
+
+    @Override
+    public boolean schoolExists(String schoolName) {
+        return schoolDAO.findByName(schoolName) != null;
     }
 }

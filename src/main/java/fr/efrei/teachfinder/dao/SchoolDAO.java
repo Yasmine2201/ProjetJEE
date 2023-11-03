@@ -55,4 +55,14 @@ public class SchoolDAO implements ISchoolDAO {
 
         return query.getResultList();
     }
+
+    @Override
+    public void update(School school) throws EntityNotFoundException {
+        if (findByName(school.getSchoolName()) == null)
+            throw new EntityNotFoundException("No School found with name " + school.getSchoolName());
+
+        entityManager.getTransaction().begin();
+        entityManager.merge(school);
+        entityManager.getTransaction().commit();
+    }
 }
