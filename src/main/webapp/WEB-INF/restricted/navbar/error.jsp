@@ -23,6 +23,11 @@
 
             <div class="navbar-end">
                 <div class="navbar-item">
+                    <button class="button is-info" type="submit" name="action" value="goToMyProfile">
+                        Mon Profil
+                    </button>
+                </div>
+                <div class="navbar-item">
                     <button class="button is-danger" type="submit" name="action" value="logout">
                         Deconnexion
                     </button>

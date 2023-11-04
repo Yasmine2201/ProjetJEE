@@ -21,23 +21,14 @@
                     Bonjour Prenom, Nom.
                 </div>
                 <div class="navbar-item">
-                    <label for="research">
-                        <div class="field has-addons">
-                            <div class="control">
-                                <input id="research" name="reasearch" type="text"
-                                       class="input is-medium is-rounded"
-                                       placeholder="Recherche"/>
-                            </div>
-                            <div class="control">
-                                <button class="button  is-medium is-rounded" name="action"
-                                        type="submit" value="research">
+                    <div class="control">
+                        <button class="button  is-medium is-rounded" name="action"
+                                type="submit" value="research">
                                 <span class="material-symbols-outlined">
                                     search
                                 </span>
-                                </button>
-                            </div>
-                        </div>
-                    </label>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="navbar-end">

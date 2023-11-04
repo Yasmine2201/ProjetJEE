@@ -12,7 +12,9 @@
 </head>
 <body>
 <jsp:include page="../navbar/admin.jsp"/>
+<c:set var="candidatures" scope="session" value="${'registrationId' :10}">
 
+</c:set>
 <section class="section">
     <div class="columns is-centered">
         <div class="column is-10 ">
@@ -21,13 +23,16 @@
                               is-narrow is-hoverable is-fullwidth">
                     <thead>
                     <tr>
-                        <th colspan="7">
+                        <th colspan="8">
                             En attend de validation
                         </th>
                     </tr>
                     <tr>
                         <th>
                             Nom
+                        </th>
+                        <th>
+                            Prenom
                         </th>
                         <th>
                             Email
@@ -46,6 +51,34 @@
                         </th>
                     </tr>
                     </thead>
+                    <tbody>
+                    <c:forEach items="${candidatures}" var="candidature">
+                        <tr id= ${candidature.registrationId}>
+
+                            <td>${candidature.lastname}</td>
+
+                            <td>${candidature.firstname}</td>
+
+                            <td>${candidature.phone}</td>
+
+                            <td>${candidature.role}</td>
+
+                            <td>${candidature.schoolName}</td>
+                            <td>
+                                <button class="button is-success" type="submit" name="action" value="approveRegistration">
+                                    <span class="material-symbols-outlined">
+                                        done
+                                    </span>
+                                </button>
+                                <button class="button is-danger" type="submit" name="action" value="denyRegistration">
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
+                                </button>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
                 </table>
             </form>
         </div>
@@ -54,7 +87,6 @@
 </body>
 </html>
 
-<script>
-
-
-</script>
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+</style>

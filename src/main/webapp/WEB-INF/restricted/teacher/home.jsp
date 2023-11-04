@@ -24,7 +24,7 @@
                     <thead>
                     <tr>
                         <th colspan="6">
-                            Offre interesant(s)
+                            Offres interessantes
                         </th>
                     </tr>
                     <tr>
