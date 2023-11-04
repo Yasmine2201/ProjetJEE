@@ -70,10 +70,10 @@ public final class Constants {
         public static final String REGISTRATION_GETALLWITHSTATUS = "SELECT r from Registration r WHERE r.status = :status";
 
         public static final String SCHOOL_FINDBYNAME = "SELECT s from School s WHERE s.schoolName = :schoolName";
-        public static final String SCHOOL_GETALL = "SELECT * from School";
+        public static final String SCHOOL_GETALL = "SELECT s from School s";
 
         public static final String TEACHER_FINDBYID = "SELECT t from Teacher t WHERE t.teacherId = :teacherId";
-        public static final String TEACHER_GETALL = "SELECT * from Teacher";
+        public static final String TEACHER_GETALL = "SELECT t from Teacher t";
 
         public static final String RECRUITER_FINDBYID = "SELECT r from Recruiter r WHERE r.recruiterId= :recruiterId";
         public static final String RECRUITER_FINDALL = "SELECT r FROM Recruiter r WHERE r.schoolName = :schoolName";
@@ -82,7 +82,7 @@ public final class Constants {
         public static final String NEED_FINDBYID = "SELECT n from Need n WHERE n.needId = :needId";
         public static final String NEED_FINDALL_BY_SCHOOL = "SELECT n from Need n WHERE n.schoolName= :schoolName";
         public static final String NEED_FINDALL_BY_RECRUITER = "SELECT n from Need n WHERE n.recruiterId= :recruiterId";
-        public static final String NEED_GETALL = "SELECT * from Need";
+        public static final String NEED_GETALL = "SELECT n from Need n";
         public static final String NEED_SEARCHWITH_STRING = "SELECT n FROM Need n WHERE n.schoolName LIKE :search OR n.subject LIKE :search";
 
         public static final String CANDIDATURE_FINDBYID = "SELECT c FROM Candidature c WHERE c.candidatureId = :candidatureId";
