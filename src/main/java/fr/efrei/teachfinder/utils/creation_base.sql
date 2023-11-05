@@ -94,7 +94,7 @@ CREATE TABLE Need (
     contractType ENUM('Temporary', 'Continous', 'Any') NOT NULL DEFAULT 'Temporary',
     subject VARCHAR(64) NOT NULL,
     requirements TEXT,
-    timePeriod VARCHAR(32) NOT NULL,
+    timePeriod VARCHAR(32),
     notes TEXT,
     FOREIGN KEY (schoolName) REFERENCES School(schoolName),
     FOREIGN KEY (recruiterId) REFERENCES Recruiter(recruiterId)
