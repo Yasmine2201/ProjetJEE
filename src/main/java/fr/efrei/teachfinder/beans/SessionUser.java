@@ -10,6 +10,7 @@ public class SessionUser {
     private final RoleType role;
     private final String firstname;
     private final String lastname;
+    private String sessionId;
 
     public SessionUser(ApplicationUser user) {
         userId = user.getId();
@@ -37,6 +38,14 @@ public class SessionUser {
 
     public String getLastname() {
         return lastname;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     @Override

@@ -11,9 +11,8 @@
         <div class="notification is-danger">
             <p class="title is-1">Erreur code : <b>403</b>:</p>
             <p class="text is-size-3">
-                Non autorisé
+                Non authorisé
             </p>
-
         </div>
     </div>
 </section>

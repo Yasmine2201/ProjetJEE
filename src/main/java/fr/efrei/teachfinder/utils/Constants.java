@@ -96,30 +96,29 @@ public final class Constants {
         public static final String SCHOOL_FINDBYNAME = "SELECT s from School s WHERE s.schoolName = :schoolName";
         public static final String SCHOOL_GETALL = "SELECT s from School s";
 
-        public static final String TEACHER_FINDBYID = "SELECT t from Teacher t WHERE t.teacherId = :teacherId";
+        public static final String TEACHER_FINDBYID = "SELECT t from Teacher t WHERE t.id = :teacherId";
         public static final String TEACHER_GETALL = "SELECT t from Teacher t";
 
-        public static final String RECRUITER_FINDBYID = "SELECT r from Recruiter r WHERE r.recruiterId= :recruiterId";
-        public static final String RECRUITER_FINDALL = "SELECT r FROM Recruiter r WHERE r.schoolName = :schoolName";
-        public static final String RECRUITER_FINDALL_BY_SCHOOL = "SELECT r from Recruiter r WHERE r.schoolName= :schoolName";
+        public static final String RECRUITER_FINDBYID = "SELECT r from Recruiter r WHERE r.id = :recruiterId";
+        public static final String RECRUITER_FINDALL_BY_SCHOOL = "SELECT r from Recruiter r WHERE r.schoolName.schoolName = :schoolName";
 
         public static final String NEED_FINDBYID = "SELECT n from Need n WHERE n.needId = :needId";
-        public static final String NEED_FINDALL_BY_SCHOOL = "SELECT n from Need n WHERE n.schoolName= :schoolName";
-        public static final String NEED_FINDALL_BY_RECRUITER = "SELECT n from Need n WHERE n.recruiterId= :recruiterId";
+        public static final String NEED_FINDALL_BY_SCHOOL = "SELECT n from Need n WHERE n.schoolName.schoolName = :schoolName";
+        public static final String NEED_FINDALL_BY_RECRUITER = "SELECT n from Need n WHERE n.recruiter.id = :recruiterId";
         public static final String NEED_GETALL = "SELECT n from Need n";
-        public static final String NEED_SEARCHWITH_STRING = "SELECT n FROM Need n WHERE n.schoolName LIKE %:search% OR n.subject LIKE %:search%";
+        public static final String NEED_SEARCHWITH_STRING = "SELECT n FROM Need n WHERE n.schoolName.schoolName LIKE %:search% OR n.subject LIKE %:search%";
 
-        public static final String CANDIDATURE_FINDBYID = "SELECT c FROM Candidature c WHERE c.candidatureId = :candidatureId";
-        public static final String CANDIDATURE_FINDALL_BY_TEACHER = "SELECT c FROM Candidature c WHERE c.teacherId = :teacherId";
-        public static final String CANDIDATURE_FINDALL_BY_NEED = "SELECT c FROM Candidature c WHERE c.needId = :needId";
-        public static final String CANDIDATURE_FINDALL_BY_RECRUITER = "SELECT c FROM Candidature c, Need n WHERE c.needId = n.needId and n.recruiterId= :recruiterId";
+        public static final String CANDIDATURE_FINDBYID = "SELECT c FROM Candidature c WHERE c.id = :candidatureId";
+        public static final String CANDIDATURE_FINDALL_BY_TEACHER = "SELECT c FROM Candidature c WHERE c.teacher.id = :teacherId";
+        public static final String CANDIDATURE_FINDALL_BY_NEED = "SELECT c FROM Candidature c WHERE c.need.needId = :needId";
+        public static final String CANDIDATURE_FINDALL_BY_RECRUITER = "SELECT c FROM Candidature c WHERE c.need.recruiter.id = :recruiterId";
 
-        public static final String EVALUATION_FINDBYID = "SELECT ev FROM Evaluation ev WHERE ev.evalutionId = :evalutionId";
-        public static final String EVALUATION_FINDALL_BY_TEACHER = "SELECT ev FROM Evaluation ev WHERE ev.teacherId = :teacherId";
+        public static final String EVALUATION_FINDBYID = "SELECT ev FROM Evaluation ev WHERE ev.id = :evalutionId";
+        public static final String EVALUATION_FINDALL_BY_TEACHER = "SELECT ev FROM Evaluation ev WHERE ev.teacher.id = :teacherId";
 
-        public static final String DISPONIBILITY_FINDBYID = "SELECT d from Disponibility d WHERE d.disponibilityId = :disponibilityId";
-        public static final String DISPONIBILITY_FINDALL_BY_TEACHER = "SELECT d from Disponibility WHERE d.teacherId = :teacherId";
-        public static final String SCHOOL_SEARCHWITH_STRING = "SELECT s FROM School s WHERE s.schoolName LIKE %:search% OR s.address LIKE %:search% OR s.specializations LIKE %:search%";
+        public static final String DISPONIBILITY_FINDBYID = "SELECT d from Disponibility d WHERE d.id = :disponibilityId";
+        public static final String DISPONIBILITY_FINDALL_BY_TEACHER = "SELECT d from Disponibility WHERE d.teacher.id = :teacherId";
+        public static final String SCHOOL_SEARCHWITH_STRING = "SELECT s FROM School s WHERE s.schoolName.schoolName LIKE %:search% OR s.address LIKE %:search% OR s.specializations LIKE %:search%";
         public static final String TEACHER_SEARCHWITH_SKILLS = " SELECT t FROM Teacher t WHERE t.skills LIKE %:search%";
     }
 }

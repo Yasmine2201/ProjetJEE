@@ -51,7 +51,7 @@ public class SchoolDAO implements ISchoolDAO {
     @Override
     public List<Recruiter> findAllRecruiters(String schoolName) {
         TypedQuery<Recruiter> query = entityManager.createQuery(
-                        QueryRequests.RECRUITER_FINDALL, Recruiter.class)
+                        QueryRequests.RECRUITER_FINDALL_BY_SCHOOL, Recruiter.class)
                 .setParameter("schoolName", schoolName);
 
         return query.getResultList();
