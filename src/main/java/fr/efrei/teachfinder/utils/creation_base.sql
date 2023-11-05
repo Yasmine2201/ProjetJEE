@@ -55,7 +55,7 @@ CREATE TABLE Teacher(
     personnalInterests VARCHAR(256),
     schoolInterests VARCHAR(256),
     desiredLevels VARCHAR(64),
-    contractType ENUM('Temporary', 'Continous') NOT NULL DEFAULT 'Temporary',
+    contractType ENUM('Temporary', 'Continous', 'Any') NOT NULL DEFAULT 'Any',
     academicCertifications VARCHAR(256),
     otherInformations TEXT,
     recommendations VARCHAR(256),
@@ -91,7 +91,7 @@ CREATE TABLE Need (
     needId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     recruiterId INT NOT NULL,
     schoolName VARCHAR(128) NOT NULL,
-    contractType ENUM('Temporary', 'Continous') NOT NULL DEFAULT 'Temporary',
+    contractType ENUM('Temporary', 'Continous', 'Any') NOT NULL DEFAULT 'Temporary',
     subject VARCHAR(64) NOT NULL,
     requirements TEXT,
     timePeriod VARCHAR(32) NOT NULL,
@@ -116,12 +116,16 @@ CREATE TABLE Candidature (
 ) ENGINE=InnoDB;
 
 
-INSERT INTO `applicationuser` (`login`, `password`, `role`, `firstname`, `lastname`, `email`) VALUES
-    # Mdp : ImASuperAdmin
-    ('adminTest', '49a02abc531d047c7596bcdd3657e213db6d5d2972ca44d7699ea4accc1827c2', 'Admin', 'MYTZ', 'BACB', 'example@efrei.net'),
-    # Mdp : Teacher1234
-    ('teacherTest', '2c1714cf95b64a23d5a0d9720fb078d3af6acc0cdf23afdf9797dc022d77bdc4', 'Teacher', 'Jacques', 'Augustin', 'example@efrei.net'),
-    # Mdp : Teacher1234
-    ('recruiterTest', '2c1714cf95b64a23d5a0d9720fb078d3af6acc0cdf23afdf9797dc022d77bdc4', 'Recruiter', 'Dupond', 'Dupont', 'dd@efrei.net');
+INSERT INTO school (schoolName, address, specializations) VALUES
+    ('EFREI', '30-32 Av. de la République, 94800 Villejuif', 'Informatique');
+
+INSERT INTO applicationuser (userId, login, password, firstname, lastname, email, phone, role) VALUES
+    (1, 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'Admin', 'Test', 'admin@test.com', '', 'Admin'),
+    (2, 'recruiter', '92d46204d8e9aeb3b37873c794348b3132ab9c9f33a89f2063c46180914c0104', 'Recruteur', 'Test', 'recruteur@test.com', '', 'Recruiter'),
+    (3, 'teacher', '1057a9604e04b274da5a4de0c8f4b4868d9b230989f8c8c6a28221143cc5a755', 'Eneignant', 'Test', 'teacher@test.com', '', 'Teacher');
+
+INSERT INTO recruiter (recruiterId, schoolName) VALUES (2, 'EFREI');
+
+INSERT INTO teacher (teacherId, contractType) VALUES (3, 'ANY');
 
 COMMIT;

@@ -1,14 +1,15 @@
 package fr.efrei.teachfinder;
 
 import fr.efrei.teachfinder.annotations.Action;
-import fr.efrei.teachfinder.beans.RegistrationBean;
 import fr.efrei.teachfinder.beans.SessionUser;
+import fr.efrei.teachfinder.entities.Registration;
 import fr.efrei.teachfinder.entities.RoleType;
-import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
-import fr.efrei.teachfinder.exceptions.UnavailableLoginException;
 import fr.efrei.teachfinder.services.IRegistrationService;
 import fr.efrei.teachfinder.services.ISecurityService;
+import fr.efrei.teachfinder.services.IUserService;
 import jakarta.ejb.EJB;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,16 +23,24 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static fr.efrei.teachfinder.utils.Constants.*;
 
 public class Controller extends HttpServlet {
 
-    @EJB
-    private ISecurityService securityService;
-
-    @EJB
-    private IRegistrationService registrationService;
+//    @EJB private ICandidatureService candidatureService;
+//    @EJB private IDisponibilityService disponibilityService;
+//    @EJB private IEvaluationService evaluationService;
+//    @EJB private INeedService needService;
+//    @EJB private IRecruiterDashboardService recruiterDashboardService;
+    @EJB private IRegistrationService registrationService;
+//    @EJB private IResearchService researchService;
+//    @EJB private ISchoolService schoolService;
+    @EJB private ISecurityService securityService;
+//    @EJB private ITeacherDashboardService teacherDashboardService;
+//    @EJB private ITeacherService teacherService;
+    @EJB private IUserService userService;
 
     private static final Logger log = LogManager.getLogger(Controller.class);
 
@@ -177,6 +186,8 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.GO_TO_ADMIN_HOME, roles = {RoleType.Admin})
     public void goToAdminHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Registration> pendingRegistrations = registrationService.getPendingRegistrations();
+        request.setAttribute("pendingRegistrations", pendingRegistrations);
         request.getRequestDispatcher(Pages.ADMIN_HOME).forward(request, response);
     }
 
@@ -190,51 +201,40 @@ public class Controller extends HttpServlet {
         request.getRequestDispatcher(Pages.TEACHER_HOME).forward(request, response);
     }
 
-    @Action(action= Actions.GO_TO_REGISTER)
+    @Action(action = Actions.GO_TO_REGISTER)
     public void goToRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(Pages.REGISTRATION).forward(request, response);
     }
 
-    @Action(action = Actions.REGISTER)
-    public void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        if (request.getParameter("password") != null &&
-                !request.getParameter("password").equals(request.getParameter("passwordVerification"))) {
-            request.setAttribute("errorMessage", Messages.PASSWORD_MISMATCH);
-            useParametersAsAttributes(request, response);
-            goToRegister(request, response);
-            return;
-        }
-
-        RegistrationBean registration = new RegistrationBean();
-        registration.setLogin(request.getParameter("login"));
-        registration.setPassword(request.getParameter("password"));
-        registration.setFirstname(request.getParameter("firstname"));
-        registration.setLastname(request.getParameter("lastname"));
-        registration.setEmail(request.getParameter("email"));
-        registration.setPhone(request.getParameter("phone"));
-        registration.setRole(request.getParameter("role"));
-        registration.setSchoolName(request.getParameter("schoolName"));
-
-        String errorMessage = null;
-
+    @Action(action = Actions.APPROVE_REGISTRATION, roles = {RoleType.Admin})
+    public void approveRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
-            registrationService.createRegistration(registration);
-        } catch (IncompleteEntityException e) {
-            errorMessage = Messages.MISSING_FIELD;
-        } catch (UnavailableLoginException e) {
-            errorMessage = Messages.UNAVAILABLE_LOGIN;
-        } catch (IllegalArgumentException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            int registrationId = Integer.parseInt(request.getParameter("registrationId"));
+            registrationService.approveRegistration(registrationId);
+            request.setAttribute("message", Messages.SUCCESS);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "registrationId should be an integer");
+        } catch (EntityNotFoundException e) {
+            request.setAttribute("message", Messages.UNAVAILABLE_ENTITY);
+        } catch (EntityExistsException e) {
+            request.setAttribute("message", Messages.UNAVAILABLE_LOGIN);
         }
 
-        if (errorMessage != null) {
-            useParametersAsAttributes(request, response);
-            request.setAttribute("errorMessage", errorMessage);
-        } else {
-            request.setAttribute("successMessage", Messages.SUCCESSFUL_REGISTRATION);
+        goToAdminHome(request, response);
+    }
+
+    @Action(action = Actions.DENY_REGISTRATION, roles = {RoleType.Admin})
+    public void denyRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        try {
+            int registrationId = Integer.parseInt(request.getParameter("registrationId"));
+            registrationService.denyRegistration(registrationId);
+            request.setAttribute("message", Messages.SUCCESS);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "registrationId should be an integer");
+        } catch (EntityNotFoundException e) {
+            request.setAttribute("message", Messages.UNAVAILABLE_ENTITY);
         }
 
-        goToRegister(request, response);
+        goToAdminHome(request, response);
     }
 }

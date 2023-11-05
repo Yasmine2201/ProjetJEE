@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: maxim
-  Date: 20/10/2023
-  Time: 14:33
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -12,80 +5,79 @@
 </head>
 <body>
 <jsp:include page="../navbar/admin.jsp"/>
-
 <section class="section">
     <div class="columns is-centered">
         <div class="column is-10 ">
+            <div class="box has-text-centered px-3">
+                <h3 class="title is-3 has-text-left">En attente de validation</h3>
+
                 <table class="table is-bordered is-striped
-                              is-narrow is-hoverable is-fullwidth px-3">
+                              is-narrow is-hoverable is-fullwidth">
                     <thead>
                     <tr>
-                        <th colspan="8">
-                            En attend de validation
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            Nom
-                        </th>
-                        <th>
-                            Prenom
-                        </th>
-                        <th>
-                            Email
-                        </th>
-                        <th>
-                            N° de telephone
-                        </th>
-                        <th>
-                            Role
-                        </th>
-                        <th>
-                            Ecole
-                        </th>
-                        <th>
-                            Validation
-                        </th>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Courrier électronique</th>
+                        <th>N° de téléphone</th>
+                        <th>Rôle</th>
+                        <th>École</th>
+                        <th>Valider / Refuser</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${candidatures}" var="candidature">
-                        <tr id= ${candidature.registrationId}>
+                    <c:forEach items="${pendingRegistrations}" var="registration">
+                        <tr id= ${registration.registrationId}>
+                            <td>${registration.firstname}</td>
+                            <td>${registration.lastname}</td>
+                            <td>${registration.email}</td>
+                            <td>${registration.phone}</td>
+                            <td>${registration.role}</td>
+                            <td>${registration.schoolName.schoolName}</td>
 
-                            <td>${candidature.lastname}</td>
-
-                            <td>${candidature.firstname}</td>
-
-                            <td>${candidature.phone}</td>
-
-                            <td>${candidature.role}</td>
-
-                            <td>${candidature.schoolName}</td>
                             <td>
                                 <form method="post" action="controller">
+                                    <input class="is-hidden" name="registrationId" value="${registration.registrationId}">
 
-                                <button class="button is-success" type="submit" name="action" value="approveRegistration">
-                                    <span class="material-symbols-outlined">
-                                        done
-                                    </span>
-                                </button>
-                                <button class="button is-danger" type="submit" name="action" value="denyRegistration">
-                                    <span class="material-symbols-outlined">
-                                        close
-                                    </span>
-                                </button>
+                                    <button class="button is-success" type="submit" name="action"
+                                            value="approveRegistration">
+                                    <span class="material-symbols-outlined">done</span>
+                                    </button>
+
+                                    <button class="button is-danger" type="submit" name="action"
+                                            value="denyRegistration">
+                                    <span class="material-symbols-outlined">close</span>
+                                    </button>
                                 </form>
                             </td>
+
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
-            </form>
+            </div>
+            <c:if test="${not empty message}">
+                <div class="notification" id="message">
+                    ${message}
+                </div>
+            </c:if>
         </div>
     </div>
 </section>
 </body>
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(hideNotification, 5000);
+    })
+
+    function hideNotification() {
+        const notification = document.getElementById("message");
+
+        if (notification === null) return;
+        notification.hidden = true;
+    }
+</script>
 
 <style>
     @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");

@@ -3,7 +3,6 @@
 //icones
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
 
-
 div .is-rounded {
   border-radius: 50%;
 }
@@ -12,6 +11,13 @@ div .is-rounded {
   min-height: 2.5em;
   padding-bottom: 5px;
   padding-top: 5px;
+}
+
+.is-navbar {
+  background-color: #c4bbff;
+  position: relative;
+  z-index: 30;
+  display: flex;
 }
 
 @import "/WEB-INF/css/bulma/bulma.sass";

@@ -8,6 +8,17 @@ public final class Constants {
         public static final String LOGIN = "login";
         public static final String LOGOUT = "logout";
         public static final String REGISTER = "register";
+        public static final String APPLY = "applyToNeed";
+        public static final String VALIDATE_CANDIDATURE = "validateCandidature";
+        public static final String DENY_CANDIDATURE = "denyCandidature";
+        public static final String SAVE_USER = "saveUserProfile";
+        public static final String SAVE_TEACHER = "saveTeacher";
+        public static final String SAVE_SCHOOL = "saveSchool";
+        public static final String SAVE_NEED = "saveNeed";
+        public static final String SAVE_EVALUATION = "saveEvaluation";
+        public static final String SAVE_DISPONIBILITY = "saveDisponibility";
+        public static final String APPROVE_REGISTRATION = "approveRegistration";
+        public static final String DENY_REGISTRATION = "denyRegistration";
 
         public static final String GO_TO_LOGIN = "goToLogin";
         public static final String GO_TO_HOME = "goToHome";
@@ -30,6 +41,16 @@ public final class Constants {
         public static final String GO_TO_TEACHER_EDITION = "goToEdition";
         public static final String GO_TO_USER_PROFILE = "goToUserProfile";
         public static final String GO_TO_USER_PROFILE_EDITION = "goToUserProfileEdition";
+
+        public static final String CANCEL_DISPONIBILITY_CREATION = "cancelDisponibilityCreation";
+        public static final String CANCEL_DISPONIBILITY_EDITION = "cancelDisponibilityEdition";
+        public static final String CANCEL_EVALUATION = "cancelEvaluation";
+        public static final String CANCEL_NEED_CREATION = "cancelNeedCreation";
+        public static final String CANCEL_NEED_EDITION = "cancelNeedEdition";
+        public static final String CANCEL_SCHOOL_CREATION = "cancelSchoolCreation";
+        public static final String CANCEL_SCHOOL_EDITION = "cancelSchoolEdition";
+        public static final String CANCEL_TEACHER_EDITION = "cancelTeacherEdition";
+        public static final String CANCEL_PROFILE_EDITION = "cancelProfileEdition";
     }
 
     public static final class Pages {
@@ -60,6 +81,8 @@ public final class Constants {
         public static final String UNAVAILABLE_LOGIN = "Cet identifiant est déjà utilisé par un autre utilisateur";
         public static final String SUCCESSFUL_REGISTRATION = "Inscription envoyée";
         public static final String INVALID_ARGUMENT = "Argument invalide";
+        public static final String UNAVAILABLE_ENTITY = "Entité non disponible";
+        public static final String SUCCESS = "Succès de l'opération";
     }
 
     public static final class QueryRequests {
