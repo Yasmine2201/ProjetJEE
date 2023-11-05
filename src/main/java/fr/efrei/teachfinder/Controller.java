@@ -61,6 +61,7 @@ public class Controller extends HttpServlet {
         String httpMethod = request.getMethod();
 
         Method method = findActionMethod(action);
+        HttpSession session = request.getSession(false);
         SessionUser sessionUser = getSessionUser(request);
 
         log.info("HTTP request. \n\tSERVLET: " + path +
@@ -69,8 +70,13 @@ public class Controller extends HttpServlet {
                 "\n\tUSER: " + sessionUser
         );
 
-        if (action == null || (isActionRestricted(action) && sessionUser == null)) {
-            goToLogin(request, response);
+        if (action == null) goToLogin(request, response);
+
+        if (action != null && (
+                isActionRestricted(action)
+                && (sessionUser == null || session == null || !session.getId().equals(sessionUser.getSessionId())))
+        ) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
 
@@ -147,6 +153,7 @@ public class Controller extends HttpServlet {
 
         // Create session
         HttpSession session = request.getSession(true);
+        sessionUser.setSessionId(session.getId());
         session.setAttribute("sessionUser", sessionUser);
         goToHome(request, response);
     }

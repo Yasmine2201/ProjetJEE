@@ -24,7 +24,7 @@
 
                 <tbody>
                     <c:forEach items="${runningNeeds}" var="need">
-                        <tr id=${need.needId}>
+                        <tr id=${need.id}>
                             <td class="is-narrow">${need.id}</td>
                             <td>${need.subject}</td>
                             <td class="is-narrow">
@@ -46,7 +46,7 @@
                             </td>
                             <td class="is-narrow">
                                 <form method="post" action="controller">
-                                    <input class="is-hidden" name="needId" value="${need.needId}">
+                                    <input class="is-hidden" name="needId" value="${need.id}">
                                     <button class="button is-info is-small" type="submit" name="action" value="goToNeed">
                                         <span class="material-symbols-outlined is-size-6">read_more</span>
                                     </button>
@@ -72,7 +72,7 @@
 
                 <tbody>
                     <c:forEach items="${pendingCandidatures}" var="candidature">
-                        <tr id=${candidature.need.needId}>
+                        <tr id=${candidature.need.id}>
                             <td class="is-narrow">${candidature.need.id}</td>
                             <td>
                                 ${candidature.teacher.applicationuser.firstname}
@@ -91,7 +91,7 @@
                             </td>
                             <td class="is-narrow">
                                 <form method="post" action="controller">
-                                    <input class="is-hidden" name="needId" value="${candidature.need.needId}">
+                                    <input class="is-hidden" name="needId" value="${candidature.need.id}">
                                     <input class="is-hidden" name="teacherId" value="${candidature.teacher.id}">
                                     <button class="button is-info is-small" type="submit" name="action" value="goToCandidature">
                                         <span class="material-symbols-outlined is-size-6">read_more</span>
