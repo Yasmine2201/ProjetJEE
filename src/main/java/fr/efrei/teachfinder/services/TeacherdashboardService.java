@@ -2,17 +2,18 @@ package fr.efrei.teachfinder.services;
 
 import fr.efrei.teachfinder.dao.CandidatureDAO;
 import fr.efrei.teachfinder.dao.NeedDAO;
-import fr.efrei.teachfinder.entities.Candidature;
-import fr.efrei.teachfinder.entities.Need;
-import fr.efrei.teachfinder.entities.StatusType;
+import fr.efrei.teachfinder.dao.TeacherDAO;
+import fr.efrei.teachfinder.entities.*;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
 import java.util.List;
 
 @Stateless
-public class TeacherdashboardService implements  ITeacherDashboardService{
+public class TeacherdashboardService implements ITeacherDashboardService {
 
+    @Inject
+    TeacherDAO teacherDAO;
     @Inject
     NeedDAO needDAO;
     @Inject
@@ -21,16 +22,26 @@ public class TeacherdashboardService implements  ITeacherDashboardService{
 
     @Override
     public List<Need> getInterestingNeeds(int teacherId) {
-        //à modifier encore pour prendre en compte les preferences du teacher
+
         List<Need> needs = needDAO.getAll();
+        Teacher teacher = teacherDAO.findById(teacherId);
 
 
-        return needs.stream()
+        List<Need> filtredNeeds = needs.stream()
                 .filter(
                         need -> need.getCandidatures()
                                 .stream()
                                 .noneMatch(candidature -> candidature.getStatus() == StatusType.Accepted))
                 .toList();
+        //We consider ContractType - schooInterests - personnalInterests
+        String teacherPersonnalInterests = teacher.getPersonnalInterests();
+        ContractType teacherContractType = teacher.getContractType();
+        String teacherSchoolInterests = teacher.getSchoolInterests();
+
+        return filtredNeeds.stream().filter(
+                need -> teacherPersonnalInterests.contains(need.getSubject()) && need.getContractType().equals(teacherContractType)
+                        && teacherSchoolInterests.contains(need.getSchoolName().getSchoolName())
+        ).toList();
 
     }
 
