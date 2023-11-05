@@ -2,6 +2,7 @@ package fr.efrei.teachfinder.services;
 
 import fr.efrei.teachfinder.beans.RegistrationBean;
 import fr.efrei.teachfinder.dao.IRegistrationDAO;
+import fr.efrei.teachfinder.dao.IUserDAO;
 import fr.efrei.teachfinder.entities.Registration;
 import fr.efrei.teachfinder.entities.RoleType;
 import fr.efrei.teachfinder.entities.School;
@@ -12,6 +13,8 @@ import fr.efrei.teachfinder.utils.StringUtils;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +22,9 @@ import java.util.List;
 
 @Stateless
 public class RegistrationService implements IRegistrationService {
+
+    @Inject
+    private IUserDAO userDAO;
 
     @Inject
     private IRegistrationDAO registrationDAO;
@@ -82,15 +88,15 @@ public class RegistrationService implements IRegistrationService {
     }
 
     @Override
-    public void denyRegistration(int registrationId) {
-        Registration reg = registrationDAO.findById(registrationId);
-        reg.setStatus(StatusType.Refused);
+    public void denyRegistration(int registrationId) throws EntityNotFoundException {
+        registrationDAO.changeStatus(registrationId, StatusType.Refused);
     }
 
     @Override
-    public void approveRegistration(int registrationId) {
-        Registration reg = registrationDAO.findById(registrationId);
-        reg.setStatus(StatusType.Accepted);
+    public void approveRegistration(int registrationId) throws EntityNotFoundException, EntityExistsException {
+        registrationDAO.changeStatus(registrationId, StatusType.Accepted);
+        Registration registration = registrationDAO.findById(registrationId);
+        userService.createUserFromRegistration(registration);
     }
 
     @Override
