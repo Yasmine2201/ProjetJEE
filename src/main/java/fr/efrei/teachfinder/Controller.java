@@ -116,7 +116,11 @@ public class Controller extends HttpServlet {
     }
 
     public void sendSessionUser(HttpServletRequest request) {
-        SessionUser sessionUser = getSessionUser(request);
+        sendSessionUser(request, null);
+    }
+
+    public void sendSessionUser(HttpServletRequest request, SessionUser sessionUser) {
+        SessionUser userToSend = sessionUser == null ? getSessionUser(request) : sessionUser;
         request.setAttribute("sessionuser", sessionUser);
     }
 
@@ -191,7 +195,10 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.GO_TO_RECRUITER_HOME, roles = {RoleType.Recruiter})
     public void goToRecruiterHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        sendSessionUser(request);
+        SessionUser sessionUser = getSessionUser(request);
+        sendSessionUser(request, sessionUser);
+        request.setAttribute("runningNeeds", recruiterDashboardService.getRunningNeed(sessionUser.getUserId()));
+        request.setAttribute("pendingCandidatures", recruiterDashboardService.getCandidatures(sessionUser.getUserId()));
         request.getRequestDispatcher(Pages.RECRUITER_HOME).forward(request, response);
     }
 
