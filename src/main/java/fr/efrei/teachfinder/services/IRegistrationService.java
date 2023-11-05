@@ -4,6 +4,8 @@ import fr.efrei.teachfinder.beans.RegistrationBean;
 import fr.efrei.teachfinder.entities.Registration;
 import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
 import fr.efrei.teachfinder.exceptions.UnavailableLoginException;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 
@@ -14,9 +16,9 @@ public interface IRegistrationService {
 
     List<Registration> getPendingRegistration();
 
-    void denyRegistration(int registrationId);
+    void denyRegistration(int registrationId) throws EntityNotFoundException;
 
-    void approveRegistration(int registrationId);
+    void approveRegistration(int registrationId) throws EntityNotFoundException, EntityExistsException;
 
     boolean registrationWithLoginExists(String login);
 }
