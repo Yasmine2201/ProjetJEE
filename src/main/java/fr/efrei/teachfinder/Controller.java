@@ -1,11 +1,8 @@
 package fr.efrei.teachfinder;
 
 import fr.efrei.teachfinder.annotations.Action;
-import fr.efrei.teachfinder.beans.RegistrationBean;
 import fr.efrei.teachfinder.beans.SessionUser;
 import fr.efrei.teachfinder.entities.RoleType;
-import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
-import fr.efrei.teachfinder.exceptions.UnavailableLoginException;
 import fr.efrei.teachfinder.services.IRegistrationService;
 import fr.efrei.teachfinder.services.ISecurityService;
 import jakarta.ejb.EJB;
@@ -193,48 +190,5 @@ public class Controller extends HttpServlet {
     @Action(action= Actions.GO_TO_REGISTER)
     public void goToRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(Pages.REGISTRATION).forward(request, response);
-    }
-
-    @Action(action = Actions.REGISTER)
-    public void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        if (request.getParameter("password") != null &&
-                !request.getParameter("password").equals(request.getParameter("passwordVerification"))) {
-            request.setAttribute("errorMessage", Messages.PASSWORD_MISMATCH);
-            useParametersAsAttributes(request, response);
-            goToRegister(request, response);
-            return;
-        }
-
-        RegistrationBean registration = new RegistrationBean();
-        registration.setLogin(request.getParameter("login"));
-        registration.setPassword(request.getParameter("password"));
-        registration.setFirstname(request.getParameter("firstname"));
-        registration.setLastname(request.getParameter("lastname"));
-        registration.setEmail(request.getParameter("email"));
-        registration.setPhone(request.getParameter("phone"));
-        registration.setRole(request.getParameter("role"));
-        registration.setSchoolName(request.getParameter("schoolName"));
-
-        String errorMessage = null;
-
-        try {
-            registrationService.createRegistration(registration);
-        } catch (IncompleteEntityException e) {
-            errorMessage = Messages.MISSING_FIELD;
-        } catch (UnavailableLoginException e) {
-            errorMessage = Messages.UNAVAILABLE_LOGIN;
-        } catch (IllegalArgumentException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        }
-
-        if (errorMessage != null) {
-            useParametersAsAttributes(request, response);
-            request.setAttribute("errorMessage", errorMessage);
-        } else {
-            request.setAttribute("successMessage", Messages.SUCCESSFUL_REGISTRATION);
-        }
-
-        goToRegister(request, response);
     }
 }
