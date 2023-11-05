@@ -34,7 +34,7 @@ public final class Constants {
 
     public static final class Pages {
         public static final String LOGIN = "/WEB-INF/login.jsp";
-        public static final String REGISTRATION = "/WEB-INF/subscribe.jsp";
+        public static final String REGISTRATION = "/WEB-INF/subscribe.html";
         public static final String ADMIN_HOME = "/WEB-INF/restricted/admin/home.jsp";
         public static final String TEACHER_HOME = "/WEB-INF/restricted/teacher/home.jsp";
         public static final String RECRUITER_HOME = "/WEB-INF/restricted/recruiter/home.jsp";
@@ -53,12 +53,13 @@ public final class Constants {
     }
 
     public static final class Messages {
-        public static final String CREDENTIALS_KO = "Identifiants invalides.";
-        public static final String MISSING_FIELD = "Un champ requis du formulaire n'est pas renseigné.";
-        public static final String FORBIDDEN = "Vous n'êtes pas autorisé à réaliser cette action.";
-        public static final String PASSWORD_MISMATCH = "Mot de passe de confirmation non conforme.";
-        public static final String UNAVAILABLE_LOGIN = "Cet identifiant est déjà utilisé par un autre utilisateur.";
-        public static final String SUCCESSFUL_REGISTRATION = "Inscription envoyée.";
+        public static final String CREDENTIALS_KO = "Identifiants invalides";
+        public static final String MISSING_FIELD = "Un champ requis du formulaire n'est pas renseigné";
+        public static final String FORBIDDEN = "Vous n'êtes pas autorisé à réaliser cette action";
+        public static final String PASSWORD_MISMATCH = "Mot de passe de confirmation non conforme";
+        public static final String UNAVAILABLE_LOGIN = "Cet identifiant est déjà utilisé par un autre utilisateur";
+        public static final String SUCCESSFUL_REGISTRATION = "Inscription envoyée";
+        public static final String INVALID_ARGUMENT = "Argument invalide";
     }
 
     public static final class QueryRequests {
@@ -70,10 +71,10 @@ public final class Constants {
         public static final String REGISTRATION_GETALLWITHSTATUS = "SELECT r from Registration r WHERE r.status = :status";
 
         public static final String SCHOOL_FINDBYNAME = "SELECT s from School s WHERE s.schoolName = :schoolName";
-        public static final String SCHOOL_GETALL = "SELECT * from School";
+        public static final String SCHOOL_GETALL = "SELECT s from School s";
 
         public static final String TEACHER_FINDBYID = "SELECT t from Teacher t WHERE t.teacherId = :teacherId";
-        public static final String TEACHER_GETALL = "SELECT * from Teacher";
+        public static final String TEACHER_GETALL = "SELECT t from Teacher t";
 
         public static final String RECRUITER_FINDBYID = "SELECT r from Recruiter r WHERE r.recruiterId= :recruiterId";
         public static final String RECRUITER_FINDALL = "SELECT r FROM Recruiter r WHERE r.schoolName = :schoolName";
@@ -82,7 +83,7 @@ public final class Constants {
         public static final String NEED_FINDBYID = "SELECT n from Need n WHERE n.needId = :needId";
         public static final String NEED_FINDALL_BY_SCHOOL = "SELECT n from Need n WHERE n.schoolName= :schoolName";
         public static final String NEED_FINDALL_BY_RECRUITER = "SELECT n from Need n WHERE n.recruiterId= :recruiterId";
-        public static final String NEED_GETALL = "SELECT * from Need";
+        public static final String NEED_GETALL = "SELECT n from Need n";
         public static final String NEED_SEARCHWITH_STRING = "SELECT n FROM Need n WHERE n.schoolName LIKE :search OR n.subject LIKE :search";
 
         public static final String CANDIDATURE_FINDBYID = "SELECT c FROM Candidature c WHERE c.candidatureId = :candidatureId";

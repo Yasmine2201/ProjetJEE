@@ -13,6 +13,7 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,14 +31,14 @@ public class RegistrationService implements IRegistrationService {
     @Override
     public Registration createRegistration(RegistrationBean registration) throws IncompleteEntityException, UnavailableLoginException {
 
-        List<String> shouldNotBeNullFields = Arrays.asList(
+        List<String> shouldNotBeNullFields = new ArrayList<>(Arrays.asList(
                 registration.getLogin(),
                 registration.getPassword(),
                 registration.getFirstname(),
                 registration.getLastname(),
                 registration.getEmail(),
                 registration.getRole()
-        );
+        ));
 
         String login = registration.getLogin();
         String roleString = registration.getRole();
@@ -56,7 +57,7 @@ public class RegistrationService implements IRegistrationService {
         }
 
         School school = null;
-        if (registration.getSchoolName() != null){
+        if (StringUtils.isNotNullOrEmpty(registration.getSchoolName())){
             school = new School();
             school.setSchoolName(registration.getSchoolName());
         }
