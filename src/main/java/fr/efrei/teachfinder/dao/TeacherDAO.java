@@ -1,6 +1,5 @@
 package fr.efrei.teachfinder.dao;
 
-import fr.efrei.teachfinder.entities.School;
 import fr.efrei.teachfinder.entities.Teacher;
 import jakarta.persistence.*;
 

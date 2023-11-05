@@ -2,7 +2,6 @@ package fr.efrei.teachfinder.services;
 
 import fr.efrei.teachfinder.dao.CandidatureDAO;
 import fr.efrei.teachfinder.dao.NeedDAO;
-import fr.efrei.teachfinder.dao.TeacherDAO;
 import fr.efrei.teachfinder.entities.Candidature;
 import fr.efrei.teachfinder.entities.Need;
 import jakarta.inject.Inject;
