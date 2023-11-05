@@ -1,5 +1,6 @@
 package fr.efrei.teachfinder.dao;
 
+
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.School;
 import jakarta.persistence.*;
@@ -64,5 +65,12 @@ public class SchoolDAO implements ISchoolDAO {
         entityManager.getTransaction().begin();
         entityManager.merge(school);
         entityManager.getTransaction().commit();
+    }
+    public List<School> searchWithString(String research) {
+        TypedQuery<School> query = entityManager.createQuery(
+                        QueryRequests.SCHOOL_SEARCHWITH_STRING, School.class)
+                .setParameter("search", "%" + research + "%");
+
+        return query.getResultList();
     }
 }

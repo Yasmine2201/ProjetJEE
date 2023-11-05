@@ -25,4 +25,5 @@ public interface ISchoolDAO {
      * @throws EntityNotFoundException If School with schoolName does not exist.
      */
     void update(School school) throws EntityNotFoundException;
+    List<School> searchWithString(String research);
 }

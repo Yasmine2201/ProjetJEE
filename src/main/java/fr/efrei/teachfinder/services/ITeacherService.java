@@ -1,6 +1,7 @@
 package fr.efrei.teachfinder.services;
 
 import fr.efrei.teachfinder.entities.Disponibility;
+import fr.efrei.teachfinder.entities.Evaluation;
 import fr.efrei.teachfinder.entities.Teacher;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface ITeacherService {
 
     List<Disponibility> getTeacherFutureDisponibilities(int teacherId);
 
-    List<Disponibility> getTeacherEvaluations(int teacherId);
+    List<Evaluation> getTeacherEvaluations(int teacherId);
 }

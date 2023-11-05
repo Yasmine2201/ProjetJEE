@@ -10,5 +10,5 @@ public interface IDisponibilityService {
 
     Disponibility editDisponibility(Disponibility disponibility);
 
-    Disponibility deletDisponibility(Disponibility disponibility);
+    void deletDisponibility(Disponibility disponibility);
 }

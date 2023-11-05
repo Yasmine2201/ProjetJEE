@@ -95,5 +95,7 @@ public final class Constants {
 
         public static final String DISPONIBILITY_FINDBYID = "SELECT d from Disponibility d WHERE d.disponibilityId = :disponibilityId";
         public static final String DISPONIBILITY_FINDALL_BY_TEACHER = "SELECT d from Disponibility WHERE d.teacherId = :teacherId";
+        public static final String SCHOOL_SEARCHWITH_STRING = "SELECT s FROM School s WHERE s.schoolName LIKE :search OR s.address LIKE :search OR s.specializations= :search";
+        public static final String TEACHER_SEARCHWITH_SKILLS = " SELECT t FROM Teacher t WHERE t.skills LIKE :search";
     }
 }

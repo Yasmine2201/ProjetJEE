@@ -1,5 +1,6 @@
 package fr.efrei.teachfinder.dao;
 
+import fr.efrei.teachfinder.entities.School;
 import fr.efrei.teachfinder.entities.Teacher;
 import jakarta.persistence.*;
 
@@ -56,6 +57,15 @@ public class TeacherDAO implements ITeacherDAO {
     public List<Teacher> getAll() {
 
         TypedQuery<Teacher> query = entityManager.createQuery(QueryRequests.TEACHER_GETALL, Teacher.class);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Teacher> searchWithSkills(String research) {
+        TypedQuery<Teacher> query = entityManager.createQuery(
+                        QueryRequests.TEACHER_SEARCHWITH_SKILLS, Teacher.class)
+                .setParameter("search", "%" + research + "%");
 
         return query.getResultList();
     }

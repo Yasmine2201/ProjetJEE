@@ -16,4 +16,6 @@ public interface ITeacherDAO {
     Teacher update(Teacher teacher) throws EntityNotFoundException;
 
     List<Teacher> getAll ();
+
+    List<Teacher> searchWithSkills(String research);
 }
