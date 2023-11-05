@@ -12,15 +12,12 @@
 </head>
 <body>
 <jsp:include page="../navbar/admin.jsp"/>
-<c:set var="candidatures" scope="session" value="${'registrationId' :10}">
 
-</c:set>
 <section class="section">
     <div class="columns is-centered">
         <div class="column is-10 ">
-            <form class="box has-text-centered px-3" method="post" action="controller">
                 <table class="table is-bordered is-striped
-                              is-narrow is-hoverable is-fullwidth">
+                              is-narrow is-hoverable is-fullwidth px-3">
                     <thead>
                     <tr>
                         <th colspan="8">
@@ -65,6 +62,8 @@
 
                             <td>${candidature.schoolName}</td>
                             <td>
+                                <form method="post" action="controller">
+
                                 <button class="button is-success" type="submit" name="action" value="approveRegistration">
                                     <span class="material-symbols-outlined">
                                         done
@@ -75,6 +74,7 @@
                                         close
                                     </span>
                                 </button>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>
