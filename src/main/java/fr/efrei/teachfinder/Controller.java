@@ -2,11 +2,8 @@ package fr.efrei.teachfinder;
 
 import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.SessionUser;
-import fr.efrei.teachfinder.entities.Registration;
 import fr.efrei.teachfinder.entities.RoleType;
-import fr.efrei.teachfinder.services.IRegistrationService;
-import fr.efrei.teachfinder.services.ISecurityService;
-import fr.efrei.teachfinder.services.IUserService;
+import fr.efrei.teachfinder.services.*;
 import jakarta.ejb.EJB;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,31 +20,27 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import static fr.efrei.teachfinder.utils.Constants.*;
 
 public class Controller extends HttpServlet {
 
 //    @EJB private ICandidatureService candidatureService;
-//    @EJB private IDisponibilityService disponibilityService;
-//    @EJB private IEvaluationService evaluationService;
-//    @EJB private INeedService needService;
-//    @EJB private IRecruiterDashboardService recruiterDashboardService;
+    @EJB private IDisponibilityService disponibilityService;
+    @EJB private IEvaluationService evaluationService;
+    @EJB private INeedService needService;
+    @EJB private IRecruiterDashboardService recruiterDashboardService;
     @EJB private IRegistrationService registrationService;
-//    @EJB private IResearchService researchService;
-//    @EJB private ISchoolService schoolService;
+    @EJB private IResearchService researchService;
+    @EJB private ISchoolService schoolService;
     @EJB private ISecurityService securityService;
-//    @EJB private ITeacherDashboardService teacherDashboardService;
-//    @EJB private ITeacherService teacherService;
+    @EJB private ITeacherDashboardService teacherDashboardService;
+    @EJB private ITeacherService teacherService;
     @EJB private IUserService userService;
 
     private static final Logger log = LogManager.getLogger(Controller.class);
 
     public void init() {
-    }
-
-    public void destroy() {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -122,6 +115,11 @@ public class Controller extends HttpServlet {
         return (SessionUser) session.getAttribute("sessionUser");
     }
 
+    public void sendSessionUser(HttpServletRequest request) {
+        SessionUser sessionUser = getSessionUser(request);
+        request.setAttribute("sessionuser", sessionUser);
+    }
+
     public void useParametersAsAttributes(HttpServletRequest request, HttpServletResponse response) {
         for (String name : Collections.list(request.getParameterNames())) {
             request.setAttribute(name, request.getParameter(name));
@@ -186,23 +184,26 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.GO_TO_ADMIN_HOME, roles = {RoleType.Admin})
     public void goToAdminHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Registration> pendingRegistrations = registrationService.getPendingRegistrations();
-        request.setAttribute("pendingRegistrations", pendingRegistrations);
+        sendSessionUser(request);
+        request.setAttribute("pendingRegistrations", registrationService.getPendingRegistrations());
         request.getRequestDispatcher(Pages.ADMIN_HOME).forward(request, response);
     }
 
     @Action(action = Actions.GO_TO_RECRUITER_HOME, roles = {RoleType.Recruiter})
     public void goToRecruiterHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        sendSessionUser(request);
         request.getRequestDispatcher(Pages.RECRUITER_HOME).forward(request, response);
     }
 
     @Action(action = Actions.GO_TO_TEACHER_HOME, roles = {RoleType.Teacher})
     public void goToTeacherHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        sendSessionUser(request);
         request.getRequestDispatcher(Pages.TEACHER_HOME).forward(request, response);
     }
 
     @Action(action = Actions.GO_TO_REGISTER)
     public void goToRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        sendSessionUser(request);
         request.getRequestDispatcher(Pages.REGISTRATION).forward(request, response);
     }
 

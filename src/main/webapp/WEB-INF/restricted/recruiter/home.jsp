@@ -75,6 +75,6 @@
         </div>
     </section>
 </form>
-
 </body>
+<jsp:include page="/WEB-INF/footer.jsp"/>
 </html>
