@@ -58,6 +58,11 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="notification is-danger">
+                <button class="delete"></button>
+                ${message}
+            </div>
         </div>
     </div>
 </section>

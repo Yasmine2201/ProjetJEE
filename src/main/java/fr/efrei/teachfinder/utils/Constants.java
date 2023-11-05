@@ -81,6 +81,8 @@ public final class Constants {
         public static final String UNAVAILABLE_LOGIN = "Cet identifiant est déjà utilisé par un autre utilisateur";
         public static final String SUCCESSFUL_REGISTRATION = "Inscription envoyée";
         public static final String INVALID_ARGUMENT = "Argument invalide";
+        public static final String UNAVAILABLE_ENTITY = "Entité non disponible";
+        public static final String SUCCESS = "Succès de l'opération";
     }
 
     public static final class QueryRequests {

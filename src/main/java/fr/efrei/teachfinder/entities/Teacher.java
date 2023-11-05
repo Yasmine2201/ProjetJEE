@@ -39,11 +39,11 @@ public class Teacher {
     @Column(name = "desiredLevels", length = 64)
     private String desiredLevels;
 
-    @NotNull
     @Lob
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "contractType", nullable = false)
-    private ContractType contractType;
+    private ContractType contractType = ContractType.Any;
 
     @Size(max = 256)
     @Column(name = "academicCertifications", length = 256)

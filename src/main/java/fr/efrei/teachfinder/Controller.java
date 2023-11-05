@@ -8,6 +8,8 @@ import fr.efrei.teachfinder.services.IRegistrationService;
 import fr.efrei.teachfinder.services.ISecurityService;
 import fr.efrei.teachfinder.services.IUserService;
 import jakarta.ejb.EJB;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -202,5 +204,37 @@ public class Controller extends HttpServlet {
     @Action(action = Actions.GO_TO_REGISTER)
     public void goToRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(Pages.REGISTRATION).forward(request, response);
+    }
+
+    @Action(action = Actions.APPROVE_REGISTRATION, roles = {RoleType.Admin})
+    public void approveRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        try {
+            int registrationId = Integer.parseInt(request.getParameter("registrationId"));
+            registrationService.approveRegistration(registrationId);
+            request.setAttribute("message", Messages.SUCCESS);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "registrationId should be an integer");
+        } catch (EntityNotFoundException e) {
+            request.setAttribute("message", Messages.UNAVAILABLE_ENTITY);
+        } catch (EntityExistsException e) {
+            request.setAttribute("message", Messages.UNAVAILABLE_LOGIN);
+        }
+
+        goToAdminHome(request, response);
+    }
+
+    @Action(action = Actions.DENY_REGISTRATION, roles = {RoleType.Admin})
+    public void denyRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        try {
+            int registrationId = Integer.parseInt(request.getParameter("registrationId"));
+            registrationService.denyRegistration(registrationId);
+            request.setAttribute("message", Messages.SUCCESS);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "registrationId should be an integer");
+        } catch (EntityNotFoundException e) {
+            request.setAttribute("message", Messages.UNAVAILABLE_ENTITY);
+        }
+
+        goToAdminHome(request, response);
     }
 }

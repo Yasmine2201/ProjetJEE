@@ -4,6 +4,7 @@ import fr.efrei.teachfinder.dao.IRecruiterDAO;
 import fr.efrei.teachfinder.dao.ITeacherDAO;
 import fr.efrei.teachfinder.dao.IUserDAO;
 import fr.efrei.teachfinder.entities.*;
+import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityExistsException;
@@ -12,14 +13,11 @@ import jakarta.persistence.EntityNotFoundException;
 @Stateless
 public class UserService implements IUserService {
 
-    @Inject
-    private IUserDAO userDAO;
+    @Inject private IUserDAO userDAO;
+    @Inject private ITeacherDAO teacherDAO;
+    @Inject private IRecruiterDAO recruiterDAO;
 
-    @Inject
-    private ITeacherDAO teacherDAO;
-
-    @Inject
-    private IRecruiterDAO recruiterDAO;
+    @EJB private ISchoolService schoolService;
 
     @Override
     public ApplicationUser getUser(int userId) throws EntityNotFoundException {
@@ -55,11 +53,14 @@ public class UserService implements IUserService {
 
         if (createdUser.getRole() == RoleType.Teacher) {
             Teacher teacher = new Teacher();
+            teacher.setId(createdUser.getId());
             teacher.setApplicationuser(createdUser);
             teacherDAO.create(teacher);
         } else if (createdUser.getRole() == RoleType.Recruiter) {
             Recruiter recruiter = new Recruiter();
+            recruiter.setId(createdUser.getId());
             recruiter.setApplicationuser(createdUser);
+            recruiter.setSchoolName(registration.getSchoolName());
             recruiterDAO.create(recruiter);
         }
 
