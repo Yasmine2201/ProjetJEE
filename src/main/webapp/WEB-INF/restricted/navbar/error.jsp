@@ -1,6 +1,7 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <form method="post" action="controller">
     <section class="section">
-        <nav class="navbar is-fixed-top">
+        <nav class="is-navbar is-fixed-top">
 
             <div class="navbar-start">
                 <div class="navbar-item">
@@ -20,20 +21,6 @@
                     </button>
                 </div>
             </div>
-
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <button class="button is-info" type="submit" name="action" value="goToMyProfile">
-                        Mon Profil
-                    </button>
-                </div>
-                <div class="navbar-item">
-                    <button class="button is-danger" type="submit" name="action" value="logout">
-                        Deconnexion
-                    </button>
-                </div>
-            </div>
-
         </nav>
 
     </section>

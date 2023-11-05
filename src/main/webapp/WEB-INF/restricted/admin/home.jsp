@@ -9,29 +9,26 @@
     <div class="columns is-centered">
         <div class="column is-10 ">
             <div class="box has-text-centered px-3">
+                <h3 class="title is-3 has-text-left">En attente de validation</h3>
+
                 <table class="table is-bordered is-striped
                               is-narrow is-hoverable is-fullwidth">
                     <thead>
                     <tr>
-                        <th colspan="8">
-                            En attente de validation
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>Nom</th>
                         <th>Prénom</th>
-                        <th>Email</th>
-                        <th>N° de telephone</th>
-                        <th>Role</th>
-                        <th>Ecole</th>
-                        <th>Valider ?</th>
+                        <th>Nom</th>
+                        <th>Courrier électronique</th>
+                        <th>N° de téléphone</th>
+                        <th>Rôle</th>
+                        <th>École</th>
+                        <th>Valider / Refuser</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${pendingRegistrations}" var="registration">
                         <tr id= ${registration.registrationId}>
-                            <td>${registration.lastname}</td>
                             <td>${registration.firstname}</td>
+                            <td>${registration.lastname}</td>
                             <td>${registration.email}</td>
                             <td>${registration.phone}</td>
                             <td>${registration.role}</td>
@@ -58,16 +55,29 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="notification is-danger">
-                <button class="delete"></button>
-                ${message}
-            </div>
+            <c:if test="${not empty message}">
+                <div class="notification" id="message">
+                    ${message}
+                </div>
+            </c:if>
         </div>
     </div>
 </section>
 </body>
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(hideNotification, 5000);
+    })
+
+    function hideNotification() {
+        const notification = document.getElementById("message");
+
+        if (notification === null) return;
+        notification.hidden = true;
+    }
+</script>
 
 <style>
     @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");

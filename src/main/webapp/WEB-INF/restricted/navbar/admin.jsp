@@ -1,13 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: maxim
-  Date: 20/10/2023
-  Time: 09:00
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <form method="post" action="controller">
     <section class="section">
-        <nav class="navbar is-fixed-top">
+        <nav class="is-navbar is-fixed-top">
             <div class="navbar-start">
                 <div class="navbar-item">
                     <button type="submit" name="action" value="goToHome"
