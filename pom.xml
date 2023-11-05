@@ -39,9 +39,9 @@
             <version>3.0.0</version>
         </dependency>
         <dependency>
-            <groupId>org.jboss.spec.javax.servlet.jstl</groupId>
-            <artifactId>jboss-jstl-api_1.2_spec</artifactId>
-            <version>1.1.4.Final</version>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>3.0.1</version>
         </dependency>
         <dependency>
             <groupId>jakarta.platform</groupId>

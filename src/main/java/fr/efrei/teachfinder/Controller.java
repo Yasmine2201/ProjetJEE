@@ -192,7 +192,6 @@ public class Controller extends HttpServlet {
 
     @Action(action= Actions.GO_TO_REGISTER)
     public void goToRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("schools", Arrays.asList("EFREI", "ESIEA", "EPITA", "42", "Centrale Sup"));
         request.getRequestDispatcher(Pages.REGISTRATION).forward(request, response);
     }
 
