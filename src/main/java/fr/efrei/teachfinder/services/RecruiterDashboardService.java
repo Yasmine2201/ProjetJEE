@@ -47,7 +47,7 @@ public class RecruiterDashboardService implements IRecruiterDashboardService{
 
     @Override
     public List<Candidature> getCandidatures(int recruiterId) {
-        //on ne montre que les candidatures au statut Pending
+        //only candidatures on statut Pending
         List<Need> runningNeeds=getRunningNeed(recruiterId);
         List<Candidature> candidaturesList=new ArrayList<>();
         for (Need need : runningNeeds){

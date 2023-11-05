@@ -36,7 +36,7 @@ public class TeacherService implements ITeacherService{
 
     @Override
     public List<Disponibility> getTeacherFutureDisponibilities(int teacherId) {
-        if (teacherExists(teacherId)) {
+        if (!teacherExists(teacherId)) {
             throw new EntityNotFoundException("No teacher found with id " + teacherId);
         }
 
@@ -58,7 +58,7 @@ public class TeacherService implements ITeacherService{
 
     @Override
     public List<Evaluation> getTeacherEvaluations(int teacherId) {
-        if (teacherExists(teacherId)) {
+        if (!teacherExists(teacherId)) {
             throw new EntityNotFoundException("No teacher found with id " + teacherId);
         }
         else{
