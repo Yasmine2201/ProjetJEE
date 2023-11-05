@@ -8,15 +8,15 @@ public class SessionUser {
     private final int userId;
     private final String login;
     private final RoleType role;
-    private final String firstName;
-    private final String lastName;
+    private final String firstname;
+    private final String lastname;
 
     public SessionUser(ApplicationUser user) {
         userId = user.getId();
         login = user.getLogin();
         role = user.getRole();
-        firstName = user.getFirstname();
-        lastName = user.getLastname();
+        firstname = user.getFirstname();
+        lastname = user.getLastname();
     }
 
     public int getUserId() {
@@ -31,12 +31,12 @@ public class SessionUser {
         return role;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
     @Override
@@ -45,8 +45,8 @@ public class SessionUser {
                 "userId=" + userId +
                 ", login='" + login + '\'' +
                 ", role=" + role +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
                 '}';
     }
 }

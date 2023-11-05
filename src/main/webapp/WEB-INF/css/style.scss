@@ -20,4 +20,13 @@ div .is-rounded {
   display: flex;
 }
 
+.is-footer {
+  background-color: #525254;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.8rem;
+  padding: 0.5rem;
+}
+
 @import "/WEB-INF/css/bulma/bulma.sass";

@@ -18,4 +18,5 @@
     </div>
 </section>
 </body>
+<jsp:include page="/WEB-INF/footer.jsp"/>
 </html>
