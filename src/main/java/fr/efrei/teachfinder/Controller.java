@@ -3,8 +3,7 @@ package fr.efrei.teachfinder;
 import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.SessionUser;
 import fr.efrei.teachfinder.entities.RoleType;
-import fr.efrei.teachfinder.services.IRegistrationService;
-import fr.efrei.teachfinder.services.ISecurityService;
+import fr.efrei.teachfinder.services.*;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -24,11 +23,18 @@ import static fr.efrei.teachfinder.utils.Constants.*;
 
 public class Controller extends HttpServlet {
 
-    @EJB
-    private ISecurityService securityService;
-
-    @EJB
-    private IRegistrationService registrationService;
+//    @EJB private ICandidatureService candidatureService;
+    @EJB private IDisponibilityService disponibilityService;
+    @EJB private IEvaluationService evaluationService;
+    @EJB private INeedService needService;
+    @EJB private IRecruiterDashboardService recruiterDashboardService;
+    @EJB private IRegistrationService registrationService;
+    @EJB private IResearchService researchService;
+    @EJB private ISchoolService schoolService;
+    @EJB private ISecurityService securityService;
+    @EJB private ITeacherDashboardService teacherDashboardService;
+    @EJB private ITeacherService teacherService;
+    @EJB private IUserService userService;
 
     private static final Logger log = LogManager.getLogger(Controller.class);
 
@@ -187,7 +193,7 @@ public class Controller extends HttpServlet {
         request.getRequestDispatcher(Pages.TEACHER_HOME).forward(request, response);
     }
 
-    @Action(action= Actions.GO_TO_REGISTER)
+    @Action(action = Actions.GO_TO_REGISTER)
     public void goToRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(Pages.REGISTRATION).forward(request, response);
     }
