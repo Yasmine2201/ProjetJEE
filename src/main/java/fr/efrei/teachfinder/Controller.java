@@ -2,8 +2,11 @@ package fr.efrei.teachfinder;
 
 import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.SessionUser;
+import fr.efrei.teachfinder.entities.Registration;
 import fr.efrei.teachfinder.entities.RoleType;
-import fr.efrei.teachfinder.services.*;
+import fr.efrei.teachfinder.services.IRegistrationService;
+import fr.efrei.teachfinder.services.ISecurityService;
+import fr.efrei.teachfinder.services.IUserService;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -18,22 +21,23 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static fr.efrei.teachfinder.utils.Constants.*;
 
 public class Controller extends HttpServlet {
 
 //    @EJB private ICandidatureService candidatureService;
-    @EJB private IDisponibilityService disponibilityService;
-    @EJB private IEvaluationService evaluationService;
-    @EJB private INeedService needService;
-    @EJB private IRecruiterDashboardService recruiterDashboardService;
+//    @EJB private IDisponibilityService disponibilityService;
+//    @EJB private IEvaluationService evaluationService;
+//    @EJB private INeedService needService;
+//    @EJB private IRecruiterDashboardService recruiterDashboardService;
     @EJB private IRegistrationService registrationService;
-    @EJB private IResearchService researchService;
-    @EJB private ISchoolService schoolService;
+//    @EJB private IResearchService researchService;
+//    @EJB private ISchoolService schoolService;
     @EJB private ISecurityService securityService;
-    @EJB private ITeacherDashboardService teacherDashboardService;
-    @EJB private ITeacherService teacherService;
+//    @EJB private ITeacherDashboardService teacherDashboardService;
+//    @EJB private ITeacherService teacherService;
     @EJB private IUserService userService;
 
     private static final Logger log = LogManager.getLogger(Controller.class);
@@ -180,6 +184,8 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.GO_TO_ADMIN_HOME, roles = {RoleType.Admin})
     public void goToAdminHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Registration> pendingRegistrations = registrationService.getPendingRegistrations();
+        request.setAttribute("pendingRegistrations", pendingRegistrations);
         request.getRequestDispatcher(Pages.ADMIN_HOME).forward(request, response);
     }
 

@@ -14,7 +14,7 @@ public interface IRegistrationService {
     Registration createRegistration(RegistrationBean registration)
             throws IncompleteEntityException, UnavailableLoginException, IllegalArgumentException;
 
-    List<Registration> getPendingRegistration();
+    List<Registration> getPendingRegistrations();
 
     void denyRegistration(int registrationId) throws EntityNotFoundException;
 

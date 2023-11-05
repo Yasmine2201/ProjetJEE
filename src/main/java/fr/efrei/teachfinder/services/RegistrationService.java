@@ -83,7 +83,7 @@ public class RegistrationService implements IRegistrationService {
     }
 
     @Override
-    public List<Registration> getPendingRegistration() {
+    public List<Registration> getPendingRegistrations() {
         return registrationDAO.getAllWithStatus(StatusType.Pending);
     }
 

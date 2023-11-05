@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: maxim
-  Date: 20/10/2023
-  Time: 14:33
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -12,75 +5,59 @@
 </head>
 <body>
 <jsp:include page="../navbar/admin.jsp"/>
-<c:set var="candidatures" scope="session" value="${'registrationId' :10}">
-
-</c:set>
 <section class="section">
     <div class="columns is-centered">
         <div class="column is-10 ">
-            <form class="box has-text-centered px-3" method="post" action="controller">
+            <div class="box has-text-centered px-3">
                 <table class="table is-bordered is-striped
                               is-narrow is-hoverable is-fullwidth">
                     <thead>
                     <tr>
                         <th colspan="8">
-                            En attend de validation
+                            En attente de validation
                         </th>
                     </tr>
                     <tr>
-                        <th>
-                            Nom
-                        </th>
-                        <th>
-                            Prenom
-                        </th>
-                        <th>
-                            Email
-                        </th>
-                        <th>
-                            N° de telephone
-                        </th>
-                        <th>
-                            Role
-                        </th>
-                        <th>
-                            Ecole
-                        </th>
-                        <th>
-                            Validation
-                        </th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
+                        <th>N° de telephone</th>
+                        <th>Role</th>
+                        <th>Ecole</th>
+                        <th>Valider ?</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${candidatures}" var="candidature">
-                        <tr id= ${candidature.registrationId}>
+                    <c:forEach items="${pendingRegistrations}" var="registration">
+                        <tr id= ${registration.registrationId}>
+                            <td>${registration.lastname}</td>
+                            <td>${registration.firstname}</td>
+                            <td>${registration.email}</td>
+                            <td>${registration.phone}</td>
+                            <td>${registration.role}</td>
+                            <td>${registration.schoolName.schoolName}</td>
 
-                            <td>${candidature.lastname}</td>
-
-                            <td>${candidature.firstname}</td>
-
-                            <td>${candidature.phone}</td>
-
-                            <td>${candidature.role}</td>
-
-                            <td>${candidature.schoolName}</td>
                             <td>
-                                <button class="button is-success" type="submit" name="action" value="approveRegistration">
-                                    <span class="material-symbols-outlined">
-                                        done
-                                    </span>
-                                </button>
-                                <button class="button is-danger" type="submit" name="action" value="denyRegistration">
-                                    <span class="material-symbols-outlined">
-                                        close
-                                    </span>
-                                </button>
+                                <form method="post" action="controller">
+                                    <input class="is-hidden" name="registrationId" value="${registration.registrationId}">
+
+                                    <button class="button is-success" type="submit" name="action"
+                                            value="approveRegistration">
+                                    <span class="material-symbols-outlined">done</span>
+                                    </button>
+
+                                    <button class="button is-danger" type="submit" name="action"
+                                            value="denyRegistration">
+                                    <span class="material-symbols-outlined">close</span>
+                                    </button>
+                                </form>
                             </td>
+
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
-            </form>
+            </div>
         </div>
     </div>
 </section>
