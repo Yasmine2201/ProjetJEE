@@ -33,22 +33,25 @@ public class NeedService implements INeedService{
     public Candidature apply(int needId, int teacherId) {
         Need need=needDAO.findById(needId);
         Teacher teacher=teacherDAO.findById(teacherId);
-        School school= need.getSchoolName();
-        if(teacher != null && need != null){
+        if(need!=null){
+            School school= need.getSchoolName();
 
-        Candidature newCandidature = new Candidature();
-        newCandidature.setTeacher(teacher);
-        newCandidature.setNeed(need);
-        newCandidature.setSchoolName(school);
-        newCandidature.setStatus(StatusType.Pending);
-        newCandidature.setCreatedOn(LocalDateTime.now());
-        newCandidature.setIsInitiatedByTeacher(true);
-        newCandidature.setIsValidatedByRecruiter(false);
-        newCandidature.setIsValidatedByTeacher(false);
+            if(teacher != null ){
+                Candidature newCandidature = new Candidature();
+                newCandidature.setTeacher(teacher);
+                newCandidature.setNeed(need);
+                newCandidature.setSchoolName(school);
+                newCandidature.setStatus(StatusType.Pending);
+                newCandidature.setCreatedOn(LocalDateTime.now());
+                newCandidature.setIsInitiatedByTeacher(true);
+                newCandidature.setIsValidatedByRecruiter(false);
+                newCandidature.setIsValidatedByTeacher(false);
+                return candidatureDAO.create(newCandidature);
+                }
+            else {return null;}
+            }
 
-        return candidatureDAO.create(newCandidature);}
         else{ return null;}
     }
-
 
 }
