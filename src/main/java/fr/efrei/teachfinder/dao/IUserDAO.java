@@ -1,7 +1,6 @@
 package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.ApplicationUser;
-import fr.efrei.teachfinder.entities.Registration;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.NotNull;
@@ -25,13 +24,13 @@ public interface IUserDAO {
     ApplicationUser findByLogin(String login);
 
     /**
-     * Create an ApplicationUser from a validated registration.
+     * Create an ApplicationUser in database.
      *
-     * @param registration Registration validated by an administrator
+     * @param user ApplicationUser to create in database
      * @throws EntityExistsException if ApplicationUser with same login as registration already exists.
      * @return The created ApplicationUser if successful
      */
-    ApplicationUser create(@NotNull Registration registration) throws EntityExistsException;
+    ApplicationUser create(@NotNull ApplicationUser user) throws EntityExistsException;
 
     /**
      * Update an ApplicationUser.
