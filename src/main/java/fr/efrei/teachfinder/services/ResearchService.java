@@ -4,10 +4,12 @@ import fr.efrei.teachfinder.dao.SchoolDAO;
 import fr.efrei.teachfinder.dao.TeacherDAO;
 import fr.efrei.teachfinder.entities.School;
 import fr.efrei.teachfinder.entities.Teacher;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
 import java.util.List;
 
+@Stateless
 public class ResearchService implements IResearchService{
 
     @Inject

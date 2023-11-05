@@ -69,7 +69,7 @@ public class SchoolDAO implements ISchoolDAO {
     public List<School> searchWithString(String research) {
         TypedQuery<School> query = entityManager.createQuery(
                         QueryRequests.SCHOOL_SEARCHWITH_STRING, School.class)
-                .setParameter("search", "%" + research + "%");
+                .setParameter("search", research);
 
         return query.getResultList();
     }

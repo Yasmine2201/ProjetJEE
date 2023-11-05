@@ -6,11 +6,15 @@ import fr.efrei.teachfinder.dao.TeacherDAO;
 import fr.efrei.teachfinder.entities.Disponibility;
 import fr.efrei.teachfinder.entities.Evaluation;
 import fr.efrei.teachfinder.entities.Teacher;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+@Stateless
 public class TeacherService implements ITeacherService{
     @Inject
     TeacherDAO teacherDAO;
@@ -35,9 +39,20 @@ public class TeacherService implements ITeacherService{
         if (teacherExists(teacherId)) {
             throw new EntityNotFoundException("No teacher found with id " + teacherId);
         }
-        else {
-            return disponibilityDAO.findAllByTeacher(teacherId);
+
+        List<Disponibility> disponibilities = disponibilityDAO.findAllByTeacher(teacherId);
+        LocalDateTime todayDate = LocalDateTime.now();
+
+
+        List<Disponibility> filteredDisponibilities = new ArrayList<>();
+
+
+        for (Disponibility disponibility : disponibilities) {
+            if (disponibility.getEndDate().isAfter(todayDate)) {
+                filteredDisponibilities.add(disponibility);
+            }
         }
+        return filteredDisponibilities;
     }
 
 
@@ -51,6 +66,6 @@ public class TeacherService implements ITeacherService{
         }
     }
 
-    boolean teacherExists(int teacherId){ return teacherDAO.findById(teacherId) == null;}
+    boolean teacherExists(int teacherId){ return teacherDAO.findById(teacherId) != null;}
 
 }

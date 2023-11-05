@@ -82,7 +82,7 @@ public class NeedDAO implements INeedDAO {
     public List<Need> searchWithString(String research) {
         TypedQuery<Need> query = entityManager.createQuery(
                         QueryRequests.NEED_SEARCHWITH_STRING, Need.class)
-                .setParameter("search", "%" + research + "%");
+                .setParameter("search",  research );
 
         return query.getResultList();
     }

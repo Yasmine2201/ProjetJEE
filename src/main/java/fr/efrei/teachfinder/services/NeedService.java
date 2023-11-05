@@ -4,10 +4,11 @@ import fr.efrei.teachfinder.dao.CandidatureDAO;
 import fr.efrei.teachfinder.dao.NeedDAO;
 import fr.efrei.teachfinder.dao.TeacherDAO;
 import fr.efrei.teachfinder.entities.*;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
 import java.time.LocalDateTime;
-
+@Stateless
 public class NeedService implements INeedService{
 
     @Inject
