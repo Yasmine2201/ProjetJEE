@@ -10,55 +10,41 @@ import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-public class RecruiterDashboardService implements IRecruiterDashboardService{
+public class RecruiterDashboardService implements IRecruiterDashboardService {
 
-    @Inject
-    NeedDAO needDAO;
-    @Inject
-    RecruiterDAO recruiterDAO;
-
-    @Inject
-    CandidatureDAO candidatureDAO;
+    @Inject NeedDAO needDAO;
+    @Inject RecruiterDAO recruiterDAO;
+    @Inject CandidatureDAO candidatureDAO;
 
     @Override
-    public List<Need> getRunningNeed(int recruiterId) {
-        if (!recruiterExists(recruiterId)) {
+    public List<Need> getRunningNeed(int recruiterId) throws EntityNotFoundException {
+
+        if (!recruiterExists(recruiterId))
             throw new EntityNotFoundException("No recruiter found with id " + recruiterId);
-        }
-        else {
-            List<Need> needs = needDAO.findAllByRecruiter(recruiterId);
 
-            return needs.stream()
-                    .filter(
-                            need -> need.getCandidatures()
-                                    .stream()
-                                    .noneMatch(candidature -> candidature.getStatus() == StatusType.Accepted))
-                    .toList();
-        }
+        List<Need> needs = needDAO.findAllByRecruiter(recruiterId);
 
+        return needs.stream()
+                .filter(
+                        need -> need.getCandidatures()
+                                .stream()
+                                .noneMatch(candidature -> candidature.getStatus() == StatusType.Accepted))
+                .toList();
     }
 
-
-
-
     @Override
-    public List<Candidature> getCandidatures(int recruiterId) {
-        //on ne montre que les candidatures au statut Pending
-        List<Need> runningNeeds=getRunningNeed(recruiterId);
-        List<Candidature> candidaturesList=new ArrayList<>();
-        for (Need need : runningNeeds){
-            List<Candidature> candidaturesForNeed = candidatureDAO.findAllByNeed(need.getId());
-            candidaturesList.addAll(candidaturesForNeed);
-        }
+    public List<Candidature> getCandidatures(int recruiterId) throws EntityNotFoundException {
+        // Only pending candidatures
+        List<Candidature> candidaturesList = candidatureDAO.findAllByRecruiter(recruiterId);
         return candidaturesList.stream()
                 .filter(candidature -> candidature.getStatus() == StatusType.Pending)
                 .toList();
-
     }
-    private boolean recruiterExists(int recruiterId) { return recruiterDAO.findById(recruiterId)!=  null ; }
 
+    private boolean recruiterExists(int recruiterId) {
+        return recruiterDAO.findById(recruiterId) != null;
+    }
 }
