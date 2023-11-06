@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Page admin</title>
+    <title>Tableau de bord</title>
 </head>
 <body>
 <jsp:include page="../navbar/admin.jsp"/>

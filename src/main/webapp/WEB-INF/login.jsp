@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>TeachFinder</title>
+    <title>TeachFinder - Connexion</title>
 </head>
 <body>
 <div style=" position: relative;

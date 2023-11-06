@@ -1,14 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ThibautColnot
-  Date: 12/10/2023
-  Time: 09:37
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Tableau de bord</title>
 </head>
 <c:set var="candidaturesById" scope="session"
        value="${[{'needId' : 10012, 'schoolName': 'HEC', 'isValidatedByTeacher' : 0, 'isValidatedByRecruiter' : 0, 'status' : 'Pending'},
