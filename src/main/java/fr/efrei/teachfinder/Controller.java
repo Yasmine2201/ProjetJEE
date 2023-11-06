@@ -81,11 +81,13 @@ public class Controller extends HttpServlet {
                 "\n\tUSER: " + sessionUser
         );
 
-        if (action == null) goToLogin(request, response);
+        if (action == null) {
+            goToLogin(request, response);
+            return;
+        }
 
-        if (action != null && (
-                isActionRestricted(action)
-                        && (sessionUser == null || session == null || !session.getId().equals(sessionUser.getSessionId())))
+        if (isActionRestricted(action)
+            && (sessionUser == null || session == null || !session.getId().equals(sessionUser.getSessionId()))
         ) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
@@ -221,7 +223,10 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.GO_TO_TEACHER_HOME, roles = {RoleType.Teacher})
     public void goToTeacherHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        sendSessionUser(request);
+        SessionUser sessionUser = getSessionUser(request);
+        sendSessionUser(request, sessionUser);
+        request.setAttribute("interestingNeeds", teacherDashboardService.getInterestingNeeds(sessionUser.getUserId()));
+        request.setAttribute("candidatures", teacherDashboardService.getCandidatures(sessionUser.getUserId()));
         request.getRequestDispatcher(Pages.TEACHER_HOME).forward(request, response);
     }
 

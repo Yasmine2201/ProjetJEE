@@ -42,7 +42,7 @@
                             </td>
                             <td>
                                 <c:if test="${not empty need.timePeriod}">${need.timePeriod}</c:if>
-                                <c:if test="${empty need.timePeriod}">${need.timePeriod}</c:if>
+                                <c:if test="${empty need.timePeriod}">Non applicable</c:if>
                             </td>
                             <td class="is-narrow">
                                 <form method="post" action="controller">
@@ -79,7 +79,7 @@
                                     <input class="is-hidden" name="schoolName"
                                            value="${candidature.teacher.id}">
                                 </label>
-                                <button type="submit" name="action" value="goToSchool"
+                                <button type="submit" name="action" value="goToTeacher"
                                         class="button has-text-info"
                                         style="border: none; background-color: transparent">
                                         ${candidature.teacher.applicationuser.firstname}

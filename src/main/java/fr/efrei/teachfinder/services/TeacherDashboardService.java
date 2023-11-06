@@ -38,17 +38,15 @@ public class TeacherDashboardService implements ITeacherDashboardService {
             .map(
                 need -> {
                     int score = (
-                        (teacherPersonnalInterests.contains(need.getSubject()) ? 5 : 0)
+                        (teacherPersonnalInterests != null && teacherPersonnalInterests.contains(need.getSubject()) ? 5 : 0)
                         + (need.getContractType() == teacherContractType ? 3 : 0)
-                        + (teacherSchoolInterests.contains(need.getSchoolName().getSchoolName()) ? 1 : 0)
+                        + (teacherSchoolInterests != null && teacherSchoolInterests.contains(need.getSchoolName().getSchoolName()) ? 1 : 0)
                     );
                   return Map.entry(need, score);
                 }
             )
-            // Keep only scores greater than 2
-            .filter(needIntegerEntry -> needIntegerEntry.getValue() > 2)
             // Sort by score
-            .sorted((Map.Entry.comparingByValue()))
+            .sorted()
             // Max : 10 results
             .limit(20)
             // Transform to list
