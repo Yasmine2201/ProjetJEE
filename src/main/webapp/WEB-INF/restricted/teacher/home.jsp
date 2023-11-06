@@ -29,6 +29,7 @@
 
     <div class="columns">
         <div class="column">
+            <div>
             <table class="table is-bordered is-striped
                                   is-narrow is-hoverable is-fullwidth ">
                 <thead>
@@ -61,7 +62,18 @@
                     <tr id=${need.needId}>
                         <td class="is-narrow">${need.needId}</td>
 
-                        <td>${need.schoolName}</td>
+                        <td>
+                            <form method="post" action="controller">
+                                <label>
+                                    <input class="is-hidden" name="schoolName"
+                                           value="${need.schoolName}">
+                                </label>
+                                <button type="submit" name="action" value="goToSchool"
+                                        class="button has-text-info"
+                                        style="border: none; background-color: transparent"> ${need.schoolName}
+                                </button>
+                            </form>
+                        </td>
 
                         <td>${need.subject}</td>
 
@@ -118,7 +130,18 @@
 
                         <td class="is-narrow">${candidature.needId}</td>
 
-                        <td>${candidature.schoolName}</td>
+                        <td>
+                            <form method="post" action="controller">
+                                <label>
+                                    <input class="is-hidden" name="schoolName"
+                                           value="${candidature.schoolName}">
+                                </label>
+                                <button type="submit" name="action" value="goToSchool"
+                                        class="button has-text-info"
+                                        style="border: none; background-color: transparent"> ${candidature.schoolName}
+                                </button>
+                            </form>
+                        </td>
                         <td class="is-narrow">
                             <c:if test="${candidature.isValidatedByTeacher == 0}">
                                 <p class="tag is-danger"> Enseignant </p>
@@ -152,8 +175,8 @@
                         </td>
                         <td class="is-narrow">
                             <form method="post" action="controller">
-                                <input class="is-hidden" name="needId" value="${candidature.needId}">
-                                <button class="button is-info" type="submit" name="action" value="goToNeed">
+                                <input class="is-hidden" name="needId" value="${candidature.schoolName}">
+                                <button class="button is-info" type="submit" name="action" value="goToSchool">
                                     <span class="material-symbols-outlined">
                                         read_more
                                     </span>

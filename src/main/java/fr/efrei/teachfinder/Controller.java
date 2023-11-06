@@ -25,18 +25,29 @@ import static fr.efrei.teachfinder.utils.Constants.*;
 
 public class Controller extends HttpServlet {
 
-//    @EJB private ICandidatureService candidatureService;
-    @EJB private IDisponibilityService disponibilityService;
-    @EJB private IEvaluationService evaluationService;
-    @EJB private INeedService needService;
-    @EJB private IRecruiterDashboardService recruiterDashboardService;
-    @EJB private IRegistrationService registrationService;
-    @EJB private IResearchService researchService;
-    @EJB private ISchoolService schoolService;
-    @EJB private ISecurityService securityService;
-    @EJB private ITeacherDashboardService teacherDashboardService;
-    @EJB private ITeacherService teacherService;
-    @EJB private IUserService userService;
+    //    @EJB private ICandidatureService candidatureService;
+    @EJB
+    private IDisponibilityService disponibilityService;
+    @EJB
+    private IEvaluationService evaluationService;
+    @EJB
+    private INeedService needService;
+    @EJB
+    private IRecruiterDashboardService recruiterDashboardService;
+    @EJB
+    private IRegistrationService registrationService;
+    @EJB
+    private IResearchService researchService;
+    @EJB
+    private ISchoolService schoolService;
+    @EJB
+    private ISecurityService securityService;
+    @EJB
+    private ITeacherDashboardService teacherDashboardService;
+    @EJB
+    private ITeacherService teacherService;
+    @EJB
+    private IUserService userService;
 
     private static final Logger log = LogManager.getLogger(Controller.class);
 
@@ -74,7 +85,7 @@ public class Controller extends HttpServlet {
 
         if (action != null && (
                 isActionRestricted(action)
-                && (sessionUser == null || session == null || !session.getId().equals(sessionUser.getSessionId())))
+                        && (sessionUser == null || session == null || !session.getId().equals(sessionUser.getSessionId())))
         ) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
@@ -173,8 +184,7 @@ public class Controller extends HttpServlet {
 
         String action;
 
-        if (sessionUser == null)
-        {
+        if (sessionUser == null) {
             action = Actions.GO_TO_LOGIN;
         } else {
             switch (sessionUser.getRole()) {
@@ -251,5 +261,16 @@ public class Controller extends HttpServlet {
         }
 
         goToAdminHome(request, response);
+    }
+
+    @Action(action = Actions.GO_TO_SCHOOL, roles = {RoleType.Admin, RoleType.Recruiter, RoleType.Teacher})
+    public void goToReadSchool(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        sendSessionUser(request);
+        request.getRequestDispatcher(Pages.SCHOOL_VIEW).forward(request, response);
+    }
+    @Action(action = Actions.GO_TO_NEED)
+    public void goToReadNeed(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        sendSessionUser(request);
+        request.getRequestDispatcher(Pages.NEED_VIEW).forward(request, response);
     }
 }

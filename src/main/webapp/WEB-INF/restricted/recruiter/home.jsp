@@ -91,6 +91,7 @@
                             </td>
                             <td class="is-narrow">
                                 <form method="post" action="controller">
+
                                     <input class="is-hidden" name="needId" value="${candidature.need.id}">
                                     <input class="is-hidden" name="teacherId" value="${candidature.teacher.id}">
                                     <button class="button is-info is-small" type="submit" name="action" value="goToCandidature">
@@ -102,6 +103,7 @@
                     </c:forEach>
                 </tbody>
             </table>
+
         </div>
     </div>
 </section>

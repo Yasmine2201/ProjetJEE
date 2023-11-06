@@ -61,6 +61,10 @@
                 </div>
             </c:if>
         </div>
+        <form method="post" action="controller">
+            <button class="button is-info is-small" type="submit" name="action" value="goToSchool">
+            </button>
+        </form>
     </div>
 </section>
 </body>
