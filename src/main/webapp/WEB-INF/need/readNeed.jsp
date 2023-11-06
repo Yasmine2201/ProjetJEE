@@ -1,11 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: maxim
-  Date: 05/11/2023
-  Time: 16:39
-  To change this template use File | Settings | File Templates.
---%>
-
 <c:set var="need"
        value="${{'contractType' : 'Temporary','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'}}"/>
 
@@ -42,21 +34,17 @@
                         </button>
                     </form>
                 </div>
-                <p class="subtitle is-3 has-text-left">besoin N° ${need.needId} </p>
+                <p class="subtitle is-3 has-text-left">Besoin N° ${need.needId} </p>
                 <div class="column">
                     <table class="table is-bordered is-striped
                               is-narrow is-hoverable is-fullwidth">
                         <thead>
                         <tr>
-                            <th> Type de contract</th>
+                            <th> Type de contrat</th>
 
-                            <th> Sujet</th>
+                            <th> Matière</th>
 
-                            <th> Nécessaire</th>
-
-                            <th> Temps</th>
-
-                            <th> Notes</th>
+                            <th> Période</th>
 
                             <c:if test="${sessionUser.role =='Teacher' }">
                                 <th>
@@ -87,11 +75,7 @@
 
                             <td>${need.subject}</td>
 
-                            <td>${need.requirements}</td>
-
                             <td> ${need.timePeriod} </td>
-
-                            <td> ${need.notes} </td>
 
                             <c:if test="${sessionUser.role  == 'Teacher'}">
                                 <td>
@@ -101,7 +85,7 @@
                                                    value="${need.needId}">
                                         </label>
                                         <button type="submit" name="action" value="goToCandidature"
-                                                class="button is-primary"> Candidater
+                                                class="button is-success"> Candidater
                                         </button>
                                     </form>
                                 </td>
@@ -115,7 +99,7 @@
                                                    value="${need.needId}">
                                         </label>
                                         <button type="submit" name="action" value="goToNeedEdition"
-                                                class="button is-primary"> Modifier
+                                                class="button is-info"> Modifier
                                         </button>
                                     </form>
                                 </td>
@@ -132,3 +116,9 @@
 </section>
 </body>
 </html>
+
+<style>
+    <%@include file="/WEB-INF/css/bulma/css/bulma.min.css" %>
+    <%@include file="/WEB-INF/css/style.scss" %>
+    @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+</style>

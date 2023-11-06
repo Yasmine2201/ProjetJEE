@@ -48,7 +48,7 @@ public class TeacherDashboardService implements ITeacherDashboardService {
             // Sort by score
             .sorted()
             // Max : 10 results
-            .limit(20)
+            .limit(10)
             // Transform to list
             .map(Map.Entry::getKey).toList();
     }

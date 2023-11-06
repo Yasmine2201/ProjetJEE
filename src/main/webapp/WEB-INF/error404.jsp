@@ -20,3 +20,9 @@
 </body>
 <jsp:include page="/WEB-INF/footer.jsp"/>
 </html>
+
+<style>
+    <%@include file="/WEB-INF/css/bulma/css/bulma.min.css" %>
+    <%@include file="/WEB-INF/css/style.scss" %>
+    @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+</style>

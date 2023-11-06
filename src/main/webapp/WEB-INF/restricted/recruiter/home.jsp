@@ -9,7 +9,7 @@
 <section class="section">
 
     <div class="columns">
-        <div class="column">
+        <div class="column is-7">
             <h3 class="title is-3 has-text-left">Besoins de recrutement</h3>
             <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth ">
                 <thead>
@@ -27,7 +27,7 @@
                         <tr id=${need.id}>
                             <td class="is-narrow">${need.id}</td>
                             <td>${need.subject}</td>
-                            <td class="is-narrow">
+                            <td>
                                 <c:choose>
                                     <c:when test="${need.contractType eq 'Any'}">
                                         CDI et/ou CDD
@@ -58,7 +58,7 @@
             </table>
         </div>
 
-        <div class="column">
+        <div class="column is-5">
             <h3 class="title is-3 has-text-left">Candidatures en cours</h3>
             <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                 <thead>
@@ -75,16 +75,17 @@
                         <tr id=${candidature.need.id}>
                             <td class="is-narrow">${candidature.need.id}</td>
                             <td>
-                                <label>
-                                    <input class="is-hidden" name="schoolName"
-                                           value="${candidature.teacher.id}">
-                                </label>
-                                <button type="submit" name="action" value="goToTeacher"
-                                        class="button has-text-info"
-                                        style="border: none; background-color: transparent">
-                                        ${candidature.teacher.applicationuser.firstname}
-                                        ${fn:toUpperCase(candidature.teacher.applicationuser.lastname)}
-                                </button>
+                                <form method="post" action="controller">
+                                    <label>
+                                        <input class="is-hidden" name="schoolName"
+                                               value="${candidature.teacher.id}">
+                                    </label>
+                                    <button type="submit" name="action" value="goToTeacher"
+                                            class="has-text-info">
+                                            ${candidature.teacher.applicationuser.firstname}
+                                            ${fn:toUpperCase(candidature.teacher.applicationuser.lastname)}
+                                    </button>
+                                </form>
                             </td>
                             <td class="is-narrow">
                                 <c:if test="${candidature.isValidatedByTeacher}">
@@ -116,5 +117,11 @@
     </div>
 </section>
 </body>
-<jsp:include page="/WEB-INF/footer.jsp"/>
+<%--<jsp:include page="/WEB-INF/footer.jsp"/>--%>
 </html>
+
+<style>
+    <%@include file="/WEB-INF/css/bulma/css/bulma.min.css" %>
+    <%@include file="/WEB-INF/css/style.scss" %>
+    @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+</style>

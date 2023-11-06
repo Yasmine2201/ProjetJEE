@@ -1,11 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: maxim
-  Date: 05/11/2023
-  Time: 16:39
-  To change this template use File | Settings | File Templates.
---%>
-
 <c:set var="school" value="${{'schoolName' : 'HEC', 'address' : '1 rue de la libération, 78350 Jouy-en-Josas', 'specializations' : 'commerce'}}"/>
 
 <c:set var="recruiters"
@@ -15,12 +7,18 @@
                             {'contractType' : 'Temporary','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
                             {'contractType' : 'Continous','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
                             {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
+                            {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
+                            {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
+                            {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
+                            {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
+                            {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
+                            {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
                             {'contractType' : 'Temporary','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'}]}"/>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>École - ${school.schoolName}</title>
 </head>
 <body>
 <c:if test="${sessionUser.role eq 'Admin'}">
@@ -41,22 +39,19 @@
             <div class="box has-text-centered px-3">
                 <div class="columns">
                     <div class="column">
-                        <h3 class="title has-text-left">${school.schoolName}
-                        </h3>
-                        <p class="subtitle is-6 has-text-left">
-                            ${school.specializations}
-                        </p>
+                        <h3 class="title is-2 has-text-left">${school.schoolName}</h3>
+                        <p class="subtitle is-6 has-text-left">${school.specializations}</p>
                         <p class="subtitle has-text-left">${school.address} </p>
-
                     </div>
-                    <div class="column">
 
+                    <div class="column is-2 has-text-right">
                         <c:if test="${sessionUser.role eq 'Admin'}">
                             <form method="post" action="controller">
                                 <input class="is-hidden" name="needId"
                                        value="${school.schoolName}">
                                 <button type="submit" name="action" value="goToSchoolEdition"
-                                        class="button is-info"> Modifier l'ecole
+                                        class="button is-info">
+                                    Modifier l'école
                                 </button>
                             </form>
                         </c:if>
@@ -64,18 +59,27 @@
                 </div>
 
                 <div class="columns">
-                    <div class="column is-10">
+                    <div class="column is-3">
+                        <h3 class="title is-3 has-text-left">Recruteurs</h3>
+                        <div>
+                            <ul>
+                            <c:forEach items="${recruiters}" var="recruiter">
+                                <li>${recruiter.firstName} ${fn:toUpperCase(recruiter.lastName)}</li>
+                            </c:forEach>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="column is-9">
                         <h3 class="title is-3 has-text-left">Besoins</h3>
                         <table class="table is-bordered is-striped
                               is-narrow is-hoverable is-fullwidth">
                             <thead>
                             <tr>
-                                <th> Id</th>
-                                <th> Type de contract</th>
-                                <th> Sujet</th>
-                                <th> Requis</th>
-                                <th> Temps</th>
-                                <th> Notes</th>
+                                <th>Id</th>
+                                <th>Type de contrat</th>
+                                <th>Matière</th>
+                                <th>Période</th>
                                 <c:if test="${sessionUser.role eq 'Recruiter'}">
                                     <th> Modifier</th>
                                 </c:if>
@@ -94,7 +98,7 @@
                                                        value="${need.needId}">
                                             </label>
                                             <button type="submit" name="action" value="goToNeed"
-                                                    class="button fantom has-text-info"
+                                                    class="has-text-info"
                                                     style="border: none"> ${need.needId}
                                             </button>
                                         </form>
@@ -110,13 +114,10 @@
                                             CDI et/ou CDD
                                         </c:if>
                                     </td>
+
                                     <td> ${need.subject} </td>
 
-                                    <td> ${need.requirements} </td>
-
                                     <td> ${need.timePeriod} </td>
-
-                                    <td> ${need.notes} </td>
 
 
                                     <c:if test="${sessionUser.role == 'Recruiter'}">
@@ -156,28 +157,18 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="column">
-                        <h3 class="title is-3 has-text-left">Recruteur</h3>
-                        <table class="table is-bordered is-striped
-                              is-narrow is-hoverable is-fullwidth is-vcentered">
-                            <thead>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${recruiters}" var="recruiter">
-                                <tr>
-                                    <td>
-                                            ${recruiter.firstName}, ${recruiter.lastName}
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<%--<jsp:include page="/WEB-INF/footer.jsp"/>--%>
 </body>
 </html>
+
+<style>
+    <%@include file="/WEB-INF/css/bulma/css/bulma.min.css" %>
+    <%@include file="/WEB-INF/css/style.scss" %>
+    @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+</style>

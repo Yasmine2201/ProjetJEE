@@ -28,3 +28,29 @@ div .is-rounded {
   height: 2.8rem;
   padding: 0.5rem;
 }
+
+ul {
+  list-style: disc inside;
+  text-align: left;
+}
+
+td button.has-text-info {
+  font-size: medium;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+td button.has-text-info:hover {
+  text-decoration: underline;
+}
+
+td button.button {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+td form {
+  margin-bottom: 0;
+}

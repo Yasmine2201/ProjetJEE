@@ -28,16 +28,17 @@
                         <tr id=${need.id}>
                             <td class="is-narrow">${need.id}</td>
                             <td class="is-narrow">
-                                <label>
-                                    <input class="is-hidden" name="schoolName"
-                                           value="${need.schoolName.schoolName}">
-                                </label>
-                                <button type="submit" name="action" value="goToSchool"
-                                        class="button has-text-info"
-                                        style="border: none; background-color: transparent">
+                                <form method="post" action="controller">
+                                    <label>
+                                        <input class="is-hidden" name="schoolName"
+                                               value="${need.schoolName.schoolName}">
+                                    </label>
+                                    <button type="submit" name="action" value="goToSchool"
+                                            class="has-text-info">
 
-                                        ${need.schoolName.schoolName}
-                                </button>
+                                            ${need.schoolName.schoolName}
+                                    </button>
+                                </form>
                             </td>
                             <td>${need.subject}</td>
                             <td class="is-narrow">
@@ -90,20 +91,20 @@
                     <tr id=${candidature.need.id}>
                         <td class="is-narrow">${candidature.need.id}</td>
                         <td class="is-narrow">
-                            <label>
-                                <input class="is-hidden" name="schoolName"
-                                       value="${candidature.need.schoolName.schoolName}">
-                            </label>
-                            <button type="submit" name="action" value="goToSchool"
-                                    class="button has-text-info"
-                                    style="border: none; background-color: transparent">
+                            <form method="post" action="controller">
+                                <label>
+                                    <input class="is-hidden" name="schoolName"
+                                           value="${candidature.need.schoolName.schoolName}">
+                                </label>
+                                <button type="submit" name="action" value="goToSchool"
+                                        class="has-text-info">
 
-                                    ${candidature.need.schoolName.schoolName}
-                            </button>
+                                        ${candidature.need.schoolName.schoolName}
+                                </button>
+                            </form>
                         </td>
                         <td>${candidature.need.subject}</td>
-                        </td>
-                        <td class="is-narrow">
+                        <td>
                             <c:if test="${candidature.isValidatedByTeacher}">
                                 <p class="tag is-danger"> Enseignant </p></c:if>
                             <c:if test="${!candidature.isValidatedByTeacher}">
@@ -147,5 +148,11 @@
     </div>
 </section>
 </body>
-<jsp:include page="/WEB-INF/footer.jsp"/>
+<%--<jsp:include page="/WEB-INF/footer.jsp"/>--%>
 </html>
+
+<style>
+    <%@include file="/WEB-INF/css/bulma/css/bulma.min.css" %>
+    <%@include file="/WEB-INF/css/style.scss" %>
+    @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+</style>

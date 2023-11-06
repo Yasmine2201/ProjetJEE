@@ -3,6 +3,7 @@
 <head>
     <title>Tableau de bord</title>
 </head>
+
 <body>
 <jsp:include page="../navbar/admin.jsp"/>
 <section class="section">
@@ -61,14 +62,10 @@
                 </div>
             </c:if>
         </div>
-        <form method="post" action="controller">
-            <button class="button is-info is-small" type="submit" name="action" value="goToSchool">
-            </button>
-        </form>
     </div>
 </section>
 </body>
-<jsp:include page="/WEB-INF/footer.jsp"/>
+<%--<jsp:include page="/WEB-INF/footer.jsp"/>--%>
 </html>
 
 <script>
@@ -85,5 +82,7 @@
 </script>
 
 <style>
+    <%@include file="/WEB-INF/css/bulma/css/bulma.min.css" %>
+    <%@include file="/WEB-INF/css/style.scss" %>
     @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
 </style>
