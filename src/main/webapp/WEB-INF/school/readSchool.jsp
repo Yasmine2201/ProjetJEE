@@ -1,20 +1,3 @@
-<c:set var="school" value="${{'schoolName' : 'HEC', 'address' : '1 rue de la libération, 78350 Jouy-en-Josas', 'specializations' : 'commerce'}}"/>
-
-<c:set var="recruiters"
-       value="${[{'firstName' : 'Yesdg', 'lastName' : 'Tesst'},{'firstName' : 'Yesdg', 'lastName' : 'Tesst'},{'firstName' : 'Yesdg', 'lastName' : 'Tesst'},{'firstName' : 'Yesdg', 'lastName' : 'Tesst'}]}"/>
-
-<c:set var="needs" value="${[{'contractType' : 'Temporary','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
-                            {'contractType' : 'Temporary','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
-                            {'contractType' : 'Continous','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
-                            {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
-                            {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
-                            {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
-                            {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
-                            {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
-                            {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
-                            {'contractType' : 'Any','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'},
-                            {'contractType' : 'Temporary','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'}]}"/>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -64,7 +47,10 @@
                         <div>
                             <ul>
                             <c:forEach items="${recruiters}" var="recruiter">
-                                <li>${recruiter.firstName} ${fn:toUpperCase(recruiter.lastName)}</li>
+                                <li>
+                                        ${recruiter.applicationuser.firstname}
+                                        ${fn:toUpperCase(recruiter.applicationuser.lastname)}
+                                </li>
                             </c:forEach>
                             </ul>
                         </div>
@@ -89,17 +75,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${needs}" var="need">
+                            <c:forEach items="${runningNeeds}" var="need">
                                 <tr>
                                     <td>
                                         <form method="post" action="controller">
                                             <label>
                                                 <input class="is-hidden" name="needId"
-                                                       value="${need.needId}">
+                                                       value="${need.id}">
                                             </label>
                                             <button type="submit" name="action" value="goToNeed"
                                                     class="has-text-info"
-                                                    style="border: none"> ${need.needId}
+                                                    style="border: none"> ${need.id}
                                             </button>
                                         </form>
                                     </td>
@@ -125,7 +111,7 @@
                                             <form method="post" action="controller">
                                                 <label>
                                                     <input class="is-hidden" name="needId"
-                                                           value="${need.needId}">
+                                                           value="${need.id}">
                                                 </label>
                                                 <button type="submit" name="action" value="goToNeedEdition"
                                                         class="button  is-info"
@@ -143,7 +129,7 @@
                                             <form method="post" action="controller">
                                                 <label>
                                                     <input class="is-hidden" name="needId"
-                                                           value="${need.needId}">
+                                                           value="${need.id}">
                                                 </label>
                                                 <button type="submit" name="action" value="goToCandidature"
                                                         class="button is-success"

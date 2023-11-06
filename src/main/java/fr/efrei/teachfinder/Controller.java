@@ -3,7 +3,9 @@ package fr.efrei.teachfinder;
 import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.SessionUser;
 import fr.efrei.teachfinder.entities.RoleType;
+import fr.efrei.teachfinder.entities.School;
 import fr.efrei.teachfinder.services.*;
+import fr.efrei.teachfinder.utils.StringUtils;
 import jakarta.ejb.EJB;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -271,9 +273,24 @@ public class Controller extends HttpServlet {
     @Action(action = Actions.GO_TO_SCHOOL, roles = {RoleType.Admin, RoleType.Recruiter, RoleType.Teacher})
     public void goToReadSchool(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
-        request.getRequestDispatcher(Pages.SCHOOL_VIEW).forward(request, response);
+        String schoolName = request.getParameter("schoolName");
+        if (schoolName == null || StringUtils.isNullOrEmpty(schoolName)) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+
+        try {
+            School school = schoolService.getSchool(schoolName);
+            request.setAttribute("school", school);
+            request.setAttribute("runningNeeds", schoolService.getSchoolRunningNeeds(schoolName));
+            request.setAttribute("recruiters", schoolService.getSchoolRecruiters(schoolName));
+            request.getRequestDispatcher(Pages.SCHOOL_VIEW).forward(request, response);
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
-    @Action(action = Actions.GO_TO_NEED)
+
+    @Action(action = Actions.GO_TO_NEED, roles = {RoleType.Admin, RoleType.Recruiter, RoleType.Teacher})
     public void goToReadNeed(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
         request.getRequestDispatcher(Pages.NEED_VIEW).forward(request, response);
