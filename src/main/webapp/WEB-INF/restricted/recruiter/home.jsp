@@ -30,13 +30,13 @@
                             <td class="is-narrow">
                                 <c:choose>
                                     <c:when test="${need.contractType eq 'Any'}">
-                                        Non précisé
+                                        CDI et/ou CDD
                                     </c:when>
                                     <c:when test="${need.contractType eq 'Continous'}">
-                                        Durée indéterminée
+                                        CDI
                                     </c:when>
                                     <c:when test="${need.contractType eq 'Temporary'}">
-                                        Prestation
+                                        CDD
                                     </c:when>
                                 </c:choose>
                             </td>
@@ -75,8 +75,16 @@
                         <tr id=${candidature.need.id}>
                             <td class="is-narrow">${candidature.need.id}</td>
                             <td>
-                                ${candidature.teacher.applicationuser.firstname}
-                                ${fn:toUpperCase(candidature.teacher.applicationuser.lastname)}
+                                <label>
+                                    <input class="is-hidden" name="schoolName"
+                                           value="${candidature.teacher.id}">
+                                </label>
+                                <button type="submit" name="action" value="goToSchool"
+                                        class="button has-text-info"
+                                        style="border: none; background-color: transparent">
+                                        ${candidature.teacher.applicationuser.firstname}
+                                        ${fn:toUpperCase(candidature.teacher.applicationuser.lastname)}
+                                </button>
                             </td>
                             <td class="is-narrow">
                                 <c:if test="${candidature.isValidatedByTeacher}">
