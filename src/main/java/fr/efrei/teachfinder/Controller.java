@@ -448,7 +448,7 @@ public class Controller extends HttpServlet {
         request.getRequestDispatcher(Pages.DISPONIBILITY).forward(request, response);
     }
 
-    @Action(action = Actions.GO_TO_DISPONIBILITY_CREATION, roles = {Teacher})
+    @Action(action = Actions.GO_TO_DISPONIBILITY_EDITION, roles = {Teacher})
     public void goToDisponibilityEdition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser user = sendSessionUser(request);
         try {
@@ -465,6 +465,40 @@ public class Controller extends HttpServlet {
 
         } catch (MissingParameterException | NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.GO_TO_USER_PROFILE, roles = {Admin, Recruiter, Teacher})
+    public void goToProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUser user = sendSessionUser(request);
+
+        try {
+            ApplicationUser applicationUser = userService.getUser(user.getUserId());
+
+            // hide password
+            applicationUser.setPassword("");
+            request.setAttribute("user", applicationUser);
+            request.getRequestDispatcher(Pages.USER_VIEW).forward(request, response);
+
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.GO_TO_USER_PROFILE_EDITION, roles = {Admin, Recruiter, Teacher})
+    public void goToProfileEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUser user = sendSessionUser(request);
+
+        try {
+            ApplicationUser applicationUser = userService.getUser(user.getUserId());
+
+            // hide password
+            applicationUser.setPassword("");
+            request.setAttribute("user", applicationUser);
+            request.getRequestDispatcher(Pages.USER_EDIT).forward(request, response);
+
         } catch (EntityNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }
