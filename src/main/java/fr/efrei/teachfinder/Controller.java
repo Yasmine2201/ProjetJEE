@@ -412,5 +412,29 @@ public class Controller extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }
     }
+
+    @Action(action = Actions.GO_TO_TEACHER, roles = {Admin, Recruiter, Teacher})
+    public void goToTeacher(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        sendSessionUser(request);
+        try {
+            String teacherIdStr = request.getParameter("teacherId");
+
+            if (teacherIdStr == null) {
+                throw new MissingParameterException("Parameter 'teacherIdStr' is missing");
+            }
+
+            int teacherId = Integer.parseInt(teacherIdStr);
+
+            request.setAttribute("teacher", teacherService.getTeacher(teacherId));
+            request.setAttribute("futureDisponibilities", teacherService.getTeacherFutureDisponibilities(teacherId));
+            request.setAttribute("evaluations", teacherService.getTeacherEvaluations(teacherId));
+            request.getRequestDispatcher(Pages.TEACHER_VIEW).forward(request, response);
+
+        } catch (MissingParameterException | NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
     }
 }
