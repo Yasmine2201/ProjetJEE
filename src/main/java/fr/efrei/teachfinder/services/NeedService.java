@@ -6,6 +6,7 @@ import fr.efrei.teachfinder.dao.TeacherDAO;
 import fr.efrei.teachfinder.entities.*;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityNotFoundException;
 
 import java.time.LocalDateTime;
 @Stateless
@@ -20,12 +21,12 @@ public class NeedService implements INeedService{
     TeacherDAO teacherDAO;
 
     @Override
-    public Need getNeed(int needId) {
+    public Need getNeed(int needId)throws EntityNotFoundException {
         return needDAO.findById(needId) ;
     }
 
     @Override
-    public Need updateNeed(Need need) {
+    public Need updateNeed(Need need) throws EntityNotFoundException {
         return needDAO.update(need);
     }
 

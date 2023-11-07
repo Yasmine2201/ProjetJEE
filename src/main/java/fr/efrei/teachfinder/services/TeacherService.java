@@ -25,17 +25,17 @@ public class TeacherService implements ITeacherService{
     EvaluationDAO evaluationDAO;
 
     @Override
-    public Teacher getTeacher(int teacherId) {
+    public Teacher getTeacher(int teacherId)  throws EntityNotFoundException {
         return teacherDAO.findById(teacherId);
     }
 
     @Override
-    public Teacher updateTeacher(Teacher teacher) {
+    public Teacher updateTeacher(Teacher teacher)  throws EntityNotFoundException {
         return teacherDAO.update(teacher);
     }
 
     @Override
-    public List<Disponibility> getTeacherFutureDisponibilities(int teacherId) {
+    public List<Disponibility> getTeacherFutureDisponibilities(int teacherId) throws EntityNotFoundException {
         if (!teacherExists(teacherId)) {
             throw new EntityNotFoundException("No teacher found with id " + teacherId);
         }
@@ -57,7 +57,7 @@ public class TeacherService implements ITeacherService{
 
 
     @Override
-    public List<Evaluation> getTeacherEvaluations(int teacherId) {
+    public List<Evaluation> getTeacherEvaluations(int teacherId) throws EntityNotFoundException {
         if (!teacherExists(teacherId)) {
             throw new EntityNotFoundException("No teacher found with id " + teacherId);
         }

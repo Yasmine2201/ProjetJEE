@@ -4,6 +4,8 @@ import fr.efrei.teachfinder.dao.DisponibilityDAO;
 import fr.efrei.teachfinder.entities.Disponibility;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 
 @Stateless
 public class DisponibilityService implements IDisponibilityService{
@@ -12,22 +14,22 @@ public class DisponibilityService implements IDisponibilityService{
     DisponibilityDAO disponibilityDAO;
 
     @Override
-    public Disponibility getDisponibility(int disponibilityId) {
+    public Disponibility getDisponibility(int disponibilityId) throws EntityNotFoundException {
         return disponibilityDAO.findById(disponibilityId);
     }
 
     @Override
-    public Disponibility addDisponibility(Disponibility disponibility) {
+    public Disponibility addDisponibility(Disponibility disponibility) throws EntityExistsException {
         return disponibilityDAO.create(disponibility);
     }
 
     @Override
-    public Disponibility editDisponibility(Disponibility disponibility) {
+    public Disponibility editDisponibility(Disponibility disponibility) throws EntityNotFoundException {
         return disponibilityDAO.update(disponibility);
     }
 
     @Override
-    public void deletDisponibility(Disponibility disponibility) {
+    public void deletDisponibility(Disponibility disponibility) throws EntityNotFoundException {
         disponibilityDAO.delete(disponibility);
     }
 }

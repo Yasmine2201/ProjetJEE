@@ -14,7 +14,7 @@ public class CandidatureService implements ICandidatureService{
     @Inject private CandidatureDAO candidatureDAO;
 
     @Override
-    public Candidature getCandidature(CandidatureId candidatureId) {
+    public Candidature getCandidature(CandidatureId candidatureId) throws EntityNotFoundException {
         return candidatureDAO.findById(candidatureId);
     }
 
