@@ -89,11 +89,17 @@ public class RegistrationService implements IRegistrationService {
 
     @Override
     public void denyRegistration(int registrationId) throws EntityNotFoundException {
+        if (!getPendingRegistrations().stream().map(Registration::getRegistrationId).toList().contains(registrationId)) {
+            return;
+        }
         registrationDAO.changeStatus(registrationId, StatusType.Refused);
     }
 
     @Override
     public void approveRegistration(int registrationId) throws EntityNotFoundException, EntityExistsException {
+        if (!getPendingRegistrations().stream().map(Registration::getRegistrationId).toList().contains(registrationId)) {
+            return;
+        }
         registrationDAO.changeStatus(registrationId, StatusType.Accepted);
         Registration registration = registrationDAO.findById(registrationId);
         userService.createUserFromRegistration(registration);

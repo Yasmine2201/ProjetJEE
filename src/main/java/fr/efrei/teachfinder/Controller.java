@@ -28,28 +28,18 @@ import static fr.efrei.teachfinder.utils.Constants.*;
 public class Controller extends HttpServlet {
 
     //    @EJB private ICandidatureService candidatureService;
-    @EJB
-    private IDisponibilityService disponibilityService;
-    @EJB
-    private IEvaluationService evaluationService;
-    @EJB
-    private INeedService needService;
-    @EJB
-    private IRecruiterDashboardService recruiterDashboardService;
-    @EJB
-    private IRegistrationService registrationService;
-    @EJB
-    private IResearchService researchService;
-    @EJB
-    private ISchoolService schoolService;
-    @EJB
-    private ISecurityService securityService;
-    @EJB
-    private ITeacherDashboardService teacherDashboardService;
-    @EJB
-    private ITeacherService teacherService;
-    @EJB
-    private IUserService userService;
+    @EJB private IDisponibilityService disponibilityService;
+    @EJB private IEvaluationService evaluationService;
+    @EJB private INeedService needService;
+    @EJB private IRecruiterDashboardService recruiterDashboardService;
+    @EJB private IRegistrationService registrationService;
+    @EJB private IResearchService researchService;
+    @EJB private ISchoolService schoolService;
+    @EJB private ISecurityService securityService;
+    @EJB private ITeacherDashboardService teacherDashboardService;
+    @EJB private ITeacherService teacherService;
+    @EJB private IUserService userService;
+    @EJB private IRecruiterService recruiterService;
 
     private static final Logger log = LogManager.getLogger(Controller.class);
 
@@ -142,6 +132,22 @@ public class Controller extends HttpServlet {
 
     public void sendSessionUser(HttpServletRequest request, SessionUser sessionUser) {
         SessionUser userToSend = sessionUser == null ? getSessionUser(request) : sessionUser;
+
+        if (sessionUser != null) {
+            try {
+                int userId = sessionUser.getUserId();
+
+                switch (sessionUser.getRole()) {
+                    case Teacher
+                        -> request.setAttribute("teacher", teacherService.getTeacher(userId));
+                    case Recruiter
+                        -> request.setAttribute("recruiter", recruiterService.getRecruiter(userId));
+                }
+            } catch (EntityNotFoundException e) {
+                log.error("User not found\n" + e.getMessage());
+            }
+        }
+
         request.setAttribute("sessionuser", sessionUser);
     }
 

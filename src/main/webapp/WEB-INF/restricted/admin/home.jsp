@@ -33,18 +33,30 @@
                             <td>${registration.email}</td>
                             <td>${registration.phone}</td>
                             <td>${registration.role}</td>
-                            <td>${registration.schoolName.schoolName}</td>
+                            <td>
+                                <form method="post" action="controller">
+                                    <label>
+                                        <input class="is-hidden" name="schoolName"
+                                               value="${registration.schoolName.schoolName}">
+                                    </label>
+                                    <button type="submit" name="action" value="goToSchool"
+                                            class="has-text-info">
+
+                                            ${registration.schoolName.schoolName}
+                                    </button>
+                                </form>
+                            </td>
 
                             <td>
                                 <form method="post" action="controller">
                                     <input class="is-hidden" name="registrationId" value="${registration.registrationId}">
 
-                                    <button class="button is-success" type="submit" name="action"
+                                    <button class="button is-success is-small" type="submit" name="action"
                                             value="approveRegistration">
                                     <span class="material-symbols-outlined">done</span>
                                     </button>
 
-                                    <button class="button is-danger" type="submit" name="action"
+                                    <button class="button is-danger is-small" type="submit" name="action"
                                             value="denyRegistration">
                                     <span class="material-symbols-outlined">close</span>
                                     </button>

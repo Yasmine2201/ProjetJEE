@@ -18,6 +18,13 @@ public class SchoolsResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<School> getSchools() {
-        return schoolService.getAllSchools();
+        return schoolService
+            .getAllSchools()
+            .stream()
+            .map(school -> {
+                School s = new School();
+                s.setSchoolName(school.getSchoolName());
+                return s;
+            }).toList();
     }
 }
