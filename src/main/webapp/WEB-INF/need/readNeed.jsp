@@ -1,5 +1,5 @@
 <c:set var="need"
-       value="${{'contractType' : 'Temporary','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'}}"/>
+       value="${{'schoolName' : 'HEC','contractType' : 'Temporary','needId' : 1024055, 'subject' : 'JAVA', 'requirements': 'je sasi pas quoi mettre', 'timePeriod' : '10/10/2023 - 10/10/2026', 'notes' : 'aucune notes'}}"/>
 
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -24,15 +24,37 @@
     <div class="columns is-centered">
         <div class="column is-10 ">
             <div class="box has-text-centered px-3">
-                <div class="title is-3 has-text-left"> ${need.schoolName}
-                    <form method="post" action="controller">
-                        <input class="is-hidden" name="needId" value="${need.schoolName}">
-                        <button class="button is-info" type="submit" name="action" value="goToSchool">
-                        <span class="material-symbols-outlined">
-                            read_more
-                        </span>
-                        </button>
-                    </form>
+                <div class="columns">
+                    <div class="column">
+                        <div class="level">
+                            <div class="level-left">
+                                <div class="level-item">
+                                    <p class="title is-3 has-text-left">${need.schoolName} </p>
+                                </div>
+                                <div class="level-item">
+                                    <form method="post" action="controller">
+                                        <input class="is-hidden" name="needId" value="${need.schoolName}">
+                                        <button class="button is-info" type="submit" name="action" value="goToSchool">
+                                            <span class="material-symbols-outlined">
+                                                read_more
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="column">
+                        <c:if test="${sessionUser.role eq 'Recruiter' || sessionUser.role eq 'Admin'}">
+                            <form class="has-text-right" method="post" action="controller">
+                                <input class="is-hidden" name="needId" value="${need.needId}">
+                                <button class="button is-info" type="submit" name="action" value="goToNeedEdition">
+                                   Modifier
+                                </button>
+                            </form>
+                        </c:if>
+                    </div>
                 </div>
                 <p class="subtitle is-3 has-text-left">Besoin N° ${need.needId} </p>
                 <div class="column">
@@ -51,26 +73,22 @@
                                     Candidater
                                 </th>
                             </c:if>
-
-                            <c:if test="${sessionUser.role =='Recruiter'}">
-                                <th>
-                                    Modifer
-                                </th>
-                            </c:if>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <td>
-                                <c:if test="${need.contractType  == 'Temporary'}">
-                                    CDD
-                                </c:if>
-                                <c:if test="${need.contractType  == 'Continous'}">
-                                    CDI
-                                </c:if>
-                                <c:if test="${need.contractType  == 'Any'}">
-                                    CDI et/ou CDD
-                                </c:if>
+                                <c:choose>
+                                    <c:when test="${need.contractType eq 'Any'}">
+                                        Non précisé
+                                    </c:when>
+                                    <c:when test="${need.contractType eq 'Continous'}">
+                                        Durée indéterminée
+                                    </c:when>
+                                    <c:when test="${need.contractType eq 'Temporary'}">
+                                        Prestation
+                                    </c:when>
+                                </c:choose>
                             </td>
 
                             <td>${need.subject}</td>
@@ -90,29 +108,15 @@
                                     </form>
                                 </td>
                             </c:if>
-                            <c:if test="${sessionUser.role eq 'Recruiter' and fn:contains( recuitersId, sessionUser.id)}">
-
-                                <td>
-                                    <form method="post" action="controller">
-                                        <label>
-                                            <input class="is-hidden" name="needId"
-                                                   value="${need.needId}">
-                                        </label>
-                                        <button type="submit" name="action" value="goToNeedEdition"
-                                                class="button is-info"> Modifier
-                                        </button>
-                                    </form>
-                                </td>
-                            </c:if>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
     </div>
-    </div>
+
+    <jsp:include page="/WEB-INF/footer.jsp"/>
 </section>
 </body>
 </html>

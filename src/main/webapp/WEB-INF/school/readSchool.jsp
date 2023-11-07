@@ -29,12 +29,22 @@
 
                     <div class="column is-2 has-text-right">
                         <c:if test="${sessionUser.role eq 'Admin'}">
-                            <form method="post" action="controller">
+                            <form method="post" action="controller" class="has-text-right">
                                 <input class="is-hidden" name="needId"
                                        value="${school.schoolName}">
                                 <button type="submit" name="action" value="goToSchoolEdition"
                                         class="button is-info">
                                     Modifier l'école
+                                </button>
+                            </form>
+                        </c:if>
+                        <c:if test="${sessionUser.role eq 'Recruiter'}">
+                            <form method="post" action="controller" class="has-text-right">
+                                <input class="is-hidden" name="needId"
+                                       value="${school.schoolName}">
+                                <button type="submit" name="action" value="goToNeedCreation"
+                                        class="button is-info">
+                                    Ajout d'un besoin
                                 </button>
                             </form>
                         </c:if>
@@ -90,15 +100,17 @@
                                         </form>
                                     </td>
                                     <td>
-                                        <c:if test="${need.contractType =='Continous' }">
-                                            CDI
-                                        </c:if>
-                                        <c:if test="${need.contractType == 'Temporary' }">
-                                            CDD
-                                        </c:if>
-                                        <c:if test="${need.contractType  == 'Any'}">
-                                            CDI et/ou CDD
-                                        </c:if>
+                                        <c:choose>
+                                            <c:when test="${need.contractType eq 'Any'}">
+                                                Non précisé
+                                            </c:when>
+                                            <c:when test="${need.contractType eq 'Continous'}">
+                                                Durée indéterminée
+                                            </c:when>
+                                            <c:when test="${need.contractType eq 'Temporary'}">
+                                                Prestation
+                                            </c:when>
+                                        </c:choose>
                                     </td>
 
                                     <td> ${need.subject} </td>
