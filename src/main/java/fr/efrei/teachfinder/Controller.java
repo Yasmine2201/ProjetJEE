@@ -2,8 +2,6 @@ package fr.efrei.teachfinder;
 
 import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.SessionUser;
-import fr.efrei.teachfinder.entities.Candidature;
-import fr.efrei.teachfinder.entities.CandidatureId;
 import fr.efrei.teachfinder.entities.Need;
 import fr.efrei.teachfinder.entities.School;
 import fr.efrei.teachfinder.exceptions.MissingParameterException;
@@ -225,8 +223,7 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.GO_TO_RECRUITER_HOME, roles = {Recruiter})
     public void goToRecruiterHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SessionUser sessionUser = getSessionUser(request);
-        sendSessionUser(request, sessionUser);
+        SessionUser sessionUser = sendSessionUser(request);
         request.setAttribute("runningNeeds", recruiterDashboardService.getRunningNeed(sessionUser.getUserId()));
         request.setAttribute("pendingCandidatures", recruiterDashboardService.getCandidatures(sessionUser.getUserId()));
         request.getRequestDispatcher(Pages.RECRUITER_HOME).forward(request, response);
@@ -234,8 +231,7 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.GO_TO_TEACHER_HOME, roles = {Teacher})
     public void goToTeacherHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SessionUser sessionUser = getSessionUser(request);
-        sendSessionUser(request, sessionUser);
+        SessionUser sessionUser = sendSessionUser(request);
         request.setAttribute("interestingNeeds", teacherDashboardService.getInterestingNeeds(sessionUser.getUserId()));
         request.setAttribute("candidatures", teacherDashboardService.getCandidatures(sessionUser.getUserId()));
         request.getRequestDispatcher(Pages.TEACHER_HOME).forward(request, response);
