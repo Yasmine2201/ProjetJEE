@@ -2,10 +2,7 @@ package fr.efrei.teachfinder;
 
 import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.SessionUser;
-import fr.efrei.teachfinder.entities.Candidature;
-import fr.efrei.teachfinder.entities.CandidatureId;
-import fr.efrei.teachfinder.entities.Need;
-import fr.efrei.teachfinder.entities.School;
+import fr.efrei.teachfinder.entities.*;
 import fr.efrei.teachfinder.exceptions.MissingParameterException;
 import fr.efrei.teachfinder.services.*;
 import fr.efrei.teachfinder.utils.StringUtils;
@@ -415,6 +412,33 @@ public class Controller extends HttpServlet {
             request.setAttribute("futureDisponibilities", teacherService.getTeacherFutureDisponibilities(teacherId));
             request.setAttribute("evaluations", teacherService.getTeacherEvaluations(teacherId));
             request.getRequestDispatcher(Pages.TEACHER_VIEW).forward(request, response);
+
+        } catch (MissingParameterException | NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.GO_TO_DISPONIBILITY_CREATION, roles = {Teacher})
+    public void goToDisponibilityCreation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        sendSessionUser(request);
+        request.getRequestDispatcher(Pages.DISPONIBILITY).forward(request, response);
+    }
+
+    @Action(action = Actions.GO_TO_DISPONIBILITY_CREATION, roles = {Teacher})
+    public void goToDisponibilityEdition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUser user = sendSessionUser(request);
+        try {
+            int disponibilityId = getIntParameter(request, "disponibilityId");
+            Disponibility disponibility = disponibilityService.getDisponibility(disponibilityId);
+
+            if (disponibility.getTeacher().getId() != user.getUserId()) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Current user does not own this entity.");
+            }
+
+            request.setAttribute("disponibility", disponibility);
+            request.getRequestDispatcher(Pages.DISPONIBILITY).forward(request, response);
 
         } catch (MissingParameterException | NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
