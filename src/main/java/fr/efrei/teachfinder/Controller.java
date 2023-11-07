@@ -357,6 +357,12 @@ public class Controller extends HttpServlet {
         }
     }
 
+    @Action(action = Actions.GO_TO_NEED_CREATION, roles = {Admin, Recruiter})
+    public void goToNeedCreation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        sendSessionUser(request);
+        request.getRequestDispatcher(Pages.NEED_EDIT).forward(request, response);
+    }
+
     @Action(action = Actions.GO_TO_NEED_EDITION, roles = {Admin, Recruiter})
     public void goToNeedEdition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser user = sendSessionUser(request);
@@ -436,5 +442,9 @@ public class Controller extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }
     }
+
+    @Action(action = "", roles = {})
+    public void templateToDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }
