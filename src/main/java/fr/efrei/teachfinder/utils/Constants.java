@@ -95,18 +95,18 @@ public final class Constants {
         public static final String RECRUITER_FINDBYID = "SELECT r from Recruiter r WHERE r.id = :recruiterId";
         public static final String RECRUITER_FINDALL_BY_SCHOOL = "SELECT r from Recruiter r WHERE r.schoolName.schoolName = :schoolName";
 
-        public static final String NEED_FINDBYID = "SELECT n from Need n WHERE n.needId = :needId";
+        public static final String NEED_FINDBYID = "SELECT n from Need n WHERE n.id = :needId";
         public static final String NEED_FINDALL_BY_SCHOOL = "SELECT n from Need n WHERE n.schoolName.schoolName = :schoolName";
         public static final String NEED_FINDALL_BY_RECRUITER = "SELECT n from Need n WHERE n.recruiter.id = :recruiterId";
         public static final String NEED_GETALL = "SELECT n from Need n";
         public static final String NEED_SEARCHWITH_STRING = "SELECT n FROM Need n WHERE n.schoolName.schoolName LIKE %:search% OR n.subject LIKE %:search%";
 
-        public static final String CANDIDATURE_FINDBYID = "SELECT c FROM Candidature c WHERE c.id = :candidatureId";
+        public static final String CANDIDATURE_FINDBYID = "SELECT c FROM Candidature c WHERE c.teacher.id = :teacherId AND c.need.id = :needId";
         public static final String CANDIDATURE_FINDALL_BY_TEACHER = "SELECT c FROM Candidature c WHERE c.teacher.id = :teacherId";
-        public static final String CANDIDATURE_FINDALL_BY_NEED = "SELECT c FROM Candidature c WHERE c.need.needId = :needId";
+        public static final String CANDIDATURE_FINDALL_BY_NEED = "SELECT c FROM Candidature c WHERE c.need.id = :needId";
         public static final String CANDIDATURE_FINDALL_BY_RECRUITER = "SELECT c FROM Candidature c WHERE c.need.recruiter.id = :recruiterId";
 
-        public static final String EVALUATION_FINDBYID = "SELECT ev FROM Evaluation ev WHERE ev.id = :evalutionId";
+        public static final String EVALUATION_FINDBYID = "SELECT ev FROM Evaluation ev WHERE ev.schoolName.schoolName = :schoolName AND ev.teacher.id = :teacherId";
         public static final String EVALUATION_FINDALL_BY_TEACHER = "SELECT ev FROM Evaluation ev WHERE ev.teacher.id = :teacherId";
 
         public static final String DISPONIBILITY_FINDBYID = "SELECT d from Disponibility d WHERE d.id = :disponibilityId";

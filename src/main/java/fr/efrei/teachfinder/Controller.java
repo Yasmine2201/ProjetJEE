@@ -59,9 +59,7 @@ public class Controller extends HttpServlet {
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            dispatch(getStringParameter(request, "action"), request, response);
-        } catch (MissingParameterException e) {
-             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+            dispatch(request.getParameter("action"), request, response);
         } catch (Exception e) {
             log.error(e);
             request.getRequestDispatcher(Pages.ERROR_500).forward(request, response);
@@ -158,7 +156,7 @@ public class Controller extends HttpServlet {
     }
 
     public int getIntParameter(HttpServletRequest request, String parameter) throws MissingParameterException, NumberFormatException {
-        String strValue = request.getParameter("parameter");
+        String strValue = request.getParameter(parameter);
 
         if (strValue == null) {
             throw new MissingParameterException("Parameter '"+ parameter +"' is missing");
@@ -168,7 +166,7 @@ public class Controller extends HttpServlet {
     }
 
     public String getStringParameter(HttpServletRequest request, String parameter) throws MissingParameterException{
-        String strValue = request.getParameter("parameter");
+        String strValue = request.getParameter(parameter);
 
         if (StringUtils.isNullOrEmpty(strValue)) {
             throw new MissingParameterException("Parameter '"+ parameter +"' is missing");

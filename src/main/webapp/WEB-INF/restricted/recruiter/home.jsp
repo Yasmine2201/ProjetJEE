@@ -77,7 +77,7 @@
                             <td>
                                 <form method="post" action="controller">
                                     <label>
-                                        <input class="is-hidden" name="schoolName"
+                                        <input class="is-hidden" name="teacherId"
                                                value="${candidature.teacher.id}">
                                     </label>
                                     <button type="submit" name="action" value="goToTeacher"

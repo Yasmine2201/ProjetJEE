@@ -17,8 +17,9 @@ public class EvaluationDAO implements IEvaluationDAO{
     public Evaluation findById(EvaluationId evaluationId)
     {
         TypedQuery<Evaluation> query = entityManager
-                .createQuery(QueryRequests.EVALUATION_FINDBYID, Evaluation.class)
-                .setParameter("evaluationId", evaluationId);
+            .createQuery(QueryRequests.EVALUATION_FINDBYID, Evaluation.class)
+            .setParameter("schoolName", evaluationId.getSchoolName())
+            .setParameter("teacherId", evaluationId.getTeacherId());
 
         try {
             return query.getSingleResult();
