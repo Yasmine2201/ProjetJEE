@@ -553,8 +553,9 @@ public class Controller extends HttpServlet {
         }
     }
 
-    @Action(action = "", roles = {})
+    @Action(action = Actions.GO_TO_RESEARCH, roles = {Admin, Recruiter, Teacher})
     public void templateToDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        sendSessionUser(request);
+        request.getRequestDispatcher(Pages.RESEARCH).forward(request, response);
     }
 }
