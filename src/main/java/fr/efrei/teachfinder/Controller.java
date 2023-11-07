@@ -58,8 +58,11 @@ public class Controller extends HttpServlet {
     }
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        dispatch(action, request, response);
+        try {
+            dispatch(getStringParameter(request, "action"), request, response);
+        } catch (MissingParameterException e) {
+             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
     }
 
     public void dispatch(String action, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -161,6 +164,16 @@ public class Controller extends HttpServlet {
         return Integer.parseInt(strValue);
     }
 
+    public String getStringParameter(HttpServletRequest request, String parameter) throws MissingParameterException{
+        String strValue = request.getParameter("parameter");
+
+        if (StringUtils.isNullOrEmpty(strValue)) {
+            throw new MissingParameterException("Parameter '"+ parameter +"' is missing");
+        }
+
+        return strValue;
+    }
+
     public void useParametersAsAttributes(HttpServletRequest request, HttpServletResponse response) {
         for (String name : Collections.list(request.getParameterNames())) {
             request.setAttribute(name, request.getParameter(name));
@@ -169,24 +182,31 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.LOGIN)
     public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Check credentials
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
+        try {
+            // Check credentials
+            String login = getStringParameter(request, "login");
+            String password = getStringParameter(request, "password");
 
-        SessionUser sessionUser = securityService.authentificate(login, password);
+            SessionUser sessionUser = securityService.authentificate(login, password);
 
-        if (sessionUser == null) {
-            request.setAttribute("errorMessage", Messages.CREDENTIALS_KO);
-            request.setAttribute("login", login);
+            if (sessionUser == null) {
+                request.setAttribute("errorMessage", Messages.CREDENTIALS_KO);
+                request.setAttribute("login", login);
+                goToLogin(request, response);
+                return;
+            }
+
+            // Create session
+            HttpSession session = request.getSession(true);
+            sessionUser.setSessionId(session.getId());
+            session.setAttribute("sessionUser", sessionUser);
+            goToHome(request, response);
+
+        } catch (MissingParameterException e) {
+            useParametersAsAttributes(request, response);
+            request.setAttribute("errorMessage", Messages.MISSING_FIELD);
             goToLogin(request, response);
-            return;
         }
-
-        // Create session
-        HttpSession session = request.getSession(true);
-        sessionUser.setSessionId(session.getId());
-        session.setAttribute("sessionUser", sessionUser);
-        goToHome(request, response);
     }
 
     @Action(action = Actions.LOGOUT)
@@ -233,17 +253,27 @@ public class Controller extends HttpServlet {
     @Action(action = Actions.GO_TO_RECRUITER_HOME, roles = {Recruiter})
     public void goToRecruiterHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser sessionUser = sendSessionUser(request);
-        request.setAttribute("runningNeeds", recruiterDashboardService.getRunningNeed(sessionUser.getUserId()));
-        request.setAttribute("pendingCandidatures", recruiterDashboardService.getCandidatures(sessionUser.getUserId()));
-        request.getRequestDispatcher(Pages.RECRUITER_HOME).forward(request, response);
+
+        try {
+            request.setAttribute("runningNeeds", recruiterDashboardService.getRunningNeed(sessionUser.getUserId()));
+            request.setAttribute("pendingCandidatures", recruiterDashboardService.getCandidatures(sessionUser.getUserId()));
+            request.getRequestDispatcher(Pages.RECRUITER_HOME).forward(request, response);
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
+        }
     }
 
     @Action(action = Actions.GO_TO_TEACHER_HOME, roles = {Teacher})
     public void goToTeacherHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser sessionUser = sendSessionUser(request);
-        request.setAttribute("interestingNeeds", teacherDashboardService.getInterestingNeeds(sessionUser.getUserId()));
-        request.setAttribute("candidatures", teacherDashboardService.getCandidatures(sessionUser.getUserId()));
-        request.getRequestDispatcher(Pages.TEACHER_HOME).forward(request, response);
+
+        try {
+            request.setAttribute("interestingNeeds", teacherDashboardService.getInterestingNeeds(sessionUser.getUserId()));
+            request.setAttribute("candidatures", teacherDashboardService.getCandidatures(sessionUser.getUserId()));
+            request.getRequestDispatcher(Pages.TEACHER_HOME).forward(request, response);
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
+        }
     }
 
     @Action(action = Actions.GO_TO_REGISTER)
@@ -287,20 +317,18 @@ public class Controller extends HttpServlet {
     @Action(action = Actions.GO_TO_SCHOOL, roles = {Admin, Recruiter, Teacher})
     public void goToSchool(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
-        String schoolName = request.getParameter("schoolName");
-        if (schoolName == null || StringUtils.isNullOrEmpty(schoolName)) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
 
         try {
+            String schoolName = getStringParameter(request, "schoolName");
             School school = schoolService.getSchool(schoolName);
             request.setAttribute("school", school);
             request.setAttribute("runningNeeds", schoolService.getSchoolRunningNeeds(schoolName));
             request.setAttribute("recruiters", schoolService.getSchoolRecruiters(schoolName));
             request.getRequestDispatcher(Pages.SCHOOL_VIEW).forward(request, response);
         } catch (EntityNotFoundException e) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "School not found");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (MissingParameterException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -313,18 +341,16 @@ public class Controller extends HttpServlet {
     @Action(action = Actions.GO_TO_SCHOOL_EDITION, roles = {Admin})
     public void goToSchoolEdition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
-        String schoolName = request.getParameter("schoolName");
-        if (schoolName == null || StringUtils.isNullOrEmpty(schoolName)) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
 
         try {
+            String schoolName = getStringParameter(request, "schoolName");
             School school = schoolService.getSchool(schoolName);
             request.setAttribute("school", school);
             request.getRequestDispatcher(Pages.SCHOOL_EDIT).forward(request, response);
         } catch (EntityNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (MissingParameterException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }
 
