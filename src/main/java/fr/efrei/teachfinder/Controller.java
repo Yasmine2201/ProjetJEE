@@ -533,6 +533,26 @@ public class Controller extends HttpServlet {
         }
     }
 
+    @Action(action = Actions.GO_TO_EVALUATION, roles = {Admin, Recruiter})
+    public void goToEvaluation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        sendSessionUser(request);
+
+        try {
+            EvaluationId evaluationId = new EvaluationId();
+            evaluationId.setTeacherId(getIntParameter(request, "teacherId"));
+            evaluationId.setSchoolName(getStringParameter(request, "schoolName"));
+
+            Evaluation evaluation = evaluationService.getEvaluation(evaluationId);
+            if (evaluation != null) {
+                request.setAttribute("evaluation", evaluation);
+            }
+            request.getRequestDispatcher(Pages.EVALUATION).forward(request, response);
+
+        } catch (MissingParameterException | NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
+    }
+
     @Action(action = "", roles = {})
     public void templateToDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
