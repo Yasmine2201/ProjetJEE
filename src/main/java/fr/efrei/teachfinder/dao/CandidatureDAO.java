@@ -16,8 +16,9 @@ public class CandidatureDAO implements ICandidatureDAO {
     @Override
     public Candidature findById(CandidatureId candidatureId) {
         TypedQuery<Candidature> query = entityManager
-                .createQuery(QueryRequests.CANDIDATURE_FINDBYID, Candidature.class)
-                .setParameter("candidatureId", candidatureId);
+            .createQuery(QueryRequests.CANDIDATURE_FINDBYID, Candidature.class)
+            .setParameter("teacherId", candidatureId.getTeacherId())
+            .setParameter("needId", candidatureId.getNeedId());
 
         try {
             return query.getSingleResult();
