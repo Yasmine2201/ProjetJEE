@@ -62,6 +62,9 @@ public class Controller extends HttpServlet {
             dispatch(getStringParameter(request, "action"), request, response);
         } catch (MissingParameterException e) {
              response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            log.error(e);
+            request.getRequestDispatcher(Pages.ERROR_500).forward(request, response);
         }
     }
 

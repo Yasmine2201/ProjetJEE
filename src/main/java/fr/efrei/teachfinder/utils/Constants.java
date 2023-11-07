@@ -63,6 +63,7 @@ public final class Constants {
         public static final String EVALUATION = "/WEB-INF/evaluation/evaluation.jsp";
         public static final String DISPONIBILITY = "/WEB-INF/disponibility/disponibility.jsp";
         public static final String RESEARCH = "/WEB-INF/research.jsp";
+        public static final String ERROR_500 = "/WEB-INF/error500.jsp";
     }
 
     public static final class Messages {
