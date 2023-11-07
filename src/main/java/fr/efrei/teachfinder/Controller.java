@@ -420,6 +420,28 @@ public class Controller extends HttpServlet {
         }
     }
 
+    @Action(action = Actions.GO_TO_TEACHER_EDITION, roles = {Teacher})
+    public void goToTeacherEdition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUser user = sendSessionUser(request);
+        try {
+            int teacherId = getIntParameter(request, "teacherId");
+
+            if (teacherId != user.getUserId()) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Current user does not own this entity.");
+                return;
+            }
+
+            request.setAttribute("teacher", teacherService.getTeacher(teacherId));
+            request.setAttribute("futureDisponibilities", teacherService.getTeacherFutureDisponibilities(teacherId));
+            request.getRequestDispatcher(Pages.TEACHER_EDIT).forward(request, response);
+
+        } catch (MissingParameterException | NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
+
     @Action(action = Actions.GO_TO_DISPONIBILITY_CREATION, roles = {Teacher})
     public void goToDisponibilityCreation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
@@ -435,6 +457,7 @@ public class Controller extends HttpServlet {
 
             if (disponibility.getTeacher().getId() != user.getUserId()) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Current user does not own this entity.");
+                return;
             }
 
             request.setAttribute("disponibility", disponibility);
