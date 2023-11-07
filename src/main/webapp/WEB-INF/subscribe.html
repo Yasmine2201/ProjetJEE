@@ -21,7 +21,7 @@
                     <div class="field">
 
                         <div class="control pb-3">
-                            <div class="label has-text-left">Identifiant<sup>*</sup></div>
+                            <div class="label has-text-left">Identifiant<sup class="has-text-danger">*</sup></div>
                             <label for=login>
                                 <input id="login" name="login" type="text" class="input is-medium is-rounded"
                                        placeholder="Identifiant"/>
@@ -29,7 +29,7 @@
                         </div>
 
                         <div class="control pb-3">
-                            <div class="label has-text-left">Mot de passe<sup>*</sup></div>
+                            <div class="label has-text-left">Mot de passe<sup class="has-text-danger">*</sup></div>
                             <label for="password">
                                 <input id="password" name="password" class="input is-medium is-rounded"
                                        placeholder="********"
@@ -38,7 +38,7 @@
                         </div>
 
                         <div class="control pb-3">
-                            <div class="label has-text-left">Confirmez votre mot de passe<sup>*</sup></div>
+                            <div class="label has-text-left">Confirmez votre mot de passe<sup class="has-text-danger">*</sup></div>
                             <label for="passwordVerification">
                                 <input id="passwordVerification" name="passwordVerification"
                                        class="input is-medium is-rounded"
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="control pb-3">
-                            <div class="label has-text-left">Prenom<sup>*</sup></div>
+                            <div class="label has-text-left">Prenom<sup class="has-text-danger">*</sup></div>
                             <label for=firstName>
                                 <input id="firstname" name="firstname" type="text" class="input is-medium is-rounded"
                                        placeholder="Prenom"/>
@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="control pb-3">
-                            <div class="label has-text-left">Nom<sup>*</sup></div>
+                            <div class="label has-text-left">Nom<sup class="has-text-danger">*</sup></div>
                             <label for=lastName>
                                 <input id="lastname" name="lastname" type="text" class="input is-medium is-rounded"
                                        placeholder="Nom"/>
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="control pb-3">
-                            <div class="label has-text-left">Email<sup>*</sup></div>
+                            <div class="label has-text-left">Email<sup class="has-text-danger">*</sup></div>
                             <label for=email>
                                 <input id="email" name="email" type="email" class="input is-medium is-rounded"
                                        placeholder="Email"/>
@@ -218,5 +218,8 @@
         width: 100%;
         height: 2.8rem;
         padding: 0.5rem;
+    }
+    .has-text-danger{
+        color: #cc0f35;
     }
 </style>

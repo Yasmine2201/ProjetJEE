@@ -8,7 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Edition de ${school.schoolName}</title>
+    <c:if test="${not empty school}">
+        <title>Edition de ${school.schoolName}</title>
+    </c:if>
+    <c:if test="${empty school}">
+        <title>Création d'une école</title>
+    </c:if>
+
+
 </head>
 <body>
 <jsp:include page="/WEB-INF/restricted/navbar/admin.jsp"/>
@@ -16,26 +23,41 @@
     <div class="columns is-centered">
         <div class="column is-10 ">
             <form class="box has-text-centered px-3" method="post" action="controller">
-                <h3 class="title is-2 has-text-left">Edition de ${school.schoolName}</h3>
+
+                <c:if test="${not empty school}">
+                    <h3 class="title is-2 has-text-left">Edition de ${school.schoolName}</h3>
+                </c:if>
+                <c:if test="${empty school}">
+                    <h3 class="title is-2 has-text-left">Création d'une école</h3>
+                </c:if>
                 <div class="columns">
                     <div class="column is-half">
-                        <h3 class="subtitle is-5 has-text-left"> Nom de l'ecole </h3>
-                        <input class="input is-rounded" name="shoolName" placeholder="Nom de l'ecole"
-                               value="${school.schoolName}">
+
+                        <h3 class="subtitle is-5 has-text-left"> Nom de l'école<sup class="has-text-danger">*</sup></h3>
+                        <c:if test="${empty school}">
+                            <input class="input is-rounded" name="shoolName" placeholder="Nom de l'école"
+                                   value="${school.schoolName}">
+                        </c:if>
+                        <c:if test="${not empty school}">
+                            <input class="input is-rounded " name="shoolName" placeholder="Nom de l'école"
+                                   value="${school.schoolName}" disabled>
+                        </c:if>
                     </div>
 
                     <div class="column is-half">
-                        <h3 class="subtitle is-5 has-text-left"> Specialisation de l'ecole </h3>
-                        <input class="input is-rounded" name="shoolName" placeholder="spécialisation"
+                        <h3 class="subtitle is-5 has-text-left"> Spécialisation de l'école<sup class="has-text-danger">*</sup></h3>
+                        <input class="input is-rounded" name="shoolName" placeholder="Spécialisation"
                                value="${school.specializations}">
                     </div>
                 </div>
-                <h3 class="subtitle is-5 has-text-left"> Adresse de l'ecole </h3>
+                <h3 class="subtitle is-5 has-text-left"> Adresse de l'école </h3>
                 <input class="input is-rounded" name="shoolName" placeholder="addresse" value="${school.address}">
+
                 <div class="pt-6">
-                    <button class="button is-success"> Valider</button>
-                    <button class="button is-danger"> Annuler</button>
+                    <button class="button is-success" name="action" value="saveSchool"> Valider</button>
+                    <button class="button is-danger" name="action" value="back"> Annuler</button>
                 </div>
+                <div class="has-text-danger error-div">${errorMessage}</div>
             </form>
         </div>
     </div>
