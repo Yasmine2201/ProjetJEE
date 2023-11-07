@@ -2,8 +2,11 @@ package fr.efrei.teachfinder;
 
 import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.SessionUser;
-import fr.efrei.teachfinder.entities.RoleType;
+import fr.efrei.teachfinder.entities.Candidature;
+import fr.efrei.teachfinder.entities.CandidatureId;
+import fr.efrei.teachfinder.entities.Need;
 import fr.efrei.teachfinder.entities.School;
+import fr.efrei.teachfinder.exceptions.MissingParameterException;
 import fr.efrei.teachfinder.services.*;
 import fr.efrei.teachfinder.utils.StringUtils;
 import jakarta.ejb.EJB;
@@ -22,12 +25,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 
+import static fr.efrei.teachfinder.entities.RoleType.*;
 import static fr.efrei.teachfinder.utils.Constants.*;
+
 
 public class Controller extends HttpServlet {
 
-    //    @EJB private ICandidatureService candidatureService;
+    @EJB private ICandidatureService candidatureService;
     @EJB private IDisponibilityService disponibilityService;
     @EJB private IEvaluationService evaluationService;
     @EJB private INeedService needService;
@@ -56,10 +62,10 @@ public class Controller extends HttpServlet {
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        doAction(action, request, response);
+        dispatch(action, request, response);
     }
 
-    public void doAction(String action, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void dispatch(String action, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String path = request.getServletPath();
         String httpMethod = request.getMethod();
 
@@ -126,12 +132,8 @@ public class Controller extends HttpServlet {
         return (SessionUser) session.getAttribute("sessionUser");
     }
 
-    public void sendSessionUser(HttpServletRequest request) {
-        sendSessionUser(request, null);
-    }
-
-    public void sendSessionUser(HttpServletRequest request, SessionUser sessionUser) {
-        SessionUser userToSend = sessionUser == null ? getSessionUser(request) : sessionUser;
+    public SessionUser sendSessionUser(HttpServletRequest request) {
+        SessionUser sessionUser = getSessionUser(request);
 
         if (sessionUser != null) {
             try {
@@ -149,6 +151,7 @@ public class Controller extends HttpServlet {
         }
 
         request.setAttribute("sessionuser", sessionUser);
+        return sessionUser;
     }
 
     public void useParametersAsAttributes(HttpServletRequest request, HttpServletResponse response) {
@@ -205,7 +208,7 @@ public class Controller extends HttpServlet {
             }
         }
 
-        doAction(action, request, response);
+        dispatch(action, request, response);
     }
 
     @Action(action = Actions.GO_TO_LOGIN)
@@ -213,14 +216,14 @@ public class Controller extends HttpServlet {
         request.getRequestDispatcher(Pages.LOGIN).forward(request, response);
     }
 
-    @Action(action = Actions.GO_TO_ADMIN_HOME, roles = {RoleType.Admin})
+    @Action(action = Actions.GO_TO_ADMIN_HOME, roles = {Admin})
     public void goToAdminHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
         request.setAttribute("pendingRegistrations", registrationService.getPendingRegistrations());
         request.getRequestDispatcher(Pages.ADMIN_HOME).forward(request, response);
     }
 
-    @Action(action = Actions.GO_TO_RECRUITER_HOME, roles = {RoleType.Recruiter})
+    @Action(action = Actions.GO_TO_RECRUITER_HOME, roles = {Recruiter})
     public void goToRecruiterHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser sessionUser = getSessionUser(request);
         sendSessionUser(request, sessionUser);
@@ -229,7 +232,7 @@ public class Controller extends HttpServlet {
         request.getRequestDispatcher(Pages.RECRUITER_HOME).forward(request, response);
     }
 
-    @Action(action = Actions.GO_TO_TEACHER_HOME, roles = {RoleType.Teacher})
+    @Action(action = Actions.GO_TO_TEACHER_HOME, roles = {Teacher})
     public void goToTeacherHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser sessionUser = getSessionUser(request);
         sendSessionUser(request, sessionUser);
@@ -244,7 +247,7 @@ public class Controller extends HttpServlet {
         request.getRequestDispatcher(Pages.REGISTRATION).forward(request, response);
     }
 
-    @Action(action = Actions.APPROVE_REGISTRATION, roles = {RoleType.Admin})
+    @Action(action = Actions.APPROVE_REGISTRATION, roles = {Admin})
     public void approveRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
             int registrationId = Integer.parseInt(request.getParameter("registrationId"));
@@ -261,7 +264,7 @@ public class Controller extends HttpServlet {
         goToAdminHome(request, response);
     }
 
-    @Action(action = Actions.DENY_REGISTRATION, roles = {RoleType.Admin})
+    @Action(action = Actions.DENY_REGISTRATION, roles = {Admin})
     public void denyRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
             int registrationId = Integer.parseInt(request.getParameter("registrationId"));
@@ -276,8 +279,8 @@ public class Controller extends HttpServlet {
         goToAdminHome(request, response);
     }
 
-    @Action(action = Actions.GO_TO_SCHOOL, roles = {RoleType.Admin, RoleType.Recruiter, RoleType.Teacher})
-    public void goToReadSchool(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Action(action = Actions.GO_TO_SCHOOL, roles = {Admin, Recruiter, Teacher})
+    public void goToSchool(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
         String schoolName = request.getParameter("schoolName");
         if (schoolName == null || StringUtils.isNullOrEmpty(schoolName)) {
@@ -292,13 +295,94 @@ public class Controller extends HttpServlet {
             request.setAttribute("recruiters", schoolService.getSchoolRecruiters(schoolName));
             request.getRequestDispatcher(Pages.SCHOOL_VIEW).forward(request, response);
         } catch (EntityNotFoundException e) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "School not found");
         }
     }
 
-    @Action(action = Actions.GO_TO_NEED, roles = {RoleType.Admin, RoleType.Recruiter, RoleType.Teacher})
-    public void goToReadNeed(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Action(action = Actions.GO_TO_SCHOOL_CREATION, roles = {Admin})
+    public void goToSchoolCreation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
-        request.getRequestDispatcher(Pages.NEED_VIEW).forward(request, response);
+        request.getRequestDispatcher(Pages.SCHOOL_EDIT).forward(request, response);
+    }
+
+    @Action(action = Actions.GO_TO_SCHOOL_EDITION, roles = {Admin})
+    public void goToSchoolEdition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        sendSessionUser(request);
+        String schoolName = request.getParameter("schoolName");
+        if (schoolName == null || StringUtils.isNullOrEmpty(schoolName)) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+
+        try {
+            School school = schoolService.getSchool(schoolName);
+            request.setAttribute("school", school);
+            request.getRequestDispatcher(Pages.SCHOOL_EDIT).forward(request, response);
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.GO_TO_NEED, roles = {Admin, Recruiter, Teacher})
+    public void goToNeed(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUser user = sendSessionUser(request);
+
+        if (user == null) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
+        try {
+            String needIdStr = request.getParameter("needId");
+            if (needIdStr == null) {
+                throw new MissingParameterException("Parameter 'needId' is missing");
+            }
+            int needId = Integer.parseInt(needIdStr);
+
+            Need need = needService.getNeed(needId);
+
+            // Candidatures are sent only to recruiter who manage the need or an admin. Otherwise, it is hidden
+            if ((user.getRole() == Recruiter && need.getRecruiter().getId() == user.getUserId())
+                || user.getRole() == Admin)
+            {
+                request.setAttribute("candidatures", need.getCandidatures());
+            }
+
+            need.setCandidatures(new HashSet<>());
+            request.setAttribute("need", need);
+            request.getRequestDispatcher(Pages.NEED_VIEW).forward(request, response);
+
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (MissingParameterException | NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.GO_TO_NEED_EDITION, roles = {Admin, Recruiter})
+    public void goToNeedEdition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUser user = sendSessionUser(request);
+
+        if (user == null) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
+        try {
+            String needIdStr = request.getParameter("needId");
+            if (needIdStr == null) {
+                throw new MissingParameterException("Parameter 'needId' is missing");
+            }
+            int needId = Integer.parseInt(needIdStr);
+
+            Need need = needService.getNeed(needId);
+            request.setAttribute("need", need);
+            request.getRequestDispatcher(Pages.NEED_VIEW).forward(request, response);
+
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (MissingParameterException | NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
     }
 }

@@ -42,15 +42,7 @@ public final class Constants {
         public static final String GO_TO_USER_PROFILE = "goToUserProfile";
         public static final String GO_TO_USER_PROFILE_EDITION = "goToUserProfileEdition";
 
-        public static final String CANCEL_DISPONIBILITY_CREATION = "cancelDisponibilityCreation";
-        public static final String CANCEL_DISPONIBILITY_EDITION = "cancelDisponibilityEdition";
-        public static final String CANCEL_EVALUATION = "cancelEvaluation";
-        public static final String CANCEL_NEED_CREATION = "cancelNeedCreation";
-        public static final String CANCEL_NEED_EDITION = "cancelNeedEdition";
-        public static final String CANCEL_SCHOOL_CREATION = "cancelSchoolCreation";
-        public static final String CANCEL_SCHOOL_EDITION = "cancelSchoolEdition";
-        public static final String CANCEL_TEACHER_EDITION = "cancelTeacherEdition";
-        public static final String CANCEL_PROFILE_EDITION = "cancelProfileEdition";
+        public static final String GO_BACK = "back";
     }
 
     public static final class Pages {
