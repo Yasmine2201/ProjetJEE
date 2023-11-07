@@ -225,8 +225,7 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.GO_TO_RECRUITER_HOME, roles = {Recruiter})
     public void goToRecruiterHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SessionUser sessionUser = getSessionUser(request);
-        sendSessionUser(request, sessionUser);
+        SessionUser sessionUser = sendSessionUser(request);
         request.setAttribute("runningNeeds", recruiterDashboardService.getRunningNeed(sessionUser.getUserId()));
         request.setAttribute("pendingCandidatures", recruiterDashboardService.getCandidatures(sessionUser.getUserId()));
         request.getRequestDispatcher(Pages.RECRUITER_HOME).forward(request, response);
@@ -234,8 +233,7 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.GO_TO_TEACHER_HOME, roles = {Teacher})
     public void goToTeacherHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SessionUser sessionUser = getSessionUser(request);
-        sendSessionUser(request, sessionUser);
+        SessionUser sessionUser = sendSessionUser(request);
         request.setAttribute("interestingNeeds", teacherDashboardService.getInterestingNeeds(sessionUser.getUserId()));
         request.setAttribute("candidatures", teacherDashboardService.getCandidatures(sessionUser.getUserId()));
         request.getRequestDispatcher(Pages.TEACHER_HOME).forward(request, response);
@@ -384,5 +382,35 @@ public class Controller extends HttpServlet {
         } catch (MissingParameterException | NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
+    }
+
+    @Action(action = Actions.GO_TO_CANDIDATURE, roles = {Admin, Teacher, Recruiter})
+    public void goToCandidature(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        sendSessionUser(request);
+
+        try {
+            String teacherIdStr = request.getParameter("teacherId");
+            String needIdStr = request.getParameter("needId");
+
+            if (teacherIdStr == null) {
+                throw new MissingParameterException("Parameter 'teacherIdStr' is missing");
+            } else if (needIdStr == null) {
+                throw new MissingParameterException("Parameter 'needId' is missing");
+            }
+
+            CandidatureId candidatureId = new CandidatureId();
+            candidatureId.setTeacherId(Integer.parseInt(teacherIdStr));
+            candidatureId.setNeedId(Integer.parseInt(needIdStr));
+
+            Candidature candidature = candidatureService.getCandidature(candidatureId);
+            request.setAttribute("candidature", candidature);
+            request.getRequestDispatcher(Pages.CANDIDATURE).forward(request, response);
+
+        } catch (MissingParameterException | NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
     }
 }
