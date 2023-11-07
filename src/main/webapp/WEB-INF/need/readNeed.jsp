@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Besoin N°${need.id}</title>
 </head>
 <body>
 <c:if test="${sessionUser.role eq 'Admin'}">
@@ -34,7 +34,7 @@
                                 <div class="level-item">
                                     <form method="post" action="controller">
                                         <input class="is-hidden" name="needId" value="${need.schoolName.schoolName}">
-                                        <button class="button is-info" type="submit" name="action" value="goToSchool">
+                                        <button class="button has-text-info" type="submit" name="action" value="goToSchool">
                                             <span class="material-symbols-outlined">
                                                 read_more
                                             </span>
@@ -48,7 +48,7 @@
                     <div class="column">
                         <c:if test="${sessionUser.role eq 'Recruiter' or sessionUser.role eq 'Admin'}">
                             <form class="has-text-right" method="post" action="controller">
-                                <input class="is-hidden" name="needId" value="${need.needId}">
+                                <input class="is-hidden" name="needId" value="${need.id}">
                                 <button class="button is-info" type="submit" name="action" value="goToNeedEdition">
                                    Modifier
                                 </button>
@@ -100,7 +100,7 @@
                                     <form method="post" action="controller">
                                         <label>
                                             <input class="is-hidden" name="needId"
-                                                   value="${need.needId}">
+                                                   value="${need.id}">
                                         </label>
                                         <button type="submit" name="action" value="goToCandidature"
                                                 class="button is-success"> Candidater

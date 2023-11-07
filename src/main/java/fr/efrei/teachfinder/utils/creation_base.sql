@@ -128,4 +128,6 @@ INSERT INTO recruiter (recruiterId, schoolName) VALUES (2, 'EFREI');
 
 INSERT INTO teacher (teacherId, contractType) VALUES (3, 'ANY');
 
+INSERT INTO need (needId, recruiterId, schoolName, contractType, subject, requirements, timePeriod, notes)
+    VALUES (4,2,'EFREI','Temporary','JAVA','5 ans exp','10/10/2023 - 10/12/2023','');
 COMMIT;

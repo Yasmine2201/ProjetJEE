@@ -7,7 +7,6 @@
 
 <jsp:include page="../navbar/teacher.jsp"/>
 <section class="section">
-
     <div class="columns">
         <div class="column">
             <h3 class="title is-3 has-text-left">Offres intéressantes</h3>
