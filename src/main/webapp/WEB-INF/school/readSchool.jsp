@@ -30,11 +30,21 @@
                     <div class="column is-2 has-text-right">
                         <c:if test="${sessionUser.role eq 'Admin'}">
                             <form method="post" action="controller">
-                                <input class="is-hidden" name="needId"
+                                <input class="is-hidden" name="schoolName"
                                        value="${school.schoolName}">
                                 <button type="submit" name="action" value="goToSchoolEdition"
                                         class="button is-info">
                                     Modifier l'école
+                                </button>
+                            </form>
+                        </c:if>
+                        <c:if test="${sessionUser.role eq 'Recruiter'}">
+                            <form method="post" action="controller" class="has-text-right">
+                                <input class="is-hidden" name="schoolName"
+                                       value="${school.schoolName}">
+                                <button type="submit" name="action" value="goToNeedCreation"
+                                        class="button is-info">
+                                    Ajouter un besoin
                                 </button>
                             </form>
                         </c:if>
@@ -46,12 +56,12 @@
                         <h3 class="title is-3 has-text-left">Recruteurs</h3>
                         <div>
                             <ul>
-                            <c:forEach items="${recruiters}" var="recruiter">
-                                <li>
-                                        ${recruiter.applicationuser.firstname}
-                                        ${fn:toUpperCase(recruiter.applicationuser.lastname)}
-                                </li>
-                            </c:forEach>
+                                <c:forEach items="${recruiters}" var="recruiter">
+                                    <li>
+                                            ${recruiter.applicationuser.firstname}
+                                            ${fn:toUpperCase(recruiter.applicationuser.lastname)}
+                                    </li>
+                                </c:forEach>
                             </ul>
                         </div>
                     </div>

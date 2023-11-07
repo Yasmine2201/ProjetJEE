@@ -36,6 +36,7 @@
                 </button>
             </div>
             <div class="navbar-item">
+                <input class="is-hidden" name="teacherId" value="${sessionUser.id}">
                 <button class="button is-info" type="submit" name="action" value="goToUserProfile">
                     Mon Profil
                 </button>
