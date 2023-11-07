@@ -40,7 +40,7 @@
         </div>
         <div class="navbar-item">
             <form method="post" action="controller">
-                <button class="button" type="submit" name="action" value="goToNeedForm">
+                <button class="button" type="submit" name="action" value="goToNeedCreation">
                     + Besoin
                 </button>
             </form>

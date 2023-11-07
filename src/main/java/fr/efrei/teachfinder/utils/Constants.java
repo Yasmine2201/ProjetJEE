@@ -36,9 +36,9 @@ public final class Constants {
         public static final String GO_TO_RESEARCH = "goToResearch";
         public static final String GO_TO_SCHOOL = "goToSchool";
         public static final String GO_TO_SCHOOL_CREATION = "goToSchoolCreation";
-        public static final String GO_TO_SCHOOL_EDITION = "goToEdition";
+        public static final String GO_TO_SCHOOL_EDITION = "goToSchoolEdition";
         public static final String GO_TO_TEACHER = "goToTeacher";
-        public static final String GO_TO_TEACHER_EDITION = "goToEdition";
+        public static final String GO_TO_TEACHER_EDITION = "goToTeacherEdition";
         public static final String GO_TO_USER_PROFILE = "goToUserProfile";
         public static final String GO_TO_USER_PROFILE_EDITION = "goToUserProfileEdition";
 

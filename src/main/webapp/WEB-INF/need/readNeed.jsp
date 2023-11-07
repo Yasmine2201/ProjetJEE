@@ -29,11 +29,11 @@
                         <div class="level">
                             <div class="level-left">
                                 <div class="level-item">
-                                    <p class="title is-3 has-text-left">${need.schoolName} </p>
+                                    <p class="title is-3 has-text-left">${need.schoolName.schoolName} </p>
                                 </div>
                                 <div class="level-item">
                                     <form method="post" action="controller">
-                                        <input class="is-hidden" name="needId" value="${need.schoolName}">
+                                        <input class="is-hidden" name="needId" value="${need.schoolName.schoolName}">
                                         <button class="button is-info" type="submit" name="action" value="goToSchool">
                                             <span class="material-symbols-outlined">
                                                 read_more
@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="column">
-                        <c:if test="${sessionUser.role eq 'Recruiter' || sessionUser.role eq 'Admin'}">
+                        <c:if test="${sessionUser.role eq 'Recruiter' or sessionUser.role eq 'Admin'}">
                             <form class="has-text-right" method="post" action="controller">
                                 <input class="is-hidden" name="needId" value="${need.needId}">
                                 <button class="button is-info" type="submit" name="action" value="goToNeedEdition">
@@ -56,7 +56,7 @@
                         </c:if>
                     </div>
                 </div>
-                <p class="subtitle is-3 has-text-left">Besoin N° ${need.needId} </p>
+                <p class="subtitle is-3 has-text-left">Besoin N° ${need.id} </p>
                 <div class="column">
                     <table class="table is-bordered is-striped
                               is-narrow is-hoverable is-fullwidth">
@@ -68,7 +68,7 @@
 
                             <th> Période</th>
 
-                            <c:if test="${sessionUser.role =='Teacher' }">
+                            <c:if test="${sessionUser.role =='Teacher'}">
                                 <th>
                                     Candidater
                                 </th>
@@ -118,6 +118,8 @@
 
     <jsp:include page="/WEB-INF/footer.jsp"/>
 </section>
+
+<jsp:include page="/WEB-INF/footer.jsp"/>
 </body>
 </html>
 

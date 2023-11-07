@@ -29,8 +29,8 @@
 
                     <div class="column is-2 has-text-right">
                         <c:if test="${sessionUser.role eq 'Admin'}">
-                            <form method="post" action="controller" class="has-text-right">
-                                <input class="is-hidden" name="needId"
+                            <form method="post" action="controller">
+                                <input class="is-hidden" name="schoolName"
                                        value="${school.schoolName}">
                                 <button type="submit" name="action" value="goToSchoolEdition"
                                         class="button is-info">
@@ -40,11 +40,11 @@
                         </c:if>
                         <c:if test="${sessionUser.role eq 'Recruiter'}">
                             <form method="post" action="controller" class="has-text-right">
-                                <input class="is-hidden" name="needId"
+                                <input class="is-hidden" name="schoolName"
                                        value="${school.schoolName}">
                                 <button type="submit" name="action" value="goToNeedCreation"
                                         class="button is-info">
-                                    Ajout d'un besoin
+                                    Ajouter un besoin
                                 </button>
                             </form>
                         </c:if>
@@ -56,12 +56,12 @@
                         <h3 class="title is-3 has-text-left">Recruteurs</h3>
                         <div>
                             <ul>
-                            <c:forEach items="${recruiters}" var="recruiter">
-                                <li>
-                                        ${recruiter.applicationuser.firstname}
-                                        ${fn:toUpperCase(recruiter.applicationuser.lastname)}
-                                </li>
-                            </c:forEach>
+                                <c:forEach items="${recruiters}" var="recruiter">
+                                    <li>
+                                            ${recruiter.applicationuser.firstname}
+                                            ${fn:toUpperCase(recruiter.applicationuser.lastname)}
+                                    </li>
+                                </c:forEach>
                             </ul>
                         </div>
                     </div>
@@ -100,17 +100,15 @@
                                         </form>
                                     </td>
                                     <td>
-                                        <c:choose>
-                                            <c:when test="${need.contractType eq 'Any'}">
-                                                Non précisé
-                                            </c:when>
-                                            <c:when test="${need.contractType eq 'Continous'}">
-                                                Durée indéterminée
-                                            </c:when>
-                                            <c:when test="${need.contractType eq 'Temporary'}">
-                                                Prestation
-                                            </c:when>
-                                        </c:choose>
+                                        <c:if test="${need.contractType =='Continous' }">
+                                            CDI
+                                        </c:if>
+                                        <c:if test="${need.contractType == 'Temporary' }">
+                                            CDD
+                                        </c:if>
+                                        <c:if test="${need.contractType  == 'Any'}">
+                                            CDI et/ou CDD
+                                        </c:if>
                                     </td>
 
                                     <td> ${need.subject} </td>
