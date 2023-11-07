@@ -154,6 +154,16 @@ public class Controller extends HttpServlet {
         return sessionUser;
     }
 
+    public int getIntParameter(HttpServletRequest request, String parameter) throws MissingParameterException, NumberFormatException {
+        String strValue = request.getParameter("parameter");
+
+        if (strValue == null) {
+            throw new MissingParameterException("Parameter '"+ parameter +"' is missing");
+        }
+
+        return Integer.parseInt(strValue);
+    }
+
     public void useParametersAsAttributes(HttpServletRequest request, HttpServletResponse response) {
         for (String name : Collections.list(request.getParameterNames())) {
             request.setAttribute(name, request.getParameter(name));
@@ -248,10 +258,10 @@ public class Controller extends HttpServlet {
     @Action(action = Actions.APPROVE_REGISTRATION, roles = {Admin})
     public void approveRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
-            int registrationId = Integer.parseInt(request.getParameter("registrationId"));
+            int registrationId = getIntParameter(request, "registrationId");
             registrationService.approveRegistration(registrationId);
             request.setAttribute("message", Messages.SUCCESS);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | MissingParameterException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "registrationId should be an integer");
         } catch (EntityNotFoundException e) {
             request.setAttribute("message", Messages.UNAVAILABLE_ENTITY);
@@ -265,10 +275,10 @@ public class Controller extends HttpServlet {
     @Action(action = Actions.DENY_REGISTRATION, roles = {Admin})
     public void denyRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
-            int registrationId = Integer.parseInt(request.getParameter("registrationId"));
+            int registrationId = getIntParameter(request, "registrationId");
             registrationService.denyRegistration(registrationId);
             request.setAttribute("message", Messages.SUCCESS);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | MissingParameterException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "registrationId should be an integer");
         } catch (EntityNotFoundException e) {
             request.setAttribute("message", Messages.UNAVAILABLE_ENTITY);
@@ -331,12 +341,7 @@ public class Controller extends HttpServlet {
         }
 
         try {
-            String needIdStr = request.getParameter("needId");
-            if (needIdStr == null) {
-                throw new MissingParameterException("Parameter 'needId' is missing");
-            }
-            int needId = Integer.parseInt(needIdStr);
-
+            int needId = getIntParameter(request, "needId");
             Need need = needService.getNeed(needId);
 
             // Candidatures are sent only to recruiter who manage the need or an admin. Otherwise, it is hidden
@@ -365,20 +370,10 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.GO_TO_NEED_EDITION, roles = {Admin, Recruiter})
     public void goToNeedEdition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SessionUser user = sendSessionUser(request);
-
-        if (user == null) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
-            return;
-        }
+        sendSessionUser(request);
 
         try {
-            String needIdStr = request.getParameter("needId");
-            if (needIdStr == null) {
-                throw new MissingParameterException("Parameter 'needId' is missing");
-            }
-            int needId = Integer.parseInt(needIdStr);
-
+            int needId = getIntParameter(request, "needId");
             Need need = needService.getNeed(needId);
             request.setAttribute("need", need);
             request.getRequestDispatcher(Pages.NEED_VIEW).forward(request, response);
@@ -395,18 +390,9 @@ public class Controller extends HttpServlet {
         sendSessionUser(request);
 
         try {
-            String teacherIdStr = request.getParameter("teacherId");
-            String needIdStr = request.getParameter("needId");
-
-            if (teacherIdStr == null) {
-                throw new MissingParameterException("Parameter 'teacherIdStr' is missing");
-            } else if (needIdStr == null) {
-                throw new MissingParameterException("Parameter 'needId' is missing");
-            }
-
             CandidatureId candidatureId = new CandidatureId();
-            candidatureId.setTeacherId(Integer.parseInt(teacherIdStr));
-            candidatureId.setNeedId(Integer.parseInt(needIdStr));
+            candidatureId.setTeacherId(getIntParameter(request, "teacherId"));
+            candidatureId.setNeedId(getIntParameter(request, "needId"));
 
             Candidature candidature = candidatureService.getCandidature(candidatureId);
             request.setAttribute("candidature", candidature);
@@ -423,13 +409,7 @@ public class Controller extends HttpServlet {
     public void goToTeacher(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
         try {
-            String teacherIdStr = request.getParameter("teacherId");
-
-            if (teacherIdStr == null) {
-                throw new MissingParameterException("Parameter 'teacherIdStr' is missing");
-            }
-
-            int teacherId = Integer.parseInt(teacherIdStr);
+            int teacherId = getIntParameter(request, "teacherId");
 
             request.setAttribute("teacher", teacherService.getTeacher(teacherId));
             request.setAttribute("futureDisponibilities", teacherService.getTeacherFutureDisponibilities(teacherId));
