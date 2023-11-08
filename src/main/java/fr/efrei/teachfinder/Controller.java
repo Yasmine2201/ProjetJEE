@@ -3,11 +3,12 @@ package fr.efrei.teachfinder;
 import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.SessionUser;
 import fr.efrei.teachfinder.entities.*;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
+import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
 import fr.efrei.teachfinder.exceptions.MissingParameterException;
 import fr.efrei.teachfinder.services.*;
 import fr.efrei.teachfinder.utils.StringUtils;
 import jakarta.ejb.EJB;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -556,21 +557,26 @@ public class Controller extends HttpServlet {
         sendSessionUser(request);
 
         try {
-            String schoolName = getStringParameter(request, "schoolName");
-            String adress = getStringParameter(request, "adress");
-            String specializations = getStringParameter(request, "specializations");
+            String schoolName = request.getParameter("schoolName");
+            String address = request.getParameter("address");
+            String specializations = request.getParameter("specializations");
 
             School school = new School();
             school.setSchoolName(schoolName);
-            school.setAddress(adress);
+            school.setAddress(address);
             school.setSpecializations(specializations);
             schoolService.createSchool(school);
 
+            goToSchool(request, response);
 
-            dispatch(Actions.GO_TO_SCHOOL,request,response);
-        } catch (Exception e) {
-            log.error("Error while creating school: " + e.getMessage());
-            request.getRequestDispatcher(Pages.ERROR_500).forward(request, response);
+        } catch (EntityExistsException e) {
+            useParametersAsAttributes(request, response);
+            request.setAttribute("errorMessage", Messages.SCHOOL_ALREADY_EXISTS);
+            goToSchoolCreation(request, response);
+        } catch (IncompleteEntityException e) {
+            useParametersAsAttributes(request, response);
+            request.setAttribute("errorMessage", Messages.MISSING_FIELD);
+            goToSchoolCreation(request, response);
         }
     }
 
@@ -580,19 +586,24 @@ public class Controller extends HttpServlet {
 
         try {
             String schoolName = getStringParameter(request, "schoolName");
-            String adress = getStringParameter(request, "adress");
-            String specializations = getStringParameter(request, "specializations");
+            String address = request.getParameter("address");
+            String specializations = request.getParameter("specializations");
 
             School school = schoolService.getSchool(schoolName);
-            school.setAddress(adress);
+            school.setAddress(address);
             school.setSpecializations(specializations);
             schoolService.updateSchool(school);
 
+            goToSchool(request,response);
 
-            dispatch(Actions.GO_TO_SCHOOL,request,response);
-        } catch (Exception e) {
-            log.error("Error while updating school: " + e.getMessage());
-            request.getRequestDispatcher(Pages.ERROR_500).forward(request, response);
+        } catch (IncompleteEntityException e) {
+            useParametersAsAttributes(request, response);
+            request.setAttribute("errorMessage", Messages.MISSING_FIELD);
+            goToSchoolEdition(request, response);
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (MissingParameterException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -607,7 +618,6 @@ public class Controller extends HttpServlet {
         SessionUser user = sendSessionUser(request);
 
         try {
-            // TODO
             request.getRequestDispatcher(Pages.DISPONIBILITIES).forward(request, response);
 
         } catch (EntityNotFoundException e) {

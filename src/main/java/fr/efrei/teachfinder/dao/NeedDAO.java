@@ -1,6 +1,7 @@
 package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Need;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -27,16 +28,12 @@ public class NeedDAO implements INeedDAO {
 
     @Override
     public Need create(Need need) throws EntityExistsException {
-        try {
-            entityManager.getTransaction().begin();
-            Need createdNeed = entityManager.merge(need);
-            entityManager.getTransaction().commit();
+        if (findById(need.getId()) != null) throw new EntityExistsException("Need already exists");
+        entityManager.getTransaction().begin();
+        Need createdNeed = entityManager.merge(need);
+        entityManager.getTransaction().commit();
 
-            return createdNeed;
-        } catch (EntityExistsException ex) {
-            throw new EntityExistsException("Need already exists");
-        }
-
+        return createdNeed;
     }
 
     @Override

@@ -2,6 +2,7 @@ package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Registration;
 import fr.efrei.teachfinder.entities.StatusType;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -40,15 +41,13 @@ public class RegistrationDAO implements IRegistrationDAO {
 
     @Override
     public Registration create(@NotNull Registration registration) throws EntityExistsException {
-        try {
-            entityManager.getTransaction().begin();
-            Registration createdRegistration = entityManager.merge(registration);
-            entityManager.getTransaction().commit();
+        if (findById(registration.getRegistrationId()) != null) throw new EntityExistsException("Registration already exists for this login.");
 
-            return createdRegistration;
-        } catch (EntityExistsException ex) {
-            throw new EntityExistsException("Registration already exists for this login.");
-        }
+        entityManager.getTransaction().begin();
+        Registration createdRegistration = entityManager.merge(registration);
+        entityManager.getTransaction().commit();
+
+        return createdRegistration;
     }
 
     @Override

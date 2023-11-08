@@ -2,6 +2,7 @@ package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Evaluation;
 import fr.efrei.teachfinder.entities.EvaluationId;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -30,15 +31,13 @@ public class EvaluationDAO implements IEvaluationDAO{
 
     @Override
     public Evaluation create(Evaluation ev) throws EntityExistsException {
-        try {
-            entityManager.getTransaction().begin();
-            Evaluation createdEvaluation = entityManager.merge(ev);
-            entityManager.getTransaction().commit();
+        if (findById(ev.getId()) != null) throw new EntityExistsException("Evaluation already exists");
 
-            return createdEvaluation;
-        } catch (EntityExistsException ex) {
-            throw new EntityExistsException("Evaluation already exists");
-        }
+        entityManager.getTransaction().begin();
+        Evaluation createdEvaluation = entityManager.merge(ev);
+        entityManager.getTransaction().commit();
+
+        return createdEvaluation;
     }
 
     @Override

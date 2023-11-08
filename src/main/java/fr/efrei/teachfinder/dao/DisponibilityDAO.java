@@ -1,6 +1,7 @@
 package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Disponibility;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -26,15 +27,12 @@ public class DisponibilityDAO implements IDisponibilityDAO {
 
     @Override
     public Disponibility create(Disponibility disponibility) throws EntityExistsException {
-        try {
-            entityManager.getTransaction().begin();
-            Disponibility createdDisponibility = entityManager.merge(disponibility);
-            entityManager.getTransaction().commit();
+        if (findById(disponibility.getId()) != null) throw new EntityExistsException("Disponibility already exists");
+        entityManager.getTransaction().begin();
+        Disponibility createdDisponibility = entityManager.merge(disponibility);
+        entityManager.getTransaction().commit();
 
-            return createdDisponibility;
-        } catch (EntityExistsException ex) {
-            throw new EntityExistsException("Disponibility already exists");
-        }
+        return createdDisponibility;
     }
 
     @Override

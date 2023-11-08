@@ -4,10 +4,10 @@ import fr.efrei.teachfinder.dao.IRecruiterDAO;
 import fr.efrei.teachfinder.dao.ITeacherDAO;
 import fr.efrei.teachfinder.dao.IUserDAO;
 import fr.efrei.teachfinder.entities.*;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
 @Stateless

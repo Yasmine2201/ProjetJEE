@@ -7,13 +7,13 @@ import fr.efrei.teachfinder.entities.Registration;
 import fr.efrei.teachfinder.entities.RoleType;
 import fr.efrei.teachfinder.entities.School;
 import fr.efrei.teachfinder.entities.StatusType;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
 import fr.efrei.teachfinder.exceptions.UnavailableLoginException;
 import fr.efrei.teachfinder.utils.StringUtils;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.ArrayList;
@@ -79,7 +79,11 @@ public class RegistrationService implements IRegistrationService {
         registrationToCreate.setSchoolName(school);
         registrationToCreate.setStatus(StatusType.Pending);
 
-        return registrationDAO.create(registrationToCreate);
+        try {
+            return registrationDAO.create(registrationToCreate);
+        } catch (EntityExistsException e) {
+            throw new UnavailableLoginException(e);
+        }
     }
 
     @Override

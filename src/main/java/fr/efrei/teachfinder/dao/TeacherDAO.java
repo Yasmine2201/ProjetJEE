@@ -1,6 +1,7 @@
 package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Teacher;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -27,14 +28,12 @@ public class TeacherDAO implements ITeacherDAO {
 
     @Override
     public Teacher create(Teacher teacher) throws EntityExistsException {
-        try {
-            entityManager.getTransaction().begin();
-            Teacher createdTeacher = entityManager.merge(teacher);
-            entityManager.getTransaction().commit();
-            return createdTeacher;
-        } catch (EntityExistsException ex) {
-            throw new EntityExistsException("Teacher already exists");
-        }
+        if (findById(teacher.getId()) != null) throw new EntityExistsException("Teacher already exists");
+
+        entityManager.getTransaction().begin();
+        Teacher createdTeacher = entityManager.merge(teacher);
+        entityManager.getTransaction().commit();
+        return createdTeacher;
     }
 
     @Override

@@ -2,6 +2,7 @@ package fr.efrei.teachfinder.services;
 
 import fr.efrei.teachfinder.entities.Candidature;
 import fr.efrei.teachfinder.entities.Need;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
 public interface INeedService {
@@ -10,5 +11,5 @@ public interface INeedService {
 
     Need updateNeed(Need need) throws EntityNotFoundException;
 
-    Candidature apply(int needId, int teacherId);
+    Candidature apply(int needId, int teacherId) throws EntityExistsException;
 }

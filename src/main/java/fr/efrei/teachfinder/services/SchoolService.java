@@ -7,11 +7,11 @@ import fr.efrei.teachfinder.entities.Need;
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.School;
 import fr.efrei.teachfinder.entities.StatusType;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
 import fr.efrei.teachfinder.utils.StringUtils;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
@@ -30,12 +30,13 @@ public class SchoolService implements ISchoolService {
 
     @Override
     public School createSchool(School school) throws EntityExistsException, IncompleteEntityException {
-        String schoolName = school.getSchoolName();
-        if (StringUtils.isNullOrEmpty(schoolName)) {
-            throw new IncompleteEntityException();
+        if (isSchoolIncomplete(school)) throw new IncompleteEntityException("Missing field of school");
+        try {
+            return schoolDAO.create(school);
+        } catch (EntityExistsException e) {
+            // Intermediary catch to avoid EJBException
+            throw new EntityExistsException(e.getMessage());
         }
-
-        return schoolDAO.create(school);
     }
 
     @Override
@@ -65,7 +66,7 @@ public class SchoolService implements ISchoolService {
     }
 
     @Override
-    public List<Recruiter> getSchoolRecruiters(String schoolName) {
+    public List<Recruiter> getSchoolRecruiters(String schoolName) throws EntityNotFoundException {
         if (!schoolExists(schoolName)) {
             throw new EntityNotFoundException("No school found with name " + schoolName);
         }
@@ -74,12 +75,22 @@ public class SchoolService implements ISchoolService {
     }
 
     @Override
-    public void updateSchool(School school) throws EntityNotFoundException {
+    public void updateSchool(School school) throws EntityNotFoundException, IncompleteEntityException {
+        if (isSchoolIncomplete(school)) throw new IncompleteEntityException("Missing field of school");
         schoolDAO.update(school);
     }
 
     @Override
     public boolean schoolExists(String schoolName) {
         return schoolDAO.findByName(schoolName) != null;
+    }
+
+    public boolean isSchoolIncomplete(School school) {
+        String schoolName = school.getSchoolName();
+        String address = school.getAddress();
+        String specializations = school.getSpecializations();
+        return StringUtils.isNullOrEmpty(schoolName)
+            || StringUtils.isNullOrEmpty(address)
+            || StringUtils.isNullOrEmpty(specializations);
     }
 }

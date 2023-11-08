@@ -35,8 +35,7 @@
 
                         <h3 class="subtitle is-5 has-text-left"> Nom de l'école<sup class="has-text-danger">*</sup></h3>
                         <c:if test="${empty school}">
-                            <input class="input is-rounded" name="schoolName" placeholder="Nom de l'école">
-
+                            <input class="input is-rounded" name="schoolName" placeholder="Nom de l'école" value="${schoolName}">
                         </c:if>
                         <c:if test="${not empty school}">
                             <input class="input is-rounded " name="schoolName" placeholder="Nom de l'école"
@@ -46,19 +45,29 @@
 
                     <div class="column is-half">
                         <h3 class="subtitle is-5 has-text-left"> Spécialisation de l'école<sup class="has-text-danger">*</sup></h3>
-                        <input class="input is-rounded" name="specializations" placeholder="Spécialisation"
-                               value="${school.specializations}">
+                        <c:if test="${empty school}">
+                            <input class="input is-rounded" name="specializations" placeholder="Spécialisation" value="${specializations}">
+                        </c:if>
+                        <c:if test="${not empty school}">
+                            <input class="input is-rounded" name="specializations" placeholder="Spécialisation" value="${school.specializations}">
+                        </c:if>
                     </div>
                 </div>
-                <h3 class="subtitle is-5 has-text-left"> Adresse de l'école </h3>
-                <input class="input is-rounded" name="adress" placeholder="addresse" value="${school.address}">
+
+                <h3 class="subtitle is-5 has-text-left"> Adresse de l'école<sup class="has-text-danger">*</sup></h3>
+                <c:if test="${empty school}">
+                    <input class="input is-rounded" name="address" placeholder="Adresse" value="${address}">
+                </c:if>
+                <c:if test="${not empty school}">
+                    <input class="input is-rounded" name="address" placeholder="Adresse" value="${school.address}">
+                </c:if>
 
                 <div class="pt-6">
                     <c:if test="${empty school}">
                         <button class="button is-success" name="action" value="createSchool"> Valider</button>
                     </c:if>
                     <c:if test="${not empty school}">
-                        <button class="button is-success" name="action" value="editSchool"> Valider</button>
+                        <button class="button is-success" name="action" value="updateSchool"> Valider</button>
                     </c:if>
 
                     <button class="button is-danger" name="action" value="back"> Annuler</button>

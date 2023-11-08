@@ -2,6 +2,7 @@ package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Candidature;
 import fr.efrei.teachfinder.entities.CandidatureId;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -29,15 +30,13 @@ public class CandidatureDAO implements ICandidatureDAO {
 
     @Override
     public Candidature create(Candidature candidature) throws EntityExistsException {
-        try {
-            entityManager.getTransaction().begin();
-            Candidature createdCandidature = entityManager.merge(candidature);
-            entityManager.getTransaction().commit();
+        if (findById(candidature.getId()) != null) throw new EntityExistsException("Candidature already exists");
 
-            return createdCandidature;
-        } catch (EntityExistsException ex) {
-            throw new EntityExistsException("Candidature already exists");
-        }
+        entityManager.getTransaction().begin();
+        Candidature createdCandidature = entityManager.merge(candidature);
+        entityManager.getTransaction().commit();
+
+        return createdCandidature;
     }
 
     @Override
