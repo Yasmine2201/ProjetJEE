@@ -552,6 +552,24 @@ public class Controller extends HttpServlet {
         }
     }
 
+    @Action(action = Actions.GO_TO_RESEARCH, roles = {Admin, Recruiter, Teacher})
+    public void goToResearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        sendSessionUser(request);
+        request.getRequestDispatcher(Pages.RESEARCH).forward(request, response);
+    }
+
+    @Action(action = Actions.GO_TO_DISPONIBILITIES, roles = {Teacher})
+    public void goToDisponibilities(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUser user = sendSessionUser(request);
+
+        try {
+            request.getRequestDispatcher(Pages.DISPONIBILITIES).forward(request, response);
+
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
+
     @Action(action = Actions.CREATE_SCHOOL, roles = {Admin})
     public void createSchool(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         sendSessionUser(request);
@@ -604,24 +622,6 @@ public class Controller extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         } catch (MissingParameterException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
-        }
-    }
-
-    @Action(action = Actions.GO_TO_RESEARCH, roles = {Admin, Recruiter, Teacher})
-    public void goToResearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        sendSessionUser(request);
-        request.getRequestDispatcher(Pages.RESEARCH).forward(request, response);
-    }
-
-    @Action(action = Actions.GO_TO_DISPONIBILITIES, roles = {Teacher})
-    public void goToDisponibilities(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SessionUser user = sendSessionUser(request);
-
-        try {
-            request.getRequestDispatcher(Pages.DISPONIBILITIES).forward(request, response);
-
-        } catch (EntityNotFoundException e) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }
     }
 }
