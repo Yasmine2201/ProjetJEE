@@ -34,7 +34,7 @@ public class RegistrationService {
 
     @EJB UserService userService;
 
-    public void createRegistration(RegistrationBean registration) throws IncompleteEntityException, UnavailableLoginException {
+    public void createRegistration(RegistrationBean registration) throws IncompleteEntityException, UnavailableLoginException, IllegalArgumentException {
 
         List<String> shouldNotBeNullFields = new ArrayList<>(Arrays.asList(
                 registration.getLogin(),
