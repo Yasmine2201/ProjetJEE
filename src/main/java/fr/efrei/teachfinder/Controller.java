@@ -673,7 +673,9 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.CREATE_DISPONIBILITY, roles = {Teacher})
-    public void createDisponibility(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
+    public void createDisponibility(RequestWrapper request, HttpServletResponse response)
+        throws IOException, ServletException, EntityExistsException {
+
         try {
             DisponibilityBean disponibility = new DisponibilityBean();
             disponibility.setTeacherId(getIntParameter(request, "teacherId"));
@@ -683,10 +685,29 @@ public class Controller extends HttpServlet {
             disponibilityService.createDisponibility(disponibility);
 
             goToTeacher(request, response);
-        } catch (EntityExistsException e) {
+        } catch (IncompleteEntityException e) {
             useParametersAsAttributes(request, response);
-            request.setAttribute("errorMessage", Messages.SCHOOL_ALREADY_EXISTS);
+            request.setAttribute("errorMessage", Messages.MISSING_FIELD);
             goToSchoolCreation(request, response);
+        } catch (MissingParameterException | IllegalArgumentException | DateTimeParseException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.UPDATE_DISPONIBILITY, roles = {Teacher})
+    public void updateDisponibility(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
+        try {
+            DisponibilityBean disponibility = new DisponibilityBean();
+            disponibility.setDisponibilityId(getIntParameter(request, "disponibilityId"));
+            disponibility.setTeacherId(getIntParameter(request, "teacherId"));
+            disponibility.setStartDate(request.getParameter("startDate"));
+            disponibility.setEndDate(request.getParameter("endDate"));
+
+            disponibilityService.editDisponibility(disponibility);
+
+            goToTeacher(request, response);
         } catch (IncompleteEntityException e) {
             useParametersAsAttributes(request, response);
             request.setAttribute("errorMessage", Messages.MISSING_FIELD);

@@ -29,36 +29,55 @@ public class DisponibilityService {
         return disponibility;
     }
 
-    public void createDisponibility(DisponibilityBean disponibility)
+    public void createDisponibility(DisponibilityBean disponibilityBean)
         throws EntityExistsException, EntityNotFoundException, IncompleteEntityException, IllegalArgumentException {
-        if (disponibility.getTeacherId() == null
-            || StringUtils.isNullOrEmpty(disponibility.getStartDate())
-            || StringUtils.isNullOrEmpty(disponibility.getEndDate())) {
+
+        if (disponibilityBean.getTeacherId() == null
+            || StringUtils.isNullOrEmpty(disponibilityBean.getStartDate())
+            || StringUtils.isNullOrEmpty(disponibilityBean.getEndDate())) {
             throw new IncompleteEntityException("A field is missing or null");
         }
 
+        Disponibility disponibility = mapBeanToDisponibility(disponibilityBean);
+        disponibilityDAO.create(disponibility);
+    }
+
+    public void editDisponibility(DisponibilityBean disponibilityBean)
+        throws EntityNotFoundException, IncompleteEntityException, IllegalArgumentException {
+
+        if (disponibilityBean.getDisponibilityId() == null
+            || disponibilityBean.getTeacherId() == null
+            || StringUtils.isNullOrEmpty(disponibilityBean.getStartDate())
+            || StringUtils.isNullOrEmpty(disponibilityBean.getEndDate())) {
+            throw new IncompleteEntityException("A field is missing or null");
+        }
+
+        Disponibility disponibility = mapBeanToDisponibility(disponibilityBean);
+        disponibilityDAO.update(disponibility);
+    }
+
+    public Disponibility mapBeanToDisponibility(DisponibilityBean disponibilityBean)
+        throws EntityNotFoundException, IllegalArgumentException {
+
+        Disponibility disponibility = new Disponibility();
+
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
-            LocalDateTime startDate = LocalDateTime.parse(disponibility.getStartDate(), formatter);
-            LocalDateTime endDate = LocalDateTime.parse(disponibility.getEndDate(), formatter);
+            LocalDateTime startDate = LocalDateTime.parse(disponibilityBean.getStartDate(), formatter);
+            LocalDateTime endDate = LocalDateTime.parse(disponibilityBean.getEndDate(), formatter);
 
-            Teacher teacher = teacherService.getTeacher(disponibility.getTeacherId());
+            Teacher teacher = teacherService.getTeacher(disponibilityBean.getTeacherId());
 
-            Disponibility disponibilityCreated = new Disponibility();
-            disponibilityCreated.setId(disponibility.getDisponibilityId());
-            disponibilityCreated.setTeacher(teacher);
-            disponibilityCreated.setStartDate(startDate);
-            disponibilityCreated.setEndDate(endDate);
 
-            disponibilityDAO.create(disponibilityCreated);
-
+            disponibility.setId(disponibilityBean.getDisponibilityId());
+            disponibility.setTeacher(teacher);
+            disponibility.setStartDate(startDate);
+            disponibility.setEndDate(endDate);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Incorrect date format");
         }
-    }
 
-    public Disponibility editDisponibility(Disponibility disponibility) throws EntityNotFoundException {
-        return disponibilityDAO.update(disponibility);
+        return disponibility;
     }
 
     public void deleteDisponibility(Disponibility disponibility) throws EntityNotFoundException {
