@@ -21,10 +21,36 @@
 <section class="section">
     <div class="columns is-centered">
         <div class="column is-10 ">
-            <div class="box">
-                <h3 class="title is-2 has-text-left">
-                    ${teacher.applicationuser.firstname} ${teacher.applicationuser.lastname}
-                </h3>
+            <div class="box has-text-centered px-3">
+                <div class="columns">
+                    <div class="column">
+                        <h3 class="title is-2 has-text-left">
+                            ${teacher.applicationuser.firstname} ${teacher.applicationuser.lastname}
+                        </h3>
+                    </div>
+                    <div class="column">
+                        <c:if test="${sessionUser.role eq 'Recruiter'}">
+                            <form method="post" action="controller">
+                                <input class="is-hidden" name="teacherId" value="${teacher.id}">
+
+                                <button class="button is-info" type="submit" name="action"
+                                        value="graduateTeacher"> noter le prof
+                                </button>
+                            </form>
+                        </c:if>
+
+                        <c:if test="${sessionUser.role eq 'Recruiter'}">
+                            <form method="post" action="controller">
+                                <input class="is-hidden" name="teacherId" value="${teacher.id}">
+
+                                <button class="button is-info" type="submit" name="action"
+                                        value="graduateTeacher"> noter le prof
+                                </button>
+                            </form>
+                        </c:if>
+                    </div>
+                </div>
+
 
                 <h3 class="title is-5 has-text-left"> Certifications </h3>
                 <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${candidature.teacher.academicCertifications}</p>
