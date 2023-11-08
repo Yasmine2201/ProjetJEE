@@ -551,6 +551,51 @@ public class Controller extends HttpServlet {
         }
     }
 
+    @Action(action = Actions.CREATE_SCHOOL, roles = {Admin})
+    public void createSchool(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        sendSessionUser(request);
+
+        try {
+            String schoolName = getStringParameter(request, "schoolName");
+            String adress = getStringParameter(request, "adress");
+            String specializations = getStringParameter(request, "specializations");
+
+            School school = new School();
+            school.setSchoolName(schoolName);
+            school.setAddress(adress);
+            school.setSpecializations(specializations);
+            schoolService.createSchool(school);
+
+
+            dispatch(Actions.GO_TO_SCHOOL,request,response);
+        } catch (Exception e) {
+            log.error("Error while creating school: " + e.getMessage());
+            request.getRequestDispatcher(Pages.ERROR_500).forward(request, response);
+        }
+    }
+
+    @Action(action = Actions.EDIT_SCHOOL, roles = {Admin})
+    public void editSchool(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        sendSessionUser(request);
+
+        try {
+            String schoolName = getStringParameter(request, "schoolName");
+            String adress = getStringParameter(request, "adress");
+            String specializations = getStringParameter(request, "specializations");
+
+            School school = schoolService.getSchool(schoolName);
+            school.setAddress(adress);
+            school.setSpecializations(specializations);
+            schoolService.updateSchool(school);
+
+
+            dispatch(Actions.GO_TO_SCHOOL,request,response);
+        } catch (Exception e) {
+            log.error("Error while updating school: " + e.getMessage());
+            request.getRequestDispatcher(Pages.ERROR_500).forward(request, response);
+        }
+    }
+
     @Action(action = Actions.GO_TO_RESEARCH, roles = {Admin, Recruiter, Teacher})
     public void templateToDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);

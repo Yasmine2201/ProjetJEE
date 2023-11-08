@@ -43,6 +43,8 @@ public final class Constants {
         public static final String GO_TO_USER_PROFILE_EDITION = "goToUserProfileEdition";
 
         public static final String GO_BACK = "back";
+        public static final String CREATE_SCHOOL = "createSchool";
+        public static final String EDIT_SCHOOL = "editSchool";
     }
 
     public static final class Pages {
