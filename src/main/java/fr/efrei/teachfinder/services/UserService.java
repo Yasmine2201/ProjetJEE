@@ -5,10 +5,10 @@ import fr.efrei.teachfinder.dao.ITeacherDAO;
 import fr.efrei.teachfinder.dao.IUserDAO;
 import fr.efrei.teachfinder.entities.*;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
+import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityNotFoundException;
 
 @Stateless
 public class UserService {

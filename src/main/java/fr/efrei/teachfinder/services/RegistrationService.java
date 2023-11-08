@@ -8,13 +8,13 @@ import fr.efrei.teachfinder.entities.RoleType;
 import fr.efrei.teachfinder.entities.School;
 import fr.efrei.teachfinder.entities.StatusType;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
+import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
 import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
 import fr.efrei.teachfinder.exceptions.UnavailableLoginException;
 import fr.efrei.teachfinder.utils.StringUtils;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityNotFoundException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +34,7 @@ public class RegistrationService {
 
     @EJB UserService userService;
 
-    public void createRegistration(RegistrationBean registration) throws IncompleteEntityException, UnavailableLoginException {
+    public void createRegistration(RegistrationBean registration) throws IncompleteEntityException, UnavailableLoginException, IllegalArgumentException {
 
         List<String> shouldNotBeNullFields = new ArrayList<>(Arrays.asList(
                 registration.getLogin(),

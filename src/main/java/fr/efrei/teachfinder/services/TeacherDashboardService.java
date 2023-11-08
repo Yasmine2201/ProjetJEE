@@ -4,9 +4,9 @@ import fr.efrei.teachfinder.dao.CandidatureDAO;
 import fr.efrei.teachfinder.dao.NeedDAO;
 import fr.efrei.teachfinder.dao.TeacherDAO;
 import fr.efrei.teachfinder.entities.*;
+import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Map;
