@@ -389,7 +389,19 @@ public class Controller extends HttpServlet {
     @Action(action = Actions.GO_TO_NEED_CREATION, roles = {Admin, Recruiter})
     public void goToNeedCreation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
-        request.getRequestDispatcher(Pages.NEED_EDIT).forward(request, response);
+        try {
+            String schoolName = getStringParameter(request, "schoolName");
+            School school = schoolService.getSchool(schoolName);
+            request.setAttribute("school", school);
+            request.setAttribute("runningNeeds", schoolService.getSchoolRunningNeeds(schoolName));
+            request.setAttribute("recruiters", schoolService.getSchoolRecruiters(schoolName));
+            request.getRequestDispatcher(Pages.NEED_EDIT).forward(request, response);
+
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (MissingParameterException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
     }
 
     @Action(action = Actions.GO_TO_NEED_EDITION, roles = {Admin, Recruiter})
@@ -400,7 +412,7 @@ public class Controller extends HttpServlet {
             int needId = getIntParameter(request, "needId");
             Need need = needService.getNeed(needId);
             request.setAttribute("need", need);
-            request.getRequestDispatcher(Pages.NEED_VIEW).forward(request, response);
+            request.getRequestDispatcher(Pages.NEED_EDIT).forward(request, response);
 
         } catch (EntityNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());

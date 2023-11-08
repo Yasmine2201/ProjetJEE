@@ -54,3 +54,89 @@ td button.button {
 td form {
   margin-bottom: 0;
 }
+
+.title-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  color: #363636;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.125;
+}
+
+.title-button:hover {
+  color: blue;
+  text-decoration: underline;
+}
+
+.title-button.is-1 {
+  font-size: 3rem;
+}
+
+.title-button.is-2 {
+  font-size: 2.5rem;
+}
+
+.title-button.is-3 {
+  font-size: 2rem;
+}
+
+.title-button.is-4 {
+  font-size: 1.5rem;
+}
+
+.title-button.is-5 {
+  font-size: 1.25rem;
+}
+
+.title-button.is-6 {
+  font-size: 1rem;
+}
+
+.title-button.is-7 {
+  font-size: 0.75rem;
+}
+
+.subtitle {
+  color: #4a4a4a;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.subtitle strong {
+  color: #363636;
+  font-weight: 600;
+}
+
+
+
+.subtitle.is-1 {
+  font-size: 3rem;
+}
+
+.subtitle.is-2 {
+  font-size: 2.5rem;
+}
+
+.subtitle.is-3 {
+  font-size: 2rem;
+}
+
+.subtitle.is-4 {
+  font-size: 1.5rem;
+}
+
+.subtitle.is-5 {
+  font-size: 1.25rem;
+}
+
+.subtitle.is-6 {
+  font-size: 1rem;
+}
+
+.subtitle.is-7 {
+  font-size: 0.75rem;
+}

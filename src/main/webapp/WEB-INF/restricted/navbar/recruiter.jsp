@@ -40,6 +40,8 @@
         </div>
         <div class="navbar-item">
             <form method="post" action="controller">
+                <input class="is-hidden" name="schoolName"
+                       value="${recruiter.schoolName.schoolName}">
                 <button class="button" type="submit" name="action" value="goToNeedCreation">
                     + Besoin
                 </button>

@@ -24,6 +24,7 @@ public final class Constants {
         public static final String GO_TO_HOME = "goToHome";
         public static final String GO_TO_ADMIN_HOME = "goToAdminHome";
         public static final String GO_TO_RECRUITER_HOME = "goToRecruiterHome";
+        public static final String GO_TO_RECRUITER_PROFILE = "goToRecruiterProfile";
         public static final String GO_TO_TEACHER_HOME = "goToTeacherHome";
         public static final String GO_TO_REGISTER = "goToRegistration";
         public static final String GO_TO_CANDIDATURE = "goToCandidature";
