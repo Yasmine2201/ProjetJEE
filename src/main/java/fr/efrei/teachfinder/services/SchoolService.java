@@ -17,7 +17,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Stateless
-public class SchoolService implements ISchoolService {
+public class SchoolService {
 
     @Inject
     private ISchoolDAO schoolDAO;
@@ -28,7 +28,6 @@ public class SchoolService implements ISchoolService {
     @Inject
     private IRecruiterDAO recruiterDAO;
 
-    @Override
     public School createSchool(School school) throws EntityExistsException, IncompleteEntityException {
         if (isSchoolIncomplete(school)) throw new IncompleteEntityException("Missing field of school");
         try {
@@ -39,19 +38,16 @@ public class SchoolService implements ISchoolService {
         }
     }
 
-    @Override
     public School getSchool(String schoolName) throws EntityNotFoundException {
         return schoolDAO.findByName(schoolName);
     }
 
-    @Override
     public List<School> getAllSchools() {
         return schoolDAO.getAll();
     }
 
-    @Override
     public List<Need> getSchoolRunningNeeds(String schoolName) throws EntityNotFoundException {
-        if (!schoolExists(schoolName)) {
+        if (schoolNotExists(schoolName)) {
             throw new EntityNotFoundException("No school found with name " + schoolName);
         }
 
@@ -65,24 +61,21 @@ public class SchoolService implements ISchoolService {
                 .toList();
     }
 
-    @Override
     public List<Recruiter> getSchoolRecruiters(String schoolName) throws EntityNotFoundException {
-        if (!schoolExists(schoolName)) {
+        if (schoolNotExists(schoolName)) {
             throw new EntityNotFoundException("No school found with name " + schoolName);
         }
 
         return recruiterDAO.findAllBySchool(schoolName);
     }
 
-    @Override
     public void updateSchool(School school) throws EntityNotFoundException, IncompleteEntityException {
         if (isSchoolIncomplete(school)) throw new IncompleteEntityException("Missing field of school");
         schoolDAO.update(school);
     }
 
-    @Override
-    public boolean schoolExists(String schoolName) {
-        return schoolDAO.findByName(schoolName) != null;
+    public boolean schoolNotExists(String schoolName) {
+        return schoolDAO.findByName(schoolName) == null;
     }
 
     public boolean isSchoolIncomplete(School school) {

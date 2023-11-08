@@ -7,11 +7,10 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 
 @Stateless
-public class RecruiterService implements IRecruiterService{
+public class RecruiterService {
     @Inject
     RecruiterDAO recruiterDAO;
 
-    @Override
     public Recruiter getRecruiter(int recruiterId) throws EntityNotFoundException {
         return recruiterDAO.findById(recruiterId);
     }

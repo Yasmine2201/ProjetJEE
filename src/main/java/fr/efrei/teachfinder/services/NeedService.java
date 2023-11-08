@@ -10,8 +10,9 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.time.LocalDateTime;
+
 @Stateless
-public class NeedService implements INeedService{
+public class NeedService {
 
     @Inject
     NeedDAO needDAO;
@@ -21,17 +22,14 @@ public class NeedService implements INeedService{
     @Inject
     TeacherDAO teacherDAO;
 
-    @Override
     public Need getNeed(int needId)throws EntityNotFoundException {
         return needDAO.findById(needId) ;
     }
 
-    @Override
     public Need updateNeed(Need need) throws EntityNotFoundException {
         return needDAO.update(need);
     }
 
-    @Override
     public Candidature apply(int needId, int teacherId) throws EntityExistsException, EntityNotFoundException {
         Need need = needDAO.findById(needId);
         Teacher teacher = teacherDAO.findById(teacherId);
@@ -56,5 +54,4 @@ public class NeedService implements INeedService{
         newCandidature.setIsValidatedByTeacher(false);
         return candidatureDAO.create(newCandidature);
     }
-
 }

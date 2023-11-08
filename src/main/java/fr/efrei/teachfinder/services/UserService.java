@@ -11,15 +11,14 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 
 @Stateless
-public class UserService implements IUserService {
+public class UserService {
 
     @Inject private IUserDAO userDAO;
     @Inject private ITeacherDAO teacherDAO;
     @Inject private IRecruiterDAO recruiterDAO;
 
-    @EJB private ISchoolService schoolService;
+    @EJB private SchoolService schoolService;
 
-    @Override
     public ApplicationUser getUser(int userId) throws EntityNotFoundException {
         ApplicationUser user = userDAO.findById(userId);
         if (user == null) {
@@ -29,18 +28,15 @@ public class UserService implements IUserService {
         return user;
     }
 
-    @Override
     public void updateUser(ApplicationUser user) throws EntityNotFoundException {
         userDAO.update(user);
     }
 
-    @Override
     public boolean userWithLoginExists(String login) {
         return userDAO.findByLogin(login) != null;
     }
 
-    @Override
-    public ApplicationUser createUserFromRegistration(Registration registration) throws EntityExistsException {
+    public void createUserFromRegistration(Registration registration) throws EntityExistsException {
         ApplicationUser user = new ApplicationUser();
         user.setLogin(registration.getLogin());
         user.setPassword(registration.getPassword());
@@ -63,7 +59,5 @@ public class UserService implements IUserService {
             recruiter.setSchoolName(registration.getSchoolName());
             recruiterDAO.create(recruiter);
         }
-
-        return createdUser;
     }
 }

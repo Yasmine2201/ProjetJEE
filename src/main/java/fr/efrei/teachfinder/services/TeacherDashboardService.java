@@ -12,13 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 @Stateless
-public class TeacherDashboardService implements ITeacherDashboardService {
+public class TeacherDashboardService {
 
     @Inject private TeacherDAO teacherDAO;
     @Inject private NeedDAO needDAO;
     @Inject private CandidatureDAO candidatureDAO;
 
-    @Override
     public List<Need> getInterestingNeeds(int teacherId) throws EntityNotFoundException {
         Teacher teacher = teacherDAO.findById(teacherId);
         List<Need> needs = needDAO.getAll();
@@ -56,7 +55,6 @@ public class TeacherDashboardService implements ITeacherDashboardService {
             .map(Map.Entry::getKey).toList();
     }
 
-    @Override
     public List<Candidature> getCandidatures(int teacherId) throws EntityNotFoundException {
         return candidatureDAO.findAllByTeacher(teacherId);
     }

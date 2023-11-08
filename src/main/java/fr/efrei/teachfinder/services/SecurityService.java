@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Stateless
-public class SecurityService implements ISecurityService {
+public class SecurityService {
 
     private final MessageDigest digest;
     {

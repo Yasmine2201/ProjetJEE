@@ -13,13 +13,12 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Stateless
-public class RecruiterDashboardService implements IRecruiterDashboardService {
+public class RecruiterDashboardService {
 
     @Inject NeedDAO needDAO;
     @Inject RecruiterDAO recruiterDAO;
     @Inject CandidatureDAO candidatureDAO;
 
-    @Override
     public List<Need> getRunningNeed(int recruiterId) throws EntityNotFoundException {
 
         if (!recruiterExists(recruiterId))
@@ -35,7 +34,6 @@ public class RecruiterDashboardService implements IRecruiterDashboardService {
                 .toList();
     }
 
-    @Override
     public List<Candidature> getCandidatures(int recruiterId) throws EntityNotFoundException {
         // Only pending candidatures
         List<Candidature> candidaturesList = candidatureDAO.findAllByRecruiter(recruiterId);
