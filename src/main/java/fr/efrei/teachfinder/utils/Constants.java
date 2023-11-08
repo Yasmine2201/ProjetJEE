@@ -11,12 +11,15 @@ public final class Constants {
         public static final String APPLY = "applyToNeed";
         public static final String VALIDATE_CANDIDATURE = "validateCandidature";
         public static final String DENY_CANDIDATURE = "denyCandidature";
-        public static final String SAVE_USER = "saveUserProfile";
-        public static final String SAVE_TEACHER = "saveTeacher";
-        public static final String SAVE_SCHOOL = "saveSchool";
-        public static final String SAVE_NEED = "saveNeed";
-        public static final String SAVE_EVALUATION = "saveEvaluation";
-        public static final String SAVE_DISPONIBILITY = "saveDisponibility";
+        public static final String CREATE_SCHOOL = "createSchool";
+        public static final String UPDATE_SCHOOL = "updateSchool";
+        public static final String CREATE_DISPONIBILITY = "createDisponibility";
+        public static final String UPDATE_DISPONIBILITY = "updateDisponibility";
+        public static final String CREATE_NEED = "createNeed";
+        public static final String UPDATE_NEED = "updateNeed";
+        public static final String UPDATE_USER = "updateUserProfile";
+        public static final String UPDATE_TEACHER = "updateTeacher";
+        public static final String UPSERT_EVALUATION = "upsertEvaluation";
         public static final String APPROVE_REGISTRATION = "approveRegistration";
         public static final String DENY_REGISTRATION = "denyRegistration";
 
@@ -45,8 +48,6 @@ public final class Constants {
         public static final String GO_TO_DISPONIBILITIES = "goToDisponibilities";
 
         public static final String GO_BACK = "back";
-        public static final String CREATE_SCHOOL = "createSchool";
-        public static final String EDIT_SCHOOL = "editSchool";
     }
 
     public static final class Pages {
