@@ -35,26 +35,32 @@
 
                         <h3 class="subtitle is-5 has-text-left"> Nom de l'école<sup class="has-text-danger">*</sup></h3>
                         <c:if test="${empty school}">
-                            <input class="input is-rounded" name="shoolName" placeholder="Nom de l'école"
-                                   value="${school.schoolName}">
+                            <input class="input is-rounded" name="schoolName" placeholder="Nom de l'école">
+
                         </c:if>
                         <c:if test="${not empty school}">
-                            <input class="input is-rounded " name="shoolName" placeholder="Nom de l'école"
-                                   value="${school.schoolName}" disabled>
+                            <input class="input is-rounded " name="schoolName" placeholder="Nom de l'école"
+                                   value="${school.schoolName}" readonly>
                         </c:if>
                     </div>
 
                     <div class="column is-half">
                         <h3 class="subtitle is-5 has-text-left"> Spécialisation de l'école<sup class="has-text-danger">*</sup></h3>
-                        <input class="input is-rounded" name="shoolName" placeholder="Spécialisation"
+                        <input class="input is-rounded" name="specializations" placeholder="Spécialisation"
                                value="${school.specializations}">
                     </div>
                 </div>
                 <h3 class="subtitle is-5 has-text-left"> Adresse de l'école </h3>
-                <input class="input is-rounded" name="shoolName" placeholder="addresse" value="${school.address}">
+                <input class="input is-rounded" name="adress" placeholder="addresse" value="${school.address}">
 
                 <div class="pt-6">
-                    <button class="button is-success" name="action" value="saveSchool"> Valider</button>
+                    <c:if test="${empty school}">
+                        <button class="button is-success" name="action" value="createSchool"> Valider</button>
+                    </c:if>
+                    <c:if test="${not empty school}">
+                        <button class="button is-success" name="action" value="editSchool"> Valider</button>
+                    </c:if>
+
                     <button class="button is-danger" name="action" value="back"> Annuler</button>
                 </div>
                 <div class="has-text-danger error-div">${errorMessage}</div>

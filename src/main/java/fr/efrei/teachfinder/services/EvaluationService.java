@@ -5,6 +5,7 @@ import fr.efrei.teachfinder.entities.Evaluation;
 import fr.efrei.teachfinder.entities.EvaluationId;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityNotFoundException;
 
 @Stateless
 public class EvaluationService implements IEvaluationService{
@@ -12,7 +13,7 @@ public class EvaluationService implements IEvaluationService{
     @Inject
     EvaluationDAO evaluationDAO;
     @Override
-    public Evaluation getEvaluation(EvaluationId evaluationId) {
+    public Evaluation getEvaluation(EvaluationId evaluationId)throws EntityNotFoundException {
         return evaluationDAO.findById(evaluationId);
     }
 

@@ -41,8 +41,11 @@ public final class Constants {
         public static final String GO_TO_TEACHER_EDITION = "goToTeacherEdition";
         public static final String GO_TO_USER_PROFILE = "goToUserProfile";
         public static final String GO_TO_USER_PROFILE_EDITION = "goToUserProfileEdition";
+        public static final String GO_TO_DISPONIBILITIES = "goToDisponibilities";
 
         public static final String GO_BACK = "back";
+        public static final String CREATE_SCHOOL = "createSchool";
+        public static final String EDIT_SCHOOL = "editSchool";
     }
 
     public static final class Pages {
@@ -62,6 +65,7 @@ public final class Constants {
         public static final String CANDIDATURE = "/WEB-INF/candidature/candidature.jsp";
         public static final String EVALUATION = "/WEB-INF/evaluation/evaluation.jsp";
         public static final String DISPONIBILITY = "/WEB-INF/disponibility/disponibility.jsp";
+        public static final String DISPONIBILITIES = "/WEB-INF/disponibility/disponibilities.jsp";
         public static final String RESEARCH = "/WEB-INF/research.jsp";
         public static final String ERROR_500 = "/WEB-INF/error500.jsp";
     }
