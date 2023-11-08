@@ -29,7 +29,7 @@ public class DisponibilityService implements IDisponibilityService{
     }
 
     @Override
-    public void deletDisponibility(Disponibility disponibility) throws EntityNotFoundException {
+    public void deleteDisponibility(Disponibility disponibility) throws EntityNotFoundException {
         disponibilityDAO.delete(disponibility);
     }
 }

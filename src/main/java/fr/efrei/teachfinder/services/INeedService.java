@@ -11,5 +11,5 @@ public interface INeedService {
 
     Need updateNeed(Need need) throws EntityNotFoundException;
 
-    Candidature apply(int needId, int teacherId) throws EntityExistsException;
+    Candidature apply(int needId, int teacherId) throws EntityExistsException, EntityNotFoundException;
 }

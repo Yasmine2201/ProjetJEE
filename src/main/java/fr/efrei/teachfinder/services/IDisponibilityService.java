@@ -12,5 +12,5 @@ public interface IDisponibilityService {
 
     Disponibility editDisponibility(Disponibility disponibility)throws EntityNotFoundException;
 
-    void deletDisponibility(Disponibility disponibility) throws EntityNotFoundException;
+    void deleteDisponibility(Disponibility disponibility) throws EntityNotFoundException;
 }

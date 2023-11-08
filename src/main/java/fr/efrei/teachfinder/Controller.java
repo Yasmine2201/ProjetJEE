@@ -678,4 +678,21 @@ public class Controller extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }
+
+    @Action(action = Actions.APPLY, roles = {Teacher})
+    public void applyToNeed(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int teacherId = getSessionUser(request).getUserId();
+            int needId = getIntParameter(request, "needId");
+            Candidature candidature = needService.apply(needId, teacherId);
+            request.setParameter("teacherId", candidature.getId().getTeacherId().toString());
+            request.setParameter("needId", candidature.getId().getNeedId().toString());
+            goToCandidature(request, response);
+        } catch (EntityExistsException e) {
+            request.setAttribute("errorMessage", Messages.CANDIDATURE_ALREADY_EXISTS);
+            goToNeed(request, response);
+        } catch (MissingParameterException | NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
+    }
 }

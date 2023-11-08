@@ -86,6 +86,7 @@ public final class Constants {
         public static final String PASSWORD_MISMATCH = "Mot de passe de confirmation non conforme";
         public static final String UNAVAILABLE_LOGIN = "Cet identifiant est déjà utilisé par un autre utilisateur";
         public static final String SCHOOL_ALREADY_EXISTS = "Cette école existe déjà";
+        public static final String CANDIDATURE_ALREADY_EXISTS = "Vous avez déjà candidaté à cette offre";
         public static final String SUCCESSFUL_REGISTRATION = "Inscription envoyée";
         public static final String INVALID_ARGUMENT = "Argument invalide";
         public static final String UNAVAILABLE_ENTITY = "Entité non disponible";
