@@ -574,8 +574,8 @@ public class Controller extends HttpServlet {
         }
     }
 
-    @Action(action = Actions.EDIT_SCHOOL, roles = {Admin})
-    public void editSchool(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    @Action(action = Actions.UPDATE_SCHOOL, roles = {Admin})
+    public void updateSchool(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         sendSessionUser(request);
 
         try {
@@ -597,7 +597,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_RESEARCH, roles = {Admin, Recruiter, Teacher})
-    public void templateToDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToResearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
         request.getRequestDispatcher(Pages.RESEARCH).forward(request, response);
     }
