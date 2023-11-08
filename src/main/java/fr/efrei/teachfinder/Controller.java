@@ -601,4 +601,17 @@ public class Controller extends HttpServlet {
         sendSessionUser(request);
         request.getRequestDispatcher(Pages.RESEARCH).forward(request, response);
     }
+
+    @Action(action = Actions.GO_TO_DISPONIBILITIES, roles = {Teacher})
+    public void goToDisponibilities(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUser user = sendSessionUser(request);
+
+        try {
+            // TODO
+            request.getRequestDispatcher(Pages.DISPONIBILITIES).forward(request, response);
+
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
 }
