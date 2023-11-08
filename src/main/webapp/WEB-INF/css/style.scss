@@ -73,30 +73,37 @@ td form {
 
 .title-button.is-1 {
   font-size: 3rem;
+  font-weight: 700;
 }
 
 .title-button.is-2 {
   font-size: 2.5rem;
+  font-weight: 600;
 }
 
 .title-button.is-3 {
   font-size: 2rem;
+  font-weight: 600;
 }
 
 .title-button.is-4 {
   font-size: 1.5rem;
+  font-weight: 500;
 }
 
 .title-button.is-5 {
   font-size: 1.25rem;
+  font-weight: 400;
 }
 
 .title-button.is-6 {
   font-size: 1rem;
+  font-weight: 400;
 }
 
 .title-button.is-7 {
   font-size: 0.75rem;
+  font-weight: 300;
 }
 
 .subtitle {
@@ -110,8 +117,6 @@ td form {
   color: #363636;
   font-weight: 600;
 }
-
-
 
 .subtitle.is-1 {
   font-size: 3rem;
@@ -139,4 +144,36 @@ td form {
 
 .subtitle.is-7 {
   font-size: 0.75rem;
+}
+
+.is-navbar form {
+  margin-bottom: 0;
+}
+
+.min-height.is-1 {
+  min-height: 10em;
+}
+
+.min-height.is-2 {
+  min-height: 8em;
+}
+
+.min-height.is-3 {
+  min-height: 6.5em;
+}
+
+.min-height.is-4 {
+  min-height: 4.5em;
+}
+
+.min-height.is-5 {
+  min-height: 2.5em;
+}
+
+.min-height.is-6 {
+  min-height: 1.5em;
+}
+
+.min-height.is-7 {
+  min-height: 0.75em;
 }

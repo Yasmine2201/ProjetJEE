@@ -405,7 +405,7 @@ public class Controller extends HttpServlet {
             int needId = getIntParameter(request, "needId");
             Need need = needService.getNeed(needId);
             request.setAttribute("need", need);
-            request.getRequestDispatcher(Pages.NEED_VIEW).forward(request, response);
+            request.getRequestDispatcher(Pages.NEED_EDIT).forward(request, response);
 
         } catch (EntityNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());

@@ -22,112 +22,169 @@
             <div class="box has-text-centered px-3">
                 <div class="columns">
                     <div class="column">
-                        <div class="level">
-                            <div class="level-left">
-                                <div class="level-item">
-                                    <form method="post" action="controller">
-                                        <input class="is-hidden" name="schoolName"
-                                               value="${need.schoolName.schoolName}">
-                                        <button class="title-button is-2" type="submit" name="action"
-                                                value="goToSchool"><sup>⇱</sup>${need.schoolName.schoolName}
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        <p class="title is-2 has-text-left ml-2">Besoin N<sup>o</sup>${need.id} </p>
+                        <p class="subtitle has-text-left ml-3 pb-3"><u>Matière:</u> ${need.subject}</p>
                     </div>
-                    <div class="column">
-                        <c:if test="${sessionUser.role eq 'Recruiter' or sessionUser.role eq 'Admin'}">
+                    <c:if test="${sessionUser.role eq 'Recruiter'}">
+                        <div class="column">
                             <form class="has-text-right" method="post" action="controller">
                                 <input class="is-hidden" name="needId" value="${need.id}">
                                 <button class="button is-info" type="submit" name="action" value="goToNeedEdition">
                                     Modifier
                                 </button>
                             </form>
-                        </c:if>
-                    </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${sessionUser.role eq 'Teacher'}">
+                        <div class="column">
+                            <form class="has-text-right" method="post" action="controller">
+                                <input class="is-hidden" name="needId" value="${need.id}">
+                                <button class="button is-info" type="submit" name="action" value="applyToNeed">
+                                    Candidater
+                                </button>
+                                <div class="has-text-danger error-div">${errorMessage}</div>
+                            </form>
+                        </div>
+                    </c:if>
                 </div>
-                <p class="subtitle is-3 has-text-left">Besoin N° ${need.id} </p>
-                <div class="column">
-                    <h3 class="title is-5 has-text-left"> Reruteur </h3>
-                    <form class="has-text-left" method="post" action="controller">
-                        <input class="is-hidden" name="recruiterId" value="${need.recruiter.id}">
-                        <button class="title-button is-5 pb-3 ml-3" type="submit" name="action"
-                                value="goToRecruiterProfile">
-                            <sup>⇱</sup>${fn: toUpperCase(need.recruiter.applicationuser.lastname)} ${need.recruiter.applicationuser.firstname}
-                        </button>
-                    </form>
-                    <h3 class="title is-5 has-text-left"> Type de Contract </h3>
-                    <c:if test="${need.contractType =='Continous'}">
-                        <p class="subtitle is-5 has-text-left ml-2 pb-3">
-                            CDI
-                        </p>
-                    </c:if>
-                    <c:if test="${need.contractType == 'Temporary'}">
+                <div class="column ml-2">
+                    <div class="columns">
+                        <div class="column">
+                            <h3 class="title is-5 has-text-left mb-0"> École </h3>
+                            <form class="has-text-left" method="post" action="controller">
+                                <input class="is-hidden" name="schoolName" value="${need.schoolName.schoolName}">
+                                <button class="title-button is-5 pb-3" type="submit" name="action"
+                                        value="goToSchool">
+                                    <sup>⇱</sup>${need.schoolName.schoolName}
+                                </button>
+                            </form>
+                        </div>
+                        <div class="column">
+                            <h3 class="title is-5 has-text-left mb-0"> Recruteur </h3>
+                            <form class="has-text-left" method="post" action="controller">
+                                <input class="is-hidden" name="recruiterId" value="${need.recruiter.id}">
+                                <button class="title-button is-5 pb-3" type="submit" name="action"
+                                        value="goToRecruiterProfile">
+                                    <sup>⇱</sup>
+                                    ${fn: toUpperCase(need.recruiter.applicationuser.lastname)}
+                                    ${need.recruiter.applicationuser.firstname}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
 
-                        <p class="subtitle is-5 has-text-left ml-2 pb-3">
-                            CDD
-                        </p>
-                        <h3 class="title is-5 has-text-left"> Durée </h3>
-                        <p class="subtitle is-5 has-text-left ml-3 pb-3">${need.timePeriod}</p>
-                    </c:if>
-                    <c:if test="${need.contractType  == 'Any'}">
+                    <div class="columns">
+                        <div class="column">
+                            <h3 class="title is-5 has-text-left"> Type de Contrat </h3>
+                            <c:if test="${need.contractType =='Continous'}">
+                                <p class="subtitle is-5 has-text-left ml-2 pb-3">
+                                    CDI
+                                </p>
+                            </c:if>
+                            <c:if test="${need.contractType == 'Temporary'}">
 
-                        <p class="subtitle is-5 has-text-left ml-2 pb-3">
-                            CDI et/ou CDD ${need.timePeriod}
-                        </p>
-                        <h3 class="title is-5 has-text-left"> Durée </h3>
-                        <p class="subtitle is-5 has-text-left ml-3 pb-3">${need.timePeriod}</p>
-                    </c:if>
+                                <p class="subtitle is-5 has-text-left ml-2 pb-3">
+                                    CDD
+                                </p>
+                            </c:if>
+                            <c:if test="${need.contractType == 'Any'}">
 
-                    <h3 class="title is-5 has-text-left"> Sujet </h3>
-                    <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${need.subject}</p>
+                                <p class="subtitle is-5 has-text-left ml-2 pb-3">
+                                    CDI et/ou CDD ${need.timePeriod}
+                                </p>
+                            </c:if>
+                        </div>
 
-                    <h3 class="title is-5 has-text-left"> Requis </h3>
-                    <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${need.requirements}</p>
+                        <div class="column">
+                            <c:if test="${need.contractType != 'Continous'}">
+                                <h3 class="title is-5 has-text-left"> Durée </h3>
+                                <p class="subtitle is-5 has-text-left ml-3 pb-3">${need.timePeriod}</p>
+                            </c:if>
+                        </div>
+                    </div>
+
+                    <h3 class="title is-5 has-text-left"> Prérecquis </h3>
+                    <div class="min-height is-2">
+                        <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${need.requirements}</p>
+                    </div>
+
                     <h3 class="title is-5 has-text-left"> Description </h3>
-                    <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${need.notes}</p>
+                    <div class="min-height is-1">
+                        <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> ${need.notes}</p>
+                    </div>
+
 
                     <c:if test="${sessionUser.role eq 'Recruiter' and not empty candidatures}">
-                    <h3 class="title is-3 has-text-left">Candudature </h3>
-                    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth ">
+                    <h3 class="title is-3 has-text-left mt-6">Candidatures </h3>
+                    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                         <thead>
                         <tr>
-                            <th> Nom</th>
-                            <th> Prénom</th>
-                            <th> Qualification</th>
-                            <th> Disponibilité</th>
-                            <th> Vérifier la candidature</th>
+                            <th>Id du besoin</th>
+                            <th>Enseignant</th>
+                            <th>Matière</th>
+                            <th>Validations</th>
+                            <th>Statut</th>
+                            <th>Ouvrir</th>
                         </tr>
                         </thead>
-
                         <tbody>
                         <c:forEach items="${candidatures}" var="candidature">
-                            <tr>
-                                <td> ${candidature.teacher.applicationuser.lastname} </td>
-
-                                <td> ${candidature.teacher.applicationuser.lastname} </td>
-
-                                <td> ${candidature.teacher.academicCertifications} </td>
-
-                                <td> ${candidature.teacher.disponibilities} </td>
-
+                            <tr id=${candidature.need.id}>
+                                <td class="is-narrow">${candidature.need.id}</td>
                                 <td>
-                                    <form class="has-text-right" method="post" action="controller">
-                                        <input class="is-hidden" name="teacherId" value="${candidature.teahcer.id}">
-                                        <input class="is-hidden" name="needId" value="${need.id}">
-                                        <button class="button is-info" type="submit" name="action" value="goToCandidature">
-                                            Vérifier la candidature
+                                    <form method="post" action="controller">
+                                        <label>
+                                            <input class="is-hidden" name="teacherId"
+                                                   value="${candidature.teacher.id}">
+                                        </label>
+                                        <button type="submit" name="action" value="goToTeacher"
+                                                class="has-text-info">
+                                                ${candidature.teacher.applicationuser.firstname}
+                                                ${fn:toUpperCase(candidature.teacher.applicationuser.lastname)}
                                         </button>
                                     </form>
                                 </td>
+                                <td>${candidature.need.subject}</td>
+                                <td class="is-narrow">
+                                    <c:if test="${!candidature.isValidatedByTeacher}">
+                                        <p class="tag is-danger"> Enseignant </p></c:if>
+                                    <c:if test="${candidature.isValidatedByTeacher}">
+                                        <p class="tag is-success"> Enseignant </p></c:if>
 
+                                    <c:if test="${!candidature.isValidatedByRecruiter}">
+                                        <p class="tag is-danger"> Recruteur </p></c:if>
+                                    <c:if test="${candidature.isValidatedByRecruiter}">
+                                        <p class="tag is-success"> Recruteur </p></c:if>
+                                </td>
+                                <td class="is-narrow">
+                                    <c:if test="${candidature.status == 'Pending'}">
+                                        <p class="tag is-warning"> En cours </p>
+                                    </c:if>
+
+                                    <c:if test="${candidature.status == 'Accepted'}">
+                                        <p class="tag is-success"> Accepter </p>
+                                    </c:if>
+
+                                    <c:if test="${candidature.status == 'Refused'}">
+                                        <p class="tag is-danger"> Refuser </p>
+                                    </c:if>
+                                </td>
+                                <td class="is-narrow">
+                                    <form method="post" action="controller">
+
+                                        <input class="is-hidden" name="needId" value="${candidature.need.id}">
+                                        <input class="is-hidden" name="teacherId" value="${candidature.teacher.id}">
+                                        <button class="button is-info is-small" type="submit" name="action" value="goToCandidature">
+                                            <span class="material-symbols-outlined is-size-6">read_more</span>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
-                </div>
                 </c:if>
+                </div>
             </div>
         </div>
     </div>
