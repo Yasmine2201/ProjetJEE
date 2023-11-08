@@ -104,14 +104,14 @@
                         </td>
                         <td>${candidature.need.subject}</td>
                         <td>
-                            <c:if test="${candidature.isValidatedByTeacher}">
-                                <p class="tag is-danger"> Enseignant </p></c:if>
                             <c:if test="${!candidature.isValidatedByTeacher}">
+                                <p class="tag is-danger"> Enseignant </p></c:if>
+                            <c:if test="${candidature.isValidatedByTeacher}">
                                 <p class="tag is-success"> Enseignant </p></c:if>
 
-                            <c:if test="${candidature.isValidatedByRecruiter}">
-                                <p class="tag is-danger"> Recruteur </p></c:if>
                             <c:if test="${!candidature.isValidatedByRecruiter}">
+                                <p class="tag is-danger"> Recruteur </p></c:if>
+                            <c:if test="${candidature.isValidatedByRecruiter}">
                                 <p class="tag is-success"> Recruteur </p></c:if>
                         </td>
                         <td class="is-narrow">

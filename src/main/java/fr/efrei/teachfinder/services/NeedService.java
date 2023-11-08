@@ -42,6 +42,11 @@ public class NeedService {
         School school = need.getSchoolName();
 
         Candidature newCandidature = new Candidature();
+        CandidatureId candidatureId = new CandidatureId();
+        candidatureId.setTeacherId(teacherId);
+        candidatureId.setNeedId(needId);
+
+        newCandidature.setId(candidatureId);
         newCandidature.setTeacher(teacher);
         newCandidature.setNeed(need);
         newCandidature.setSchoolName(school);

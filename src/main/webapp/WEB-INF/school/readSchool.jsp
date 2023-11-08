@@ -79,9 +79,6 @@
                                 <c:if test="${sessionUser.role eq 'Recruiter'}">
                                     <th> Modifier</th>
                                 </c:if>
-                                <c:if test="${sessionUser.role eq 'Teacher'}">
-                                    <th> Candidater</th>
-                                </c:if>
                             </tr>
                             </thead>
                             <tbody>
@@ -124,26 +121,11 @@
                                                            value="${need.id}">
                                                 </label>
                                                 <button type="submit" name="action" value="goToNeedEdition"
-                                                        class="button  is-info"
+                                                        class="button is-info"
                                                         style="border: none">
                                                 <span class="material-symbols-outlined">
                                                     settings
                                                 </span>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </c:if>
-
-                                    <c:if test="${sessionUser.role == 'Teacher'}">
-                                        <td>
-                                            <form method="post" action="controller">
-                                                <label>
-                                                    <input class="is-hidden" name="needId"
-                                                           value="${need.id}">
-                                                </label>
-                                                <button type="submit" name="action" value="goToCandidature"
-                                                        class="button is-success"
-                                                        style="border: none"> Candidater
                                                 </button>
                                             </form>
                                         </td>
