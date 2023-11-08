@@ -572,6 +572,58 @@ public class Controller extends HttpServlet {
         }
     }
 
+    @Action(action = Actions.CANCEL_SCHOOL_CREATION, roles = {Admin})
+    public void cancelSchoolCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToAdminHome(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_SCHOOL_EDITION, roles = {Admin})
+    public void cancelSchoolEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToSchool(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_NEED_CREATION, roles = {Recruiter})
+    public void cancelNeedCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int recruiterId = getSessionUser(request).getUserId();
+            Recruiter recruiter = recruiterService.getRecruiter(recruiterId);
+            request.setParameter("schoolName", recruiter.getSchoolName().getSchoolName());
+            goToSchool(request, response);
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.CANCEL_NEED_EDITION, roles = {Recruiter})
+    public void cancelNeedEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToNeed(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_DISPONIBILITY_CREATION, roles = {Teacher})
+    public void cancelDisponibilityCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToTeacherHome(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_DISPONIBILITY_EDITION, roles = {Teacher})
+    public void cancelDisponibilityEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToTeacherHome(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_EVALUATION_EDITION, roles = {Recruiter})
+    public void cancelEvaluationEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToTeacherHome(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_PROFILE_EDITION, roles = {Admin, Recruiter, Teacher})
+    public void cancelProfileEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToProfile(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_TEACHER_EDITION, roles = {Teacher})
+    public void cancelTeacherEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToTeacher(request, response);
+    }
+
     @Action(action = Actions.CREATE_SCHOOL, roles = {Admin})
     public void createSchool(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
         sendSessionUser(request);
@@ -625,57 +677,5 @@ public class Controller extends HttpServlet {
         } catch (MissingParameterException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
-    }
-
-    @Action(action = Actions.CANCEL_SCHOOL_CREATION, roles = {Admin})
-    public void cancelSchoolCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        goToAdminHome(request, response);
-    }
-
-    @Action(action = Actions.CANCEL_SCHOOL_EDITION, roles = {Admin})
-    public void cancelSchoolEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        goToSchool(request, response);
-    }
-
-    @Action(action = Actions.CANCEL_NEED_CREATION, roles = {Recruiter})
-    public void cancelNeedCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            int recruiterId = getSessionUser(request).getUserId();
-            Recruiter recruiter = recruiterService.getRecruiter(recruiterId);
-            request.setParameter("schoolName", recruiter.getSchoolName().getSchoolName());
-            goToSchool(request, response);
-        } catch (EntityNotFoundException e) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
-        }
-    }
-
-    @Action(action = Actions.CANCEL_NEED_EDITION, roles = {Recruiter})
-    public void cancelNeedEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        goToNeed(request, response);
-    }
-
-    @Action(action = Actions.CANCEL_DISPONIBILITY_CREATION, roles = {Teacher})
-    public void cancelDisponibilityCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        goToTeacherHome(request, response);
-    }
-
-    @Action(action = Actions.CANCEL_DISPONIBILITY_EDITION, roles = {Teacher})
-    public void cancelDisponibilityEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        goToTeacherHome(request, response);
-    }
-
-    @Action(action = Actions.CANCEL_EVALUATION_EDITION, roles = {Recruiter})
-    public void cancelEvaluationEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        goToTeacherHome(request, response);
-    }
-
-    @Action(action = Actions.CANCEL_PROFILE_EDITION, roles = {Admin, Recruiter, Teacher})
-    public void cancelProfileEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        goToProfile(request, response);
-    }
-
-    @Action(action = Actions.CANCEL_TEACHER_EDITION, roles = {Teacher})
-    public void cancelTeacherEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        goToTeacher(request, response);
     }
 }
