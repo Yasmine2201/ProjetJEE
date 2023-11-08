@@ -99,6 +99,24 @@
                         </div>
                     </div>
                 </div>
+                <form method="post" action="controller">
+                    <input class="is-hidden" name="schoolName" value="${candidature.schoolName.schoolName}">
+                    <input class="is-hidden" name="needId" value="${candidature.need.id}">
+                    <input class="is-hidden" name="teacherId" value="${candidature.teacher.id}">
+
+                    <button class="button is-success" type="submit" name="action"
+                            value="validateCandidature"> Valider
+                    </button>
+                </form>
+                <form method="post" action="controller">
+                    <input class="is-hidden" name="schoolName" value="${candidature.schoolName.schoolName}">
+                    <input class="is-hidden" name="needId" value="${candidature.need.id}">
+                    <input class="is-hidden" name="teacherId" value="${candidature.teacher.id}">
+
+                    <button class="button is-danger" type="submit" name="action"
+                            value="denyCandidature"> Refuser
+                    </button>
+                </form>
             </div>
         </div>
     </div>
