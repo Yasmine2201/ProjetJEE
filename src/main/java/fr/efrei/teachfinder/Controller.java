@@ -5,12 +5,12 @@ import fr.efrei.teachfinder.beans.SessionUser;
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.*;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
+import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
 import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
 import fr.efrei.teachfinder.exceptions.MissingParameterException;
 import fr.efrei.teachfinder.services.*;
 import fr.efrei.teachfinder.utils.StringUtils;
 import jakarta.ejb.EJB;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -563,13 +563,7 @@ public class Controller extends HttpServlet {
     @Action(action = Actions.GO_TO_DISPONIBILITIES, roles = {Teacher})
     public void goToDisponibilities(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser user = sendSessionUser(request);
-
-        try {
-            request.getRequestDispatcher(Pages.DISPONIBILITIES).forward(request, response);
-
-        } catch (EntityNotFoundException e) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
-        }
+        request.getRequestDispatcher(Pages.DISPONIBILITIES).forward(request, response);
     }
 
     @Action(action = Actions.CANCEL_SCHOOL_CREATION, roles = {Admin})
@@ -694,6 +688,8 @@ public class Controller extends HttpServlet {
             goToNeed(request, response);
         } catch (MissingParameterException | NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }
     }
 }

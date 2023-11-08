@@ -3,9 +3,9 @@ package fr.efrei.teachfinder.services;
 import fr.efrei.teachfinder.dao.DisponibilityDAO;
 import fr.efrei.teachfinder.entities.Disponibility;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
+import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityNotFoundException;
 
 @Stateless
 public class DisponibilityService {
@@ -14,7 +14,9 @@ public class DisponibilityService {
     DisponibilityDAO disponibilityDAO;
 
     public Disponibility getDisponibility(int disponibilityId) throws EntityNotFoundException {
-        return disponibilityDAO.findById(disponibilityId);
+        Disponibility disponibility = disponibilityDAO.findById(disponibilityId);
+        if (disponibility == null) throw new EntityNotFoundException("Disponibility with id " + disponibilityId + " not found.");
+        return disponibility;
     }
 
     public Disponibility addDisponibility(Disponibility disponibility) throws EntityExistsException {

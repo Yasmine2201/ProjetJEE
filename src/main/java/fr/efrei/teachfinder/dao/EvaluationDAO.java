@@ -3,6 +3,7 @@ package fr.efrei.teachfinder.dao;
 import fr.efrei.teachfinder.entities.Evaluation;
 import fr.efrei.teachfinder.entities.EvaluationId;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
+import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
 import jakarta.persistence.*;
 
 import java.util.List;

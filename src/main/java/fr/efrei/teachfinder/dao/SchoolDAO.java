@@ -4,6 +4,7 @@ package fr.efrei.teachfinder.dao;
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.School;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
+import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
 import jakarta.persistence.*;
 
 import java.util.List;

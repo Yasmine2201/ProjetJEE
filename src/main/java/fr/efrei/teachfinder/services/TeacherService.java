@@ -6,9 +6,9 @@ import fr.efrei.teachfinder.dao.TeacherDAO;
 import fr.efrei.teachfinder.entities.Disponibility;
 import fr.efrei.teachfinder.entities.Evaluation;
 import fr.efrei.teachfinder.entities.Teacher;
+import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,7 +25,9 @@ public class TeacherService {
     EvaluationDAO evaluationDAO;
 
     public Teacher getTeacher(int teacherId)  throws EntityNotFoundException {
-        return teacherDAO.findById(teacherId);
+        Teacher teacher = teacherDAO.findById(teacherId);
+        if (teacher == null) throw new EntityNotFoundException("Teacher with id " + teacherId + " not found.");
+        return teacher;
     }
 
     public Teacher updateTeacher(Teacher teacher)  throws EntityNotFoundException {

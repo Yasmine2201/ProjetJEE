@@ -6,9 +6,9 @@ import fr.efrei.teachfinder.dao.RecruiterDAO;
 import fr.efrei.teachfinder.entities.Candidature;
 import fr.efrei.teachfinder.entities.Need;
 import fr.efrei.teachfinder.entities.StatusType;
+import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 

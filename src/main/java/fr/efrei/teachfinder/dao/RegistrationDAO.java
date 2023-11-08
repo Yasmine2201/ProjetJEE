@@ -3,6 +3,7 @@ package fr.efrei.teachfinder.dao;
 import fr.efrei.teachfinder.entities.Registration;
 import fr.efrei.teachfinder.entities.StatusType;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
+import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
