@@ -378,9 +378,9 @@ public class Controller extends HttpServlet {
                 || user.getRole() == Admin)
             {
                 request.setAttribute("candidatures", need.getCandidatures());
+            } else {
+                need.setCandidatures(new HashSet<>());
             }
-
-            need.setCandidatures(new HashSet<>());
             request.setAttribute("need", need);
             request.getRequestDispatcher(Pages.NEED_VIEW).forward(request, response);
 
@@ -416,14 +416,19 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.GO_TO_CANDIDATURE, roles = {Admin, Teacher, Recruiter})
     public void goToCandidature(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        sendSessionUser(request);
+        SessionUser user = sendSessionUser(request);
 
         try {
             CandidatureId candidatureId = new CandidatureId();
             candidatureId.setTeacherId(getIntParameter(request, "teacherId"));
             candidatureId.setNeedId(getIntParameter(request, "needId"));
-
             Candidature candidature = candidatureService.getCandidature(candidatureId);
+
+            boolean canChoose =
+                user.getUserId() == candidatureId.getTeacherId()
+                || user.getUserId() == candidature.getNeed().getRecruiter().getId();
+
+            request.setAttribute("canChoose", canChoose);
             request.setAttribute("candidature", candidature);
             request.getRequestDispatcher(Pages.CANDIDATURE).forward(request, response);
 

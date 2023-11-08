@@ -90,7 +90,7 @@
                             <c:if test="${need.contractType == 'Any'}">
 
                                 <p class="subtitle is-5 has-text-left ml-2 pb-3">
-                                    CDI et/ou CDD ${need.timePeriod}
+                                    CDI et/ou CDD
                                 </p>
                             </c:if>
                         </div>
@@ -114,7 +114,7 @@
                     </div>
 
 
-                    <c:if test="${sessionUser.role eq 'Recruiter' and not empty candidatures}">
+                    <c:if test="${not empty candidatures}">
                     <h3 class="title is-3 has-text-left mt-6">Candidatures </h3>
                     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                         <thead>

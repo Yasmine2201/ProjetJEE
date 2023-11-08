@@ -177,3 +177,24 @@ td form {
 .min-height.is-7 {
   min-height: 0.75em;
 }
+
+.dotted.title-button {
+  text-decoration: underline dotted;
+}
+
+.dotted.title-button:hover {
+  color: blue;
+  text-decoration-style: dotted;
+}
+
+div.card {
+  border-width: 0px;
+  border-radius: 30px;
+  border-style: solid;
+  box-shadow: -8px -8px 1em 0px rgb(227 218 226), 0px 0px 0 1px rgba(10,10,10,.02);
+  background-color: rgb(254 243 255);
+}
+
+.mb-7 {
+  margin-bottom: 7rem;
+}
