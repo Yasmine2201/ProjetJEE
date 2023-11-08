@@ -2,6 +2,7 @@ package fr.efrei.teachfinder;
 
 import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.SessionUser;
+import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.*;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
@@ -68,7 +69,7 @@ public class Controller extends HttpServlet {
         }
     }
 
-    public void dispatch(String action, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void dispatch(String action, RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
         String path = request.getServletPath();
         String httpMethod = request.getMethod();
 
@@ -128,14 +129,14 @@ public class Controller extends HttpServlet {
         return !Arrays.asList(method.getAnnotation(Action.class).roles()).isEmpty();
     }
 
-    public SessionUser getSessionUser(HttpServletRequest request) {
+    public SessionUser getSessionUser(RequestWrapper request) {
         HttpSession session = request.getSession(false);
         if (session == null) return null;
 
         return (SessionUser) session.getAttribute("sessionUser");
     }
 
-    public SessionUser sendSessionUser(HttpServletRequest request) {
+    public SessionUser sendSessionUser(RequestWrapper request) {
         SessionUser sessionUser = getSessionUser(request);
 
         if (sessionUser != null) {
@@ -157,7 +158,7 @@ public class Controller extends HttpServlet {
         return sessionUser;
     }
 
-    public int getIntParameter(HttpServletRequest request, String parameter) throws MissingParameterException, NumberFormatException {
+    public int getIntParameter(RequestWrapper request, String parameter) throws MissingParameterException, NumberFormatException {
         String strValue = request.getParameter(parameter);
 
         if (strValue == null) {
@@ -167,7 +168,7 @@ public class Controller extends HttpServlet {
         return Integer.parseInt(strValue);
     }
 
-    public String getStringParameter(HttpServletRequest request, String parameter) throws MissingParameterException{
+    public String getStringParameter(RequestWrapper request, String parameter) throws MissingParameterException{
         String strValue = request.getParameter(parameter);
 
         if (StringUtils.isNullOrEmpty(strValue)) {
@@ -177,14 +178,14 @@ public class Controller extends HttpServlet {
         return strValue;
     }
 
-    public void useParametersAsAttributes(HttpServletRequest request, HttpServletResponse response) {
+    public void useParametersAsAttributes(RequestWrapper request, HttpServletResponse response) {
         for (String name : Collections.list(request.getParameterNames())) {
             request.setAttribute(name, request.getParameter(name));
         }
     }
 
     @Action(action = Actions.LOGIN)
-    public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void login(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         try {
             // Check credentials
             String login = getStringParameter(request, "login");
@@ -213,7 +214,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.LOGOUT)
-    public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void logout(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
@@ -222,7 +223,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_HOME)
-    public void goToHome(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void goToHome(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
         SessionUser sessionUser = getSessionUser(request);
 
         String action;
@@ -242,19 +243,19 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_LOGIN)
-    public void goToLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToLogin(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(Pages.LOGIN).forward(request, response);
     }
 
     @Action(action = Actions.GO_TO_ADMIN_HOME, roles = {Admin})
-    public void goToAdminHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToAdminHome(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
         request.setAttribute("pendingRegistrations", registrationService.getPendingRegistrations());
         request.getRequestDispatcher(Pages.ADMIN_HOME).forward(request, response);
     }
 
     @Action(action = Actions.GO_TO_RECRUITER_HOME, roles = {Recruiter})
-    public void goToRecruiterHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToRecruiterHome(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser sessionUser = sendSessionUser(request);
 
         try {
@@ -267,7 +268,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_TEACHER_HOME, roles = {Teacher})
-    public void goToTeacherHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToTeacherHome(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser sessionUser = sendSessionUser(request);
 
         try {
@@ -280,13 +281,13 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_REGISTER)
-    public void goToRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToRegister(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
         request.getRequestDispatcher(Pages.REGISTRATION).forward(request, response);
     }
 
     @Action(action = Actions.APPROVE_REGISTRATION, roles = {Admin})
-    public void approveRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void approveRegistration(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
         try {
             int registrationId = getIntParameter(request, "registrationId");
             registrationService.approveRegistration(registrationId);
@@ -303,7 +304,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.DENY_REGISTRATION, roles = {Admin})
-    public void denyRegistration(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void denyRegistration(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
         try {
             int registrationId = getIntParameter(request, "registrationId");
             registrationService.denyRegistration(registrationId);
@@ -318,7 +319,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_SCHOOL, roles = {Admin, Recruiter, Teacher})
-    public void goToSchool(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToSchool(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
 
         try {
@@ -336,13 +337,13 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_SCHOOL_CREATION, roles = {Admin})
-    public void goToSchoolCreation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToSchoolCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
         request.getRequestDispatcher(Pages.SCHOOL_EDIT).forward(request, response);
     }
 
     @Action(action = Actions.GO_TO_SCHOOL_EDITION, roles = {Admin})
-    public void goToSchoolEdition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToSchoolEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
 
         try {
@@ -358,7 +359,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_NEED, roles = {Admin, Recruiter, Teacher})
-    public void goToNeed(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToNeed(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser user = sendSessionUser(request);
 
         if (user == null) {
@@ -388,14 +389,14 @@ public class Controller extends HttpServlet {
         }
     }
 
-    @Action(action = Actions.GO_TO_NEED_CREATION, roles = {Admin, Recruiter})
-    public void goToNeedCreation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Action(action = Actions.GO_TO_NEED_CREATION, roles = {Recruiter})
+    public void goToNeedCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
         request.getRequestDispatcher(Pages.NEED_EDIT).forward(request, response);
     }
 
-    @Action(action = Actions.GO_TO_NEED_EDITION, roles = {Admin, Recruiter})
-    public void goToNeedEdition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Action(action = Actions.GO_TO_NEED_EDITION, roles = {Recruiter})
+    public void goToNeedEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
 
         try {
@@ -412,7 +413,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_CANDIDATURE, roles = {Admin, Teacher, Recruiter})
-    public void goToCandidature(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToCandidature(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
 
         try {
@@ -432,7 +433,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_TEACHER, roles = {Admin, Recruiter, Teacher})
-    public void goToTeacher(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToTeacher(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
         try {
             int teacherId = getIntParameter(request, "teacherId");
@@ -450,7 +451,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_TEACHER_EDITION, roles = {Teacher})
-    public void goToTeacherEdition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToTeacherEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser user = sendSessionUser(request);
         try {
             int teacherId = getIntParameter(request, "teacherId");
@@ -472,13 +473,13 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_DISPONIBILITY_CREATION, roles = {Teacher})
-    public void goToDisponibilityCreation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToDisponibilityCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
         request.getRequestDispatcher(Pages.DISPONIBILITY).forward(request, response);
     }
 
     @Action(action = Actions.GO_TO_DISPONIBILITY_EDITION, roles = {Teacher})
-    public void goToDisponibilityEdition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToDisponibilityEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser user = sendSessionUser(request);
         try {
             int disponibilityId = getIntParameter(request, "disponibilityId");
@@ -500,7 +501,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_USER_PROFILE, roles = {Admin, Recruiter, Teacher})
-    public void goToProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToProfile(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser user = sendSessionUser(request);
 
         try {
@@ -517,7 +518,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_USER_PROFILE_EDITION, roles = {Admin, Recruiter, Teacher})
-    public void goToProfileEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToProfileEdit(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser user = sendSessionUser(request);
 
         try {
@@ -533,8 +534,8 @@ public class Controller extends HttpServlet {
         }
     }
 
-    @Action(action = Actions.GO_TO_EVALUATION, roles = {Admin, Recruiter})
-    public void goToEvaluation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Action(action = Actions.GO_TO_EVALUATION, roles = {Recruiter})
+    public void goToEvaluation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
 
         try {
@@ -554,13 +555,13 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.GO_TO_RESEARCH, roles = {Admin, Recruiter, Teacher})
-    public void goToResearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToResearch(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         sendSessionUser(request);
         request.getRequestDispatcher(Pages.RESEARCH).forward(request, response);
     }
 
     @Action(action = Actions.GO_TO_DISPONIBILITIES, roles = {Teacher})
-    public void goToDisponibilities(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void goToDisponibilities(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         SessionUser user = sendSessionUser(request);
 
         try {
@@ -572,7 +573,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.CREATE_SCHOOL, roles = {Admin})
-    public void createSchool(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void createSchool(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
         sendSessionUser(request);
 
         try {
@@ -600,7 +601,7 @@ public class Controller extends HttpServlet {
     }
 
     @Action(action = Actions.UPDATE_SCHOOL, roles = {Admin})
-    public void updateSchool(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void updateSchool(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
         sendSessionUser(request);
 
         try {
@@ -624,5 +625,57 @@ public class Controller extends HttpServlet {
         } catch (MissingParameterException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
+    }
+
+    @Action(action = Actions.CANCEL_SCHOOL_CREATION, roles = {Admin})
+    public void cancelSchoolCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToAdminHome(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_SCHOOL_EDITION, roles = {Admin})
+    public void cancelSchoolEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToSchool(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_NEED_CREATION, roles = {Recruiter})
+    public void cancelNeedCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int recruiterId = getIntParameter(request, "recruiterId");
+            Recruiter recruiter = recruiterService.getRecruiter(recruiterId);
+            request.setParameter("schoolName", recruiter.getSchoolName().getSchoolName());
+            goToSchool(request, response);
+        } catch (MissingParameterException | NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.CANCEL_NEED_EDITION, roles = {Recruiter})
+    public void cancelNeedEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToNeed(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_DISPONIBILITY_CREATION, roles = {Teacher})
+    public void cancelDisponibilityCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToTeacherHome(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_DISPONIBILITY_EDITION, roles = {Teacher})
+    public void cancelDisponibilityEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToTeacherHome(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_EVALUATION_EDITION, roles = {Recruiter})
+    public void cancelEvaluationEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToTeacherHome(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_PROFILE_EDITION, roles = {Admin, Recruiter, Teacher})
+    public void cancelProfileEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToProfile(request, response);
+    }
+
+    @Action(action = Actions.CANCEL_TEACHER_EDITION, roles = {Teacher})
+    public void cancelTeacherEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        goToTeacher(request, response);
     }
 }

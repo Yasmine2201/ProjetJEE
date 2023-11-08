@@ -54,9 +54,9 @@ public final class Constants {
         public static final String CANCEL_NEED_EDITION =  "cancelNeedEdition";
         public static final String CANCEL_DISPONIBILITY_CREATION = "cancelDisponibilityCreation";
         public static final String CANCEL_DISPONIBILITY_EDITION =  "cancelDisponibilityEdition";
-        public static final String CANCEL_EVALUATION_EVALUATION = "cancelEvaluationEdition";
+        public static final String CANCEL_EVALUATION_EDITION = "cancelEvaluationEdition";
         public static final String CANCEL_TEACHER_EDITION = "cancelTeacherEdition";
-        public static final String CANCEL_PROFILE_CREATION = "cancelProfileCreation";
+        public static final String CANCEL_PROFILE_EDITION = "cancelProfileEdition";
     }
 
     public static final class Pages {
