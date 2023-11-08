@@ -10,20 +10,17 @@ import jakarta.inject.Inject;
 import java.util.List;
 
 @Stateless
-public class ResearchService implements IResearchService{
+public class ResearchService {
 
     @Inject
     SchoolDAO schoolDAO;
     @Inject
     TeacherDAO teacherDAO;
 
-    @Override
     public List<School> researchSchool(String searchText) {
         return schoolDAO.searchWithString(searchText);
-
     }
 
-    @Override
     public List<Teacher> researchSkills(String searchText) {
         return teacherDAO.searchWithSkills(searchText);
     }

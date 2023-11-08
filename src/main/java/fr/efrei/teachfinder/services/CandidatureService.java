@@ -9,30 +9,26 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 
 @Stateless
-public class CandidatureService implements ICandidatureService{
+public class CandidatureService {
 
     @Inject private CandidatureDAO candidatureDAO;
 
-    @Override
     public Candidature getCandidature(CandidatureId candidatureId) throws EntityNotFoundException {
         return candidatureDAO.findById(candidatureId);
     }
 
-    @Override
     public Candidature refuse(CandidatureId candidatureId) throws EntityNotFoundException {
         Candidature candidature=candidatureDAO.findById(candidatureId);
         candidature.setStatus(StatusType.Refused);
         return candidatureDAO.update(candidature);
     }
 
-    @Override
     public Candidature accept(CandidatureId candidatureId) throws EntityNotFoundException {
         Candidature candidature=candidatureDAO.findById(candidatureId);
         candidature.setStatus(StatusType.Accepted);
         return candidatureDAO.update(candidature);
     }
 
-    @Override
     public Candidature validateFromTeacher(CandidatureId candidatureId) throws EntityNotFoundException {
         Candidature candidature=candidatureDAO.findById(candidatureId);
         candidature.setIsValidatedByTeacher(true);
@@ -40,7 +36,6 @@ public class CandidatureService implements ICandidatureService{
         return accpetIfBothValidation(candidature);
     }
 
-    @Override
     public Candidature validateFromRecruiter(CandidatureId candidatureId) throws EntityNotFoundException {
         Candidature candidature=candidatureDAO.findById(candidatureId);
         candidature.setIsValidatedByRecruiter(true);

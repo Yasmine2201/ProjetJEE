@@ -3,7 +3,7 @@ package fr.efrei.teachfinder.rest;
 import fr.efrei.teachfinder.beans.RegistrationBean;
 import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
 import fr.efrei.teachfinder.exceptions.UnavailableLoginException;
-import fr.efrei.teachfinder.services.IRegistrationService;
+import fr.efrei.teachfinder.services.RegistrationService;
 import fr.efrei.teachfinder.utils.Constants;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 public class RegistrationResource {
 
     @EJB
-    IRegistrationService registrationService;
+    RegistrationService registrationService;
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

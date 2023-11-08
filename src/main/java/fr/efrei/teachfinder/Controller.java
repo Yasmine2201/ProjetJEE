@@ -32,19 +32,19 @@ import static fr.efrei.teachfinder.utils.Constants.*;
 
 public class Controller extends HttpServlet {
 
-    @EJB private ICandidatureService candidatureService;
-    @EJB private IDisponibilityService disponibilityService;
-    @EJB private IEvaluationService evaluationService;
-    @EJB private INeedService needService;
-    @EJB private IRecruiterDashboardService recruiterDashboardService;
-    @EJB private IRegistrationService registrationService;
-    @EJB private IResearchService researchService;
-    @EJB private ISchoolService schoolService;
-    @EJB private ISecurityService securityService;
-    @EJB private ITeacherDashboardService teacherDashboardService;
-    @EJB private ITeacherService teacherService;
-    @EJB private IUserService userService;
-    @EJB private IRecruiterService recruiterService;
+    @EJB private CandidatureService candidatureService;
+    @EJB private DisponibilityService disponibilityService;
+    @EJB private EvaluationService evaluationService;
+    @EJB private NeedService needService;
+    @EJB private RecruiterDashboardService recruiterDashboardService;
+    @EJB private RegistrationService registrationService;
+    @EJB private ResearchService researchService;
+    @EJB private SchoolService schoolService;
+    @EJB private SecurityService securityService;
+    @EJB private TeacherDashboardService teacherDashboardService;
+    @EJB private TeacherService teacherService;
+    @EJB private UserService userService;
+    @EJB private RecruiterService recruiterService;
 
     private static final Logger log = LogManager.getLogger(Controller.class);
 
@@ -649,7 +649,8 @@ public class Controller extends HttpServlet {
             school.setSchoolName(schoolName);
             school.setAddress(address);
             school.setSpecializations(specializations);
-            schoolService.createSchool(school);
+            school = schoolService.createSchool(school);
+            request.setParameter("schoolName", school.getSchoolName());
 
             goToSchool(request, response);
 

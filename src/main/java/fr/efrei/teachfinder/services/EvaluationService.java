@@ -9,16 +9,15 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 
 @Stateless
-public class EvaluationService implements IEvaluationService{
+public class EvaluationService {
 
     @Inject
     EvaluationDAO evaluationDAO;
-    @Override
+
     public Evaluation getEvaluation(EvaluationId evaluationId)throws EntityNotFoundException {
         return evaluationDAO.findById(evaluationId);
     }
 
-    @Override
     public Evaluation upsertEvaluation(Evaluation evaluation) throws EntityExistsException {
         if(evaluationDAO.findById(evaluation.getId())!=null){
             return evaluationDAO.update(evaluation);
@@ -26,6 +25,5 @@ public class EvaluationService implements IEvaluationService{
         else {
             return evaluationDAO.create(evaluation);
         }
-
     }
 }

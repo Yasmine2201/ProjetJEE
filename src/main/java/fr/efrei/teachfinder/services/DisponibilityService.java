@@ -8,27 +8,23 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 
 @Stateless
-public class DisponibilityService implements IDisponibilityService{
+public class DisponibilityService {
 
     @Inject
     DisponibilityDAO disponibilityDAO;
 
-    @Override
     public Disponibility getDisponibility(int disponibilityId) throws EntityNotFoundException {
         return disponibilityDAO.findById(disponibilityId);
     }
 
-    @Override
     public Disponibility addDisponibility(Disponibility disponibility) throws EntityExistsException {
         return disponibilityDAO.create(disponibility);
     }
 
-    @Override
     public Disponibility editDisponibility(Disponibility disponibility) throws EntityNotFoundException {
         return disponibilityDAO.update(disponibility);
     }
 
-    @Override
     public void deleteDisponibility(Disponibility disponibility) throws EntityNotFoundException {
         disponibilityDAO.delete(disponibility);
     }

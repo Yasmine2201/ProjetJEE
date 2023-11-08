@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Stateless
-public class RegistrationService implements IRegistrationService {
+public class RegistrationService {
 
     @Inject
     private IUserDAO userDAO;
@@ -30,12 +30,11 @@ public class RegistrationService implements IRegistrationService {
     private IRegistrationDAO registrationDAO;
 
     @EJB
-    private ISecurityService securityService;
+    private SecurityService securityService;
 
-    @EJB IUserService userService;
+    @EJB UserService userService;
 
-    @Override
-    public Registration createRegistration(RegistrationBean registration) throws IncompleteEntityException, UnavailableLoginException {
+    public void createRegistration(RegistrationBean registration) throws IncompleteEntityException, UnavailableLoginException {
 
         List<String> shouldNotBeNullFields = new ArrayList<>(Arrays.asList(
                 registration.getLogin(),
@@ -80,18 +79,16 @@ public class RegistrationService implements IRegistrationService {
         registrationToCreate.setStatus(StatusType.Pending);
 
         try {
-            return registrationDAO.create(registrationToCreate);
+            registrationDAO.create(registrationToCreate);
         } catch (EntityExistsException e) {
             throw new UnavailableLoginException(e);
         }
     }
 
-    @Override
     public List<Registration> getPendingRegistrations() {
         return registrationDAO.getAllWithStatus(StatusType.Pending);
     }
 
-    @Override
     public void denyRegistration(int registrationId) throws EntityNotFoundException {
         if (!getPendingRegistrations().stream().map(Registration::getRegistrationId).toList().contains(registrationId)) {
             return;
@@ -99,7 +96,6 @@ public class RegistrationService implements IRegistrationService {
         registrationDAO.changeStatus(registrationId, StatusType.Refused);
     }
 
-    @Override
     public void approveRegistration(int registrationId) throws EntityNotFoundException, EntityExistsException {
         if (!getPendingRegistrations().stream().map(Registration::getRegistrationId).toList().contains(registrationId)) {
             return;
@@ -109,7 +105,6 @@ public class RegistrationService implements IRegistrationService {
         userService.createUserFromRegistration(registration);
     }
 
-    @Override
     public boolean registrationWithLoginExists(String login) {
         List<Registration> registrations = registrationDAO.findAllWithLogin(login);
 
