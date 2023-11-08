@@ -60,7 +60,8 @@ public class Controller extends HttpServlet {
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            dispatch(request.getParameter("action"), request, response);
+            RequestWrapper req = new RequestWrapper(request);
+            dispatch(req.getParameter("action"), req, response);
         } catch (Exception e) {
             log.error(e);
             request.getRequestDispatcher(Pages.ERROR_500).forward(request, response);
