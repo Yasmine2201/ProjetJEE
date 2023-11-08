@@ -4,6 +4,7 @@ import fr.efrei.teachfinder.dao.CandidatureDAO;
 import fr.efrei.teachfinder.dao.NeedDAO;
 import fr.efrei.teachfinder.dao.TeacherDAO;
 import fr.efrei.teachfinder.entities.*;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
@@ -31,28 +32,29 @@ public class NeedService implements INeedService{
     }
 
     @Override
-    public Candidature apply(int needId, int teacherId) {
-        Need need=needDAO.findById(needId);
-        Teacher teacher=teacherDAO.findById(teacherId);
-        if(need!=null){
-            School school= need.getSchoolName();
+    public Candidature apply(int needId, int teacherId) throws EntityExistsException, EntityNotFoundException {
+        Need need = needDAO.findById(needId);
+        Teacher teacher = teacherDAO.findById(teacherId);
 
-            if(teacher != null ){
-                Candidature newCandidature = new Candidature();
-                newCandidature.setTeacher(teacher);
-                newCandidature.setNeed(need);
-                newCandidature.setSchoolName(school);
-                newCandidature.setStatus(StatusType.Pending);
-                newCandidature.setCreatedOn(LocalDateTime.now());
-                newCandidature.setIsInitiatedByTeacher(true);
-                newCandidature.setIsValidatedByRecruiter(false);
-                newCandidature.setIsValidatedByTeacher(false);
-                return candidatureDAO.create(newCandidature);
-                }
-            else {return null;}
-            }
+        if (teacher == null) {
+            throw new EntityNotFoundException("Teacher with id " + teacherId + " not found.");
+        }
+        if (need == null) {
+            throw new EntityNotFoundException("Need with id " + needId + " not found.");
+        }
 
-        else{ return null;}
+        School school = need.getSchoolName();
+
+        Candidature newCandidature = new Candidature();
+        newCandidature.setTeacher(teacher);
+        newCandidature.setNeed(need);
+        newCandidature.setSchoolName(school);
+        newCandidature.setStatus(StatusType.Pending);
+        newCandidature.setCreatedOn(LocalDateTime.now());
+        newCandidature.setIsInitiatedByTeacher(true);
+        newCandidature.setIsValidatedByRecruiter(false);
+        newCandidature.setIsValidatedByTeacher(false);
+        return candidatureDAO.create(newCandidature);
     }
 
 }

@@ -2,9 +2,9 @@ package fr.efrei.teachfinder.services;
 
 import fr.efrei.teachfinder.dao.DisponibilityDAO;
 import fr.efrei.teachfinder.entities.Disponibility;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
 @Stateless
@@ -29,7 +29,7 @@ public class DisponibilityService implements IDisponibilityService{
     }
 
     @Override
-    public void deletDisponibility(Disponibility disponibility) throws EntityNotFoundException {
+    public void deleteDisponibility(Disponibility disponibility) throws EntityNotFoundException {
         disponibilityDAO.delete(disponibility);
     }
 }

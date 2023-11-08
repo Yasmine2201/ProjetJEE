@@ -2,7 +2,7 @@ package fr.efrei.teachfinder.services;
 
 import fr.efrei.teachfinder.entities.ApplicationUser;
 import fr.efrei.teachfinder.entities.Registration;
-import jakarta.persistence.EntityExistsException;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
 public interface IUserService {

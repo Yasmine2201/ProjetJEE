@@ -1,7 +1,7 @@
 package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Recruiter;
-import jakarta.persistence.EntityExistsException;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;

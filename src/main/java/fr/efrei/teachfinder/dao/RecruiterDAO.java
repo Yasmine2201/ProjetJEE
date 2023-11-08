@@ -1,6 +1,7 @@
 package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Recruiter;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import fr.efrei.teachfinder.utils.Constants;
 import jakarta.persistence.*;
 
@@ -28,16 +29,13 @@ public class RecruiterDAO implements IRecruiterDAO {
 
     @Override
     public Recruiter create(Recruiter recruiter) throws EntityExistsException {
-        try {
-            entityManager.getTransaction().begin();
-            Recruiter createdRecruiter = entityManager.merge(recruiter);
-            entityManager.getTransaction().commit();
+        if (findById(recruiter.getId()) != null) throw new EntityExistsException("Recruiter already exists");
 
-            return createdRecruiter;
-        } catch (EntityExistsException ex) {
-            throw new EntityExistsException("Recruiter already exists");
-        }
+        entityManager.getTransaction().begin();
+        Recruiter createdRecruiter = entityManager.merge(recruiter);
+        entityManager.getTransaction().commit();
 
+        return createdRecruiter;
     }
 
     @Override

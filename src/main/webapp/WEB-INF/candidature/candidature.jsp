@@ -74,7 +74,22 @@
     </div>
 </section>
 </body>
+<jsp:include page="/WEB-INF/footer.jsp"/>
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(hideNotification, 5000);
+    })
+
+    function hideNotification() {
+        const notification = document.getElementById("message");
+
+        if (notification === null) return;
+        notification.hidden = true;
+    }
+</script>
+
 <style>
     <%@include file="/WEB-INF/css/bulma/css/bulma.min.css" %>
     <%@include file="/WEB-INF/css/style.scss" %>

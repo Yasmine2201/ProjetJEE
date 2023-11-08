@@ -2,9 +2,9 @@ package fr.efrei.teachfinder.services;
 
 import fr.efrei.teachfinder.beans.RegistrationBean;
 import fr.efrei.teachfinder.entities.Registration;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
 import fr.efrei.teachfinder.exceptions.UnavailableLoginException;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;

@@ -3,8 +3,8 @@ package fr.efrei.teachfinder.services;
 import fr.efrei.teachfinder.entities.Need;
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.School;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import fr.efrei.teachfinder.exceptions.IncompleteEntityException;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;

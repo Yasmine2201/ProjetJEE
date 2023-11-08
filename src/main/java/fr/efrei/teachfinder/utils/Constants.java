@@ -11,12 +11,15 @@ public final class Constants {
         public static final String APPLY = "applyToNeed";
         public static final String VALIDATE_CANDIDATURE = "validateCandidature";
         public static final String DENY_CANDIDATURE = "denyCandidature";
-        public static final String SAVE_USER = "saveUserProfile";
-        public static final String SAVE_TEACHER = "saveTeacher";
-        public static final String SAVE_SCHOOL = "saveSchool";
-        public static final String SAVE_NEED = "saveNeed";
-        public static final String SAVE_EVALUATION = "saveEvaluation";
-        public static final String SAVE_DISPONIBILITY = "saveDisponibility";
+        public static final String CREATE_SCHOOL = "createSchool";
+        public static final String UPDATE_SCHOOL = "updateSchool";
+        public static final String CREATE_DISPONIBILITY = "createDisponibility";
+        public static final String UPDATE_DISPONIBILITY = "updateDisponibility";
+        public static final String CREATE_NEED = "createNeed";
+        public static final String UPDATE_NEED = "updateNeed";
+        public static final String UPDATE_USER = "updateUserProfile";
+        public static final String UPDATE_TEACHER = "updateTeacher";
+        public static final String UPSERT_EVALUATION = "upsertEvaluation";
         public static final String APPROVE_REGISTRATION = "approveRegistration";
         public static final String DENY_REGISTRATION = "denyRegistration";
 
@@ -44,9 +47,15 @@ public final class Constants {
         public static final String GO_TO_USER_PROFILE_EDITION = "goToUserProfileEdition";
         public static final String GO_TO_DISPONIBILITIES = "goToDisponibilities";
 
-        public static final String GO_BACK = "back";
-        public static final String CREATE_SCHOOL = "createSchool";
-        public static final String EDIT_SCHOOL = "editSchool";
+        public static final String CANCEL_SCHOOL_CREATION = "cancelSchoolCreation";
+        public static final String CANCEL_SCHOOL_EDITION =  "cancelSchoolEdition";
+        public static final String CANCEL_NEED_CREATION = "cancelNeedCreation";
+        public static final String CANCEL_NEED_EDITION =  "cancelNeedEdition";
+        public static final String CANCEL_DISPONIBILITY_CREATION = "cancelDisponibilityCreation";
+        public static final String CANCEL_DISPONIBILITY_EDITION =  "cancelDisponibilityEdition";
+        public static final String CANCEL_EVALUATION_EDITION = "cancelEvaluationEdition";
+        public static final String CANCEL_TEACHER_EDITION = "cancelTeacherEdition";
+        public static final String CANCEL_PROFILE_EDITION = "cancelProfileEdition";
     }
 
     public static final class Pages {
@@ -77,6 +86,8 @@ public final class Constants {
         public static final String FORBIDDEN = "Vous n'êtes pas autorisé à réaliser cette action";
         public static final String PASSWORD_MISMATCH = "Mot de passe de confirmation non conforme";
         public static final String UNAVAILABLE_LOGIN = "Cet identifiant est déjà utilisé par un autre utilisateur";
+        public static final String SCHOOL_ALREADY_EXISTS = "Cette école existe déjà";
+        public static final String CANDIDATURE_ALREADY_EXISTS = "Vous avez déjà candidaté à cette offre";
         public static final String SUCCESSFUL_REGISTRATION = "Inscription envoyée";
         public static final String INVALID_ARGUMENT = "Argument invalide";
         public static final String UNAVAILABLE_ENTITY = "Entité non disponible";

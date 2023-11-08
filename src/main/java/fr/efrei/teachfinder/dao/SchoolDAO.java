@@ -3,6 +3,7 @@ package fr.efrei.teachfinder.dao;
 
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.School;
+import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -30,21 +31,17 @@ public class SchoolDAO implements ISchoolDAO {
 
     @Override
     public School create(School school) throws EntityExistsException {
-        try {
-            entityManager.getTransaction().begin();
-            School createdSchool = entityManager.merge(school);
-            entityManager.getTransaction().commit();
-            return createdSchool;
-        }
-        catch (EntityExistsException ex){
-            throw new EntityExistsException("School already exists");
-        }
+        if (findByName(school.getSchoolName()) != null) throw new EntityExistsException();
+
+        entityManager.getTransaction().begin();
+        School createdSchool = entityManager.merge(school);
+        entityManager.getTransaction().commit();
+        return createdSchool;
     }
 
     @Override
     public List<School> getAll() {
         TypedQuery<School> query = entityManager.createQuery(QueryRequests.SCHOOL_GETALL, School.class);
-
         return query.getResultList();
     }
 
@@ -66,6 +63,7 @@ public class SchoolDAO implements ISchoolDAO {
         entityManager.merge(school);
         entityManager.getTransaction().commit();
     }
+
     public List<School> searchWithString(String research) {
         TypedQuery<School> query = entityManager.createQuery(
                         QueryRequests.SCHOOL_SEARCHWITH_STRING, School.class)
