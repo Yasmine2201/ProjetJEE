@@ -21,7 +21,25 @@
 <section class="section">
     <div class="columns is-centered">
         <div class="column is-10 ">
+            <div class="box">
+                <h3 class="title is-2 has-text-left">
+                    ${teacher.applicationuser.firstname} ${teacher.applicationuser.lastname}
+                </h3>
 
+                <h3 class="title is-5 has-text-left"> Certifications </h3>
+                <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${candidature.teacher.academicCertifications}</p>
+
+                <h3 class="title is-5 has-text-left"> Experiences </h3>
+                <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${candidature.teacher.experiences}</p>
+
+                <h3 class="title is-5 has-text-left"> Recommendations </h3>
+                <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${candidature.teacher.recommendations}</p>
+
+                <h3 class="title is-5 has-text-left"></h3>
+                <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${candidature.teacher.applicaitonuser.lastname}</p>
+
+
+            </div>
 
 
             <c:if test="${not empty message}">

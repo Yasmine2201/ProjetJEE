@@ -53,11 +53,17 @@
                         <h3 class="title is-5 has-text-left"> Sujet </h3>
                         <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${candidature.need.subject}</p>
 
+
                         <h3 class="title is-5 has-text-left"> Description </h3>
                         <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${candidature.need.notes}</p>
                     </div>
                     <div class="column">
-                        <h3 class="title is-2 has-text-left"> Professeur </h3>
+                        <form method="post" action="controller" class="has-text-left">
+                            <input class="is-hidden" name="teacherId"
+                                   value="${candidature.need.id}">
+                            <button class="title-button is-2" type="submit" name="action"
+                                    value="goToNeed"><sup>⇱</sup>Professeur</button>
+                        </form>
 
                         <h3 class="title is-5 has-text-left"> Nom </h3>
                         <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${candidature.teacher.applicaitonuser.lastname}</p>
@@ -99,22 +105,24 @@
                         </div>
                     </div>
                 </div>
-                <form method="post" action="controller">
-                    <input class="is-hidden" name="schoolName" value="${candidature.schoolName.schoolName}">
-                    <input class="is-hidden" name="needId" value="${candidature.need.id}">
-                    <input class="is-hidden" name="teacherId" value="${candidature.teacher.id}">
 
-                    <button class="button is-success" type="submit" name="action"
-                            value="validateCandidature"> Valider
-                    </button>
-                </form>
+                    <form method="post" action="controller">
+                        <input class="is-hidden" name="schoolName" value="${candidature.schoolName.schoolName}">
+                        <input class="is-hidden" name="needId" value="${candidature.need.id}">
+                        <input class="is-hidden" name="teacherId" value="${candidature.teacher.id}">
+
+                        <button class="button is-success" type="submit" name="action"
+                                value="validateCandidature" ${ isValidateEnable == 0 ? '"disabled"' : ''} ${ isValidateVisible == 0 ? 'class="is-hidden"' : ''}> Valider
+                        </button>
+                    </form>
+
                 <form method="post" action="controller">
                     <input class="is-hidden" name="schoolName" value="${candidature.schoolName.schoolName}">
                     <input class="is-hidden" name="needId" value="${candidature.need.id}">
                     <input class="is-hidden" name="teacherId" value="${candidature.teacher.id}">
 
                     <button class="button is-danger" type="submit" name="action"
-                            value="denyCandidature"> Refuser
+                            value="denyCandidature" ${ isRefuseEnable  == 0 ? '"disabled"' : ''} ${ isRefuseVisible == 0 ? 'class="is-hidden"' : ''}> Refuser
                     </button>
                 </form>
             </div>
