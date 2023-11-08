@@ -1,6 +1,7 @@
 package fr.efrei.teachfinder;
 
 import fr.efrei.teachfinder.annotations.Action;
+import fr.efrei.teachfinder.beans.DisponibilityBean;
 import fr.efrei.teachfinder.beans.SessionUser;
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.*;
@@ -22,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -620,8 +622,6 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.CREATE_SCHOOL, roles = {Admin})
     public void createSchool(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
-        sendSessionUser(request);
-
         try {
             String schoolName = request.getParameter("schoolName");
             String address = request.getParameter("address");
@@ -649,8 +649,6 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.UPDATE_SCHOOL, roles = {Admin})
     public void updateSchool(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
-        sendSessionUser(request);
-
         try {
             String schoolName = getStringParameter(request, "schoolName");
             String address = request.getParameter("address");
@@ -671,6 +669,32 @@ public class Controller extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         } catch (MissingParameterException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.CREATE_DISPONIBILITY, roles = {Teacher})
+    public void createDisponibility(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
+        try {
+            DisponibilityBean disponibility = new DisponibilityBean();
+            disponibility.setTeacherId(getIntParameter(request, "teacherId"));
+            disponibility.setStartDate(request.getParameter("startDate"));
+            disponibility.setEndDate(request.getParameter("endDate"));
+
+            disponibilityService.createDisponibility(disponibility);
+
+            goToTeacher(request, response);
+        } catch (EntityExistsException e) {
+            useParametersAsAttributes(request, response);
+            request.setAttribute("errorMessage", Messages.SCHOOL_ALREADY_EXISTS);
+            goToSchoolCreation(request, response);
+        } catch (IncompleteEntityException e) {
+            useParametersAsAttributes(request, response);
+            request.setAttribute("errorMessage", Messages.MISSING_FIELD);
+            goToSchoolCreation(request, response);
+        } catch (MissingParameterException | IllegalArgumentException | DateTimeParseException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }
     }
 
