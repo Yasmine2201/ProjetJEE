@@ -103,7 +103,7 @@
                         </div>
                     </div>
 
-                    <h3 class="title is-5 has-text-left"> Exigences </h3>
+                    <h3 class="title is-5 has-text-left"> Prérecquis </h3>
                     <div class="min-height is-2">
                         <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${need.requirements}</p>
                     </div>
