@@ -640,12 +640,12 @@ public class Controller extends HttpServlet {
     @Action(action = Actions.CANCEL_NEED_CREATION, roles = {Recruiter})
     public void cancelNeedCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            int recruiterId = getIntParameter(request, "recruiterId");
+            int recruiterId = getSessionUser(request).getUserId();
             Recruiter recruiter = recruiterService.getRecruiter(recruiterId);
             request.setParameter("schoolName", recruiter.getSchoolName().getSchoolName());
             goToSchool(request, response);
-        } catch (MissingParameterException | NumberFormatException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }
     }
 

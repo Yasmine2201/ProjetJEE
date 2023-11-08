@@ -46,8 +46,6 @@ public final class Constants {
         public static final String GO_TO_USER_PROFILE_EDITION = "goToUserProfileEdition";
         public static final String GO_TO_DISPONIBILITIES = "goToDisponibilities";
 
-        public static final String GO_BACK = "back";
-
         public static final String CANCEL_SCHOOL_CREATION = "cancelSchoolCreation";
         public static final String CANCEL_SCHOOL_EDITION =  "cancelSchoolEdition";
         public static final String CANCEL_NEED_CREATION = "cancelNeedCreation";

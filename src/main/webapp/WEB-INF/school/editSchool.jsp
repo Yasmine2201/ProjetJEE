@@ -64,13 +64,13 @@
 
                 <div class="pt-6">
                     <c:if test="${empty school}">
-                        <button class="button is-success" name="action" value="createSchool"> Valider</button>
+                        <button class="button is-success mr-3" name="action" value="createSchool"> Valider</button>
+                        <button class="button is-danger" name="action" value="cancelSchoolCreation"> Annuler</button>
                     </c:if>
                     <c:if test="${not empty school}">
-                        <button class="button is-success" name="action" value="updateSchool"> Valider</button>
+                        <button class="button is-success mr-3" name="action" value="updateSchool"> Valider</button>
+                        <button class="button is-danger" name="action" value="cancelSchoolEdition"> Annuler</button>
                     </c:if>
-
-                    <button class="button is-danger" name="action" value="back"> Annuler</button>
                 </div>
                 <div class="has-text-danger error-div">${errorMessage}</div>
             </form>
