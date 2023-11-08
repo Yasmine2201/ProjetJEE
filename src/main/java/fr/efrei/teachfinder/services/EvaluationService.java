@@ -1,6 +1,6 @@
 package fr.efrei.teachfinder.services;
 
-import fr.efrei.teachfinder.dao.EvaluationDAO;
+import fr.efrei.teachfinder.dao.IEvaluationDAO;
 import fr.efrei.teachfinder.entities.Evaluation;
 import fr.efrei.teachfinder.entities.EvaluationId;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
@@ -12,7 +12,7 @@ import jakarta.inject.Inject;
 public class EvaluationService {
 
     @Inject
-    EvaluationDAO evaluationDAO;
+    IEvaluationDAO evaluationDAO;
 
     public Evaluation getEvaluation(EvaluationId evaluationId) {
         return evaluationDAO.findById(evaluationId);

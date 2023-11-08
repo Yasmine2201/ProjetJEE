@@ -1,6 +1,6 @@
 package fr.efrei.teachfinder.services;
 
-import fr.efrei.teachfinder.dao.DisponibilityDAO;
+import fr.efrei.teachfinder.dao.IDisponibilityDAO;
 import fr.efrei.teachfinder.entities.Disponibility;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
@@ -11,7 +11,7 @@ import jakarta.inject.Inject;
 public class DisponibilityService {
 
     @Inject
-    DisponibilityDAO disponibilityDAO;
+    IDisponibilityDAO disponibilityDAO;
 
     public Disponibility getDisponibility(int disponibilityId) throws EntityNotFoundException {
         Disponibility disponibility = disponibilityDAO.findById(disponibilityId);

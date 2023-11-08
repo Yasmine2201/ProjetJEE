@@ -1,8 +1,8 @@
 package fr.efrei.teachfinder.services;
 
-import fr.efrei.teachfinder.dao.DisponibilityDAO;
-import fr.efrei.teachfinder.dao.EvaluationDAO;
-import fr.efrei.teachfinder.dao.TeacherDAO;
+import fr.efrei.teachfinder.dao.IDisponibilityDAO;
+import fr.efrei.teachfinder.dao.IEvaluationDAO;
+import fr.efrei.teachfinder.dao.ITeacherDAO;
 import fr.efrei.teachfinder.entities.Disponibility;
 import fr.efrei.teachfinder.entities.Evaluation;
 import fr.efrei.teachfinder.entities.Teacher;
@@ -17,12 +17,11 @@ import java.util.List;
 @Stateless
 public class TeacherService {
     @Inject
-    TeacherDAO teacherDAO;
-
+    ITeacherDAO teacherDAO;
     @Inject
-    DisponibilityDAO disponibilityDAO;
+    IDisponibilityDAO disponibilityDAO;
     @Inject
-    EvaluationDAO evaluationDAO;
+    IEvaluationDAO evaluationDAO;
 
     public Teacher getTeacher(int teacherId)  throws EntityNotFoundException {
         Teacher teacher = teacherDAO.findById(teacherId);

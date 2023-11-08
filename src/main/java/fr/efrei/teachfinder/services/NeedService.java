@@ -1,8 +1,8 @@
 package fr.efrei.teachfinder.services;
 
-import fr.efrei.teachfinder.dao.CandidatureDAO;
-import fr.efrei.teachfinder.dao.NeedDAO;
-import fr.efrei.teachfinder.dao.TeacherDAO;
+import fr.efrei.teachfinder.dao.ICandidatureDAO;
+import fr.efrei.teachfinder.dao.INeedDAO;
+import fr.efrei.teachfinder.dao.ITeacherDAO;
 import fr.efrei.teachfinder.entities.*;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
@@ -14,13 +14,9 @@ import java.time.LocalDateTime;
 @Stateless
 public class NeedService {
 
-    @Inject
-    NeedDAO needDAO;
-
-    @Inject
-    CandidatureDAO candidatureDAO;
-    @Inject
-    TeacherDAO teacherDAO;
+    @Inject INeedDAO needDAO;
+    @Inject ICandidatureDAO candidatureDAO;
+    @Inject ITeacherDAO teacherDAO;
 
     public Need getNeed(int needId) throws EntityNotFoundException {
         Need need = needDAO.findById(needId);

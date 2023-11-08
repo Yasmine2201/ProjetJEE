@@ -1,6 +1,6 @@
 package fr.efrei.teachfinder.services;
 
-import fr.efrei.teachfinder.dao.CandidatureDAO;
+import fr.efrei.teachfinder.dao.ICandidatureDAO;
 import fr.efrei.teachfinder.entities.Candidature;
 import fr.efrei.teachfinder.entities.CandidatureId;
 import fr.efrei.teachfinder.entities.StatusType;
@@ -11,7 +11,7 @@ import jakarta.inject.Inject;
 @Stateless
 public class CandidatureService {
 
-    @Inject private CandidatureDAO candidatureDAO;
+    @Inject private ICandidatureDAO candidatureDAO;
 
     public Candidature getCandidature(CandidatureId candidatureId) throws EntityNotFoundException {
         Candidature candidature = candidatureDAO.findById(candidatureId);

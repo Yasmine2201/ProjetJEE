@@ -1,7 +1,7 @@
 package fr.efrei.teachfinder.services;
 
-import fr.efrei.teachfinder.dao.SchoolDAO;
-import fr.efrei.teachfinder.dao.TeacherDAO;
+import fr.efrei.teachfinder.dao.ISchoolDAO;
+import fr.efrei.teachfinder.dao.ITeacherDAO;
 import fr.efrei.teachfinder.entities.School;
 import fr.efrei.teachfinder.entities.Teacher;
 import jakarta.ejb.Stateless;
@@ -13,9 +13,9 @@ import java.util.List;
 public class ResearchService {
 
     @Inject
-    SchoolDAO schoolDAO;
+    ISchoolDAO schoolDAO;
     @Inject
-    TeacherDAO teacherDAO;
+    ITeacherDAO teacherDAO;
 
     public List<School> researchSchool(String searchText) {
         return schoolDAO.searchWithString(searchText);
