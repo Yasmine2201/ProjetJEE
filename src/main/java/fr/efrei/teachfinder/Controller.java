@@ -80,9 +80,9 @@ public class Controller extends HttpServlet {
         SessionUser sessionUser = getSessionUser(request);
 
         log.info("HTTP request. \n\tSERVLET: " + path +
-                "\n\tMETHOD: " + httpMethod +
-                "\n\tACTION: " + action +
-                "\n\tUSER: " + sessionUser
+                 "\n\tMETHOD: " + httpMethod +
+                 "\n\tACTION: " + action +
+                 "\n\tUSER: " + sessionUser
         );
 
         if (action == null) {
@@ -117,10 +117,10 @@ public class Controller extends HttpServlet {
 
     public Method findActionMethod(String action) {
         return Arrays.stream(getClass().getDeclaredMethods())
-                .filter(m -> m.getAnnotation(Action.class) != null
-                        && m.getAnnotation(Action.class).action().equals(action))
-                .findFirst()
-                .orElse(null);
+            .filter(m -> m.getAnnotation(Action.class) != null
+                         && m.getAnnotation(Action.class).action().equals(action))
+            .findFirst()
+            .orElse(null);
     }
 
     public boolean isActionRestricted(String action) {

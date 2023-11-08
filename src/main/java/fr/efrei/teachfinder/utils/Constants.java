@@ -27,7 +27,6 @@ public final class Constants {
         public static final String GO_TO_HOME = "goToHome";
         public static final String GO_TO_ADMIN_HOME = "goToAdminHome";
         public static final String GO_TO_RECRUITER_HOME = "goToRecruiterHome";
-        public static final String GO_TO_RECRUITER_PROFILE = "goToRecruiterProfile";
         public static final String GO_TO_TEACHER_HOME = "goToTeacherHome";
         public static final String GO_TO_REGISTER = "goToRegistration";
         public static final String GO_TO_CANDIDATURE = "goToCandidature";
@@ -47,7 +46,15 @@ public final class Constants {
         public static final String GO_TO_USER_PROFILE_EDITION = "goToUserProfileEdition";
         public static final String GO_TO_DISPONIBILITIES = "goToDisponibilities";
 
-        public static final String GO_BACK = "back";
+        public static final String CANCEL_SCHOOL_CREATION = "cancelSchoolCreation";
+        public static final String CANCEL_SCHOOL_EDITION =  "cancelSchoolEdition";
+        public static final String CANCEL_NEED_CREATION = "cancelNeedCreation";
+        public static final String CANCEL_NEED_EDITION =  "cancelNeedEdition";
+        public static final String CANCEL_DISPONIBILITY_CREATION = "cancelDisponibilityCreation";
+        public static final String CANCEL_DISPONIBILITY_EDITION =  "cancelDisponibilityEdition";
+        public static final String CANCEL_EVALUATION_EDITION = "cancelEvaluationEdition";
+        public static final String CANCEL_TEACHER_EDITION = "cancelTeacherEdition";
+        public static final String CANCEL_PROFILE_EDITION = "cancelProfileEdition";
     }
 
     public static final class Pages {
@@ -78,6 +85,8 @@ public final class Constants {
         public static final String FORBIDDEN = "Vous n'êtes pas autorisé à réaliser cette action";
         public static final String PASSWORD_MISMATCH = "Mot de passe de confirmation non conforme";
         public static final String UNAVAILABLE_LOGIN = "Cet identifiant est déjà utilisé par un autre utilisateur";
+        public static final String SCHOOL_ALREADY_EXISTS = "Cette école existe déjà";
+        public static final String CANDIDATURE_ALREADY_EXISTS = "Vous avez déjà candidaté à cette offre";
         public static final String SUCCESSFUL_REGISTRATION = "Inscription envoyée";
         public static final String INVALID_ARGUMENT = "Argument invalide";
         public static final String UNAVAILABLE_ENTITY = "Entité non disponible";
