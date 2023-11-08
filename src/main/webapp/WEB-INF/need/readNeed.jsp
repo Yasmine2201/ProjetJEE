@@ -22,19 +22,8 @@
             <div class="box has-text-centered px-3">
                 <div class="columns">
                     <div class="column">
-                        <div class="level">
-                            <div class="level-left">
-                                <div class="level-item">
-                                    <form method="post" action="controller">
-                                        <input class="is-hidden" name="schoolName"
-                                               value="${need.schoolName.schoolName}">
-                                        <button class="title-button is-2" type="submit" name="action"
-                                                value="goToSchool"><sup>⇱</sup>${need.schoolName.schoolName}
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        <p class="title is-2 has-text-left ml-2">Besoin N<sup>o</sup>${need.id} </p>
+                        <p class="subtitle has-text-left ml-3 pb-3"><u>Matière:</u> ${need.subject}</p>
                     </div>
                     <c:if test="${sessionUser.role eq 'Recruiter'}">
                         <div class="column">
@@ -58,51 +47,75 @@
                         </div>
                     </c:if>
                 </div>
-                <p class="subtitle is-3 has-text-left ml-2">Besoin N<sup>o</sup>${need.id} </p>
                 <div class="column ml-2">
-                    <h3 class="title is-5 has-text-left mb-0"> Recruteur </h3>
-                    <form class="has-text-left" method="post" action="controller">
-                        <input class="is-hidden" name="recruiterId" value="${need.recruiter.id}">
-                        <button class="title-button is-5 pb-3" type="submit" name="action"
-                                value="goToRecruiterProfile">
-                            <sup>⇱</sup>
-                            ${fn: toUpperCase(need.recruiter.applicationuser.lastname)}
-                            ${need.recruiter.applicationuser.firstname}
-                        </button>
-                    </form>
-                    <h3 class="title is-5 has-text-left"> Type de Contrat </h3>
-                    <c:if test="${need.contractType =='Continous'}">
-                        <p class="subtitle is-5 has-text-left ml-2 pb-3">
-                            CDI
-                        </p>
-                    </c:if>
-                    <c:if test="${need.contractType == 'Temporary'}">
+                    <div class="columns">
+                        <div class="column">
+                            <h3 class="title is-5 has-text-left mb-0"> École </h3>
+                            <form class="has-text-left" method="post" action="controller">
+                                <input class="is-hidden" name="schoolName" value="${need.schoolName.schoolName}">
+                                <button class="title-button is-5 pb-3" type="submit" name="action"
+                                        value="goToSchool">
+                                    <sup>⇱</sup>${need.schoolName.schoolName}
+                                </button>
+                            </form>
+                        </div>
+                        <div class="column">
+                            <h3 class="title is-5 has-text-left mb-0"> Recruteur </h3>
+                            <form class="has-text-left" method="post" action="controller">
+                                <input class="is-hidden" name="recruiterId" value="${need.recruiter.id}">
+                                <button class="title-button is-5 pb-3" type="submit" name="action"
+                                        value="goToRecruiterProfile">
+                                    <sup>⇱</sup>
+                                    ${fn: toUpperCase(need.recruiter.applicationuser.lastname)}
+                                    ${need.recruiter.applicationuser.firstname}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
 
-                        <p class="subtitle is-5 has-text-left ml-2 pb-3">
-                            CDD
-                        </p>
-                        <h3 class="title is-5 has-text-left"> Durée </h3>
-                        <p class="subtitle is-5 has-text-left ml-3 pb-3">${need.timePeriod}</p>
-                    </c:if>
-                    <c:if test="${need.contractType == 'Any'}">
+                    <div class="columns">
+                        <div class="column">
+                            <h3 class="title is-5 has-text-left"> Type de Contrat </h3>
+                            <c:if test="${need.contractType =='Continous'}">
+                                <p class="subtitle is-5 has-text-left ml-2 pb-3">
+                                    CDI
+                                </p>
+                            </c:if>
+                            <c:if test="${need.contractType == 'Temporary'}">
 
-                        <p class="subtitle is-5 has-text-left ml-2 pb-3">
-                            CDI et/ou CDD ${need.timePeriod}
-                        </p>
-                        <h3 class="title is-5 has-text-left"> Durée </h3>
-                        <p class="subtitle is-5 has-text-left ml-3 pb-3">${need.timePeriod}</p>
-                    </c:if>
+                                <p class="subtitle is-5 has-text-left ml-2 pb-3">
+                                    CDD
+                                </p>
+                            </c:if>
+                            <c:if test="${need.contractType == 'Any'}">
 
-                    <h3 class="title is-5 has-text-left"> Sujet </h3>
-                    <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${need.subject}</p>
+                                <p class="subtitle is-5 has-text-left ml-2 pb-3">
+                                    CDI et/ou CDD ${need.timePeriod}
+                                </p>
+                            </c:if>
+                        </div>
+
+                        <div class="column">
+                            <c:if test="${need.contractType != 'Continous'}">
+                                <h3 class="title is-5 has-text-left"> Durée </h3>
+                                <p class="subtitle is-5 has-text-left ml-3 pb-3">${need.timePeriod}</p>
+                            </c:if>
+                        </div>
+                    </div>
 
                     <h3 class="title is-5 has-text-left"> Exigences </h3>
-                    <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${need.requirements}</p>
+                    <div class="min-height is-2">
+                        <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${need.requirements}</p>
+                    </div>
+
                     <h3 class="title is-5 has-text-left"> Description </h3>
-                    <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> ${need.notes}</p>
+                    <div class="min-height is-1">
+                        <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> ${need.notes}</p>
+                    </div>
+
 
                     <c:if test="${sessionUser.role eq 'Recruiter' and not empty candidatures}">
-                    <h3 class="title is-3 has-text-left">Candidatures </h3>
+                    <h3 class="title is-3 has-text-left mt-6">Candidatures </h3>
                     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                         <thead>
                         <tr>
