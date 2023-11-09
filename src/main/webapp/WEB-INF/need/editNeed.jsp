@@ -73,7 +73,7 @@
 
                     <h3 class="title is-4 has-text-left"> Description </h3>
 
-                    <textarea class="textarea is-rounded has-fixed-size" name="notes">${empty nned ? notes : need.notes}</textarea>
+                    <textarea class="textarea is-rounded has-fixed-size" name="notes">${empty need ? notes : need.notes}</textarea>
 
                     <div class="pt-6">
                         <c:if test="${empty need}">

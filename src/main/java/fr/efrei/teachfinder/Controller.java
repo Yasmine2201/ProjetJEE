@@ -734,6 +734,44 @@ public class Controller extends HttpServlet {
         }
 
         try {
+            int needId = getIntParameter(request, "needId");
+            Recruiter recruiter = recruiterService.getRecruiter(user.getUserId());
+
+            NeedBean needBean = new NeedBean();
+            needBean.setNeedId(needId);
+            needBean.setRecruiterId(recruiter.getId());
+            needBean.setSchoolName(recruiter.getSchoolName().getSchoolName());
+            needBean.setSubject(request.getParameter("subject"));
+            needBean.setContractType(request.getParameter("contractType"));
+            needBean.setRequirements(request.getParameter("requirements"));
+            needBean.setTimePeriod(request.getParameter("timePeriod"));
+            needBean.setNotes(request.getParameter("notes"));
+
+            Need need = needService.createNeed(needBean);
+            request.setParameter("needId", need.getId().toString());
+
+            goToNeed(request, response);
+
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (IncompleteEntityException e) {
+            useParametersAsAttributes(request, response);
+            request.setAttribute("errorMessage", Messages.MISSING_FIELD);
+            goToNeedCreation(request, response);
+        } catch (IllegalArgumentException | MissingParameterException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.UPDATE_NEED, roles = {Recruiter})
+    public void updateNeed(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
+        SessionUser user = getSessionUser(request);
+        if (user == null) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
+        try {
             Recruiter recruiter = recruiterService.getRecruiter(user.getUserId());
 
             NeedBean needBean = new NeedBean();
@@ -745,7 +783,7 @@ public class Controller extends HttpServlet {
             needBean.setTimePeriod(request.getParameter("timePeriod"));
             needBean.setNotes(request.getParameter("notes"));
 
-            Need need = needService.createNeed(needBean);
+            Need need = needService.updateNeed(needBean);
             request.setParameter("needId", need.getId().toString());
 
             goToNeed(request, response);
