@@ -64,7 +64,7 @@
 
                     </div>
                     <div class="column">
-                        <c:if test="${sessionUser.teacher.id == teacher.id }">
+                        <c:if test="${sessionUser.userId == teacher.id}">
                             <form method="post" action="controller" class="has-text-right">
                                 <input class="is-hidden" name="teacherId"
                                        value="${teacher.id}">
@@ -86,7 +86,7 @@
                         </c:if>
                     </div>
                 </div>
-                <form method="post" action="controller" class="has-text-right">
+                <form method="post" action="controller" class="has-text-left">
                     <button class="button is-success" type="submit" name="action"
                             value="goToDisponibilityCreation">Ajouter
                     </button>
@@ -102,7 +102,7 @@
                         <th>
                             Date de fin
                         </th>
-                        <c:if test="${sessionUser.teacher.id == teacher.id}">
+                        <c:if test="${sessionUser.userId == teacher.id}">
                             <th>
                                 Modifier
                             </th>

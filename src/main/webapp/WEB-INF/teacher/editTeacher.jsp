@@ -14,43 +14,71 @@
             <form method="post" action="controller">
                 <div class="box has-text-centered px-3">
                     <h3 class="title is-2 has-text-left">
-                        Modification du profile Enseignant
+                        Modification du profile enseignant
                     </h3>
                     <div class="columns">
                         <div class="column">
-                            <h3 class="title is-5 has-text-left"> Ecoles intéressées </h3>
-                            <input class="input is-rounded " name="schoolInterests" placeholder="Ecole intéressées"
+                            <h3 class="title is-5 has-text-left"> Intéressé par les écoles </h3>
+                            <input class="input is-rounded " name="schoolInterests"
+                                   placeholder="Intéressé par les écoles"
                                    value="${empty teacher.schoolInterests ? '' : teacher.schoolInterests}">
                         </div>
                         <div class="column">
-                            <h3 class="title is-5 has-text-left"> Certifiaction académiques </h3>
+                            <h3 class="title is-5 has-text-left"> Certifiactions académiques </h3>
                             <input class="input is-rounded " name="acidemicCertifications"
-                                   placeholder="Certifiaction académiques"
+                                   placeholder="Certifiactions académiques"
                                    value="${empty teacher.acidemicCertifications ? '' : teacher.acidemicCertifications}">
                         </div>
                     </div>
                     <div class="columns">
                         <div class="column">
-                            <h3 class="title is-5 has-text-left"> Type de contract intéressé </h3>
-                            <select name="contractType" id="constractTypeSelect">
-                                <option value="Any" ${teacher.contractType == 'Any' ? 'selected="selected"' : ''}>
-                                    CDD et/ou CDI
-                                </option>
-                                <option value="Continous" ${teacher.contractType == 'Continous' ? 'selected="selected"' : ''}>
-                                    CDI
-                                </option>
-                                <option value="Temporary" ${teacher.contractType == 'Temporary' ? 'selected="selected"' : ''}>
-                                    CDD
-                                </option>
-                            </select>
+                            <h3 class="title is-5 has-text-left"> Type de contrat intéressé </h3>
+                            <div class="select is-left has-text-left">
+                                <select name="contractType" id="constractTypeSelect">
+                                    <option value="Any" ${teacher.contractType == 'Any' ? 'selected="selected"' : ''}>
+                                        CDD et/ou CDI
+                                    </option>
+                                    <option value="Continous" ${teacher.contractType == 'Continous' ? 'selected="selected"' : ''}>
+                                        CDI
+                                    </option>
+                                    <option value="Temporary" ${teacher.contractType == 'Temporary' ? 'selected="selected"' : ''}>
+                                        CDD
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <h3 class="title is-5 has-text-left"> Site internet </h3>
+                            <input class="input is-rounded " name="website" placeholder="Site internet"
+                                   value="${teacher.website}">
                         </div>
                     </div>
 
+
+                    <h3 class="title is-5 has-text-left"> Loisirs </h3>
+                    <input class="input is-rounded " name="personnalInterests" placeholder="Loisirs"
+                           value="${teacher.personnalInterests}">
+
+                    <h3 class="title is-5 has-text-left"> Qualitées </h3>
+                    <input class="input is-rounded " name="skills" placeholder="Qualitées"
+                           value="${teacher.skills}">
+
+                    <div class="columns">
+                        <div class="column">
+                            <h3 class="title is-5 has-text-left"> Classe voulue </h3>
+                            <input class="input is-rounded " name="desiredLevels" placeholder="Classe voulue"
+                                   value="${teacher.desiredLevels}">
+                        </div>
+                    </div>
                     <h3 class="title is-5 has-text-left"> Recommendations </h3>
                     <input class="input is-rounded " name="recommendations" placeholder="Recommendations"
                            value="${teacher.recommendations}">
 
-                    <h3 class="title is-5 has-text-left"> autres informations </h3>
+                    <h3 class="title is-5 has-text-left"> Experiences </h3>
+                    <textarea class="textarea is-rounded has-fixed-size mb-3" name="experiences"
+                              placeholder="Experiences professionnels">${teacher.experiences}</textarea>
+
+                    <h3 class="title is-5 has-text-left"> Autres informations </h3>
                     <textarea class="textarea is-rounded has-fixed-size mb-3" name="otherInformations"
                               placeholder="Autre informations">${teacher.otherInformations}</textarea>
 
