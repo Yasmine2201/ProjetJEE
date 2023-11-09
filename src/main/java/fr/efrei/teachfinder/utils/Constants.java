@@ -94,7 +94,7 @@ public final class Constants {
     }
 
     public static final class QueryRequests {
-        public static final String APPLICATIONUSER_FINDBYID = "SELECT u from ApplicationUser u WHERE u.userId = :id";
+        public static final String APPLICATIONUSER_FINDBYID = "SELECT u from ApplicationUser u WHERE u.id = :id";
         public static final String APPLICATIONUSER_FINDBYLOGIN = "SELECT u from ApplicationUser u WHERE u.login = :login";
 
         public static final String REGISTRATION_FINDBYID = "SELECT r from Registration r WHERE r.registrationId = :registrationId";
@@ -125,7 +125,7 @@ public final class Constants {
         public static final String EVALUATION_FINDALL_BY_TEACHER = "SELECT ev FROM Evaluation ev WHERE ev.teacher.id = :teacherId";
 
         public static final String DISPONIBILITY_FINDBYID = "SELECT d from Disponibility d WHERE d.id = :disponibilityId";
-        public static final String DISPONIBILITY_FINDALL_BY_TEACHER = "SELECT d from Disponibility WHERE d.teacher.id = :teacherId";
+        public static final String DISPONIBILITY_FINDALL_BY_TEACHER = "SELECT d from Disponibility d WHERE d.teacher.id = :teacherId";
         public static final String SCHOOL_SEARCHWITH_STRING = "SELECT s FROM School s WHERE s.schoolName.schoolName LIKE %:search% OR s.address LIKE %:search% OR s.specializations LIKE %:search%";
         public static final String TEACHER_SEARCHWITH_SKILLS = " SELECT t FROM Teacher t WHERE t.skills LIKE %:search%";
     }

@@ -31,12 +31,12 @@
                 </button>
             </div>
             <div class="navbar-item">
-                <button class="button" type="submit" name="action" value="goToDisponibilities">
+                <button class="button" type="submit" name="action" value="goToTeacher">
                     Mes infos
                 </button>
             </div>
             <div class="navbar-item">
-                <input class="is-hidden" name="teacherId" value="${sessionUser.id}">
+                <input class="is-hidden" name="teacherId" value="${sessionuser.userId}">
                 <button class="button is-info" type="submit" name="action" value="goToUserProfile">
                     Mon Profil
                 </button>
