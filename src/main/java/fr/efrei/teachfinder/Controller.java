@@ -2,6 +2,7 @@ package fr.efrei.teachfinder;
 
 import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.DisponibilityBean;
+import fr.efrei.teachfinder.beans.NeedBean;
 import fr.efrei.teachfinder.beans.SessionUser;
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.*;
@@ -378,9 +379,9 @@ public class Controller extends HttpServlet {
                 || user.getRole() == Admin)
             {
                 request.setAttribute("candidatures", need.getCandidatures());
+            } else {
+                need.setCandidatures(new HashSet<>());
             }
-
-            need.setCandidatures(new HashSet<>());
             request.setAttribute("need", need);
             request.getRequestDispatcher(Pages.NEED_VIEW).forward(request, response);
 
@@ -405,7 +406,7 @@ public class Controller extends HttpServlet {
             int needId = getIntParameter(request, "needId");
             Need need = needService.getNeed(needId);
             request.setAttribute("need", need);
-            request.getRequestDispatcher(Pages.NEED_VIEW).forward(request, response);
+            request.getRequestDispatcher(Pages.NEED_EDIT).forward(request, response);
 
         } catch (EntityNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
@@ -416,14 +417,19 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.GO_TO_CANDIDATURE, roles = {Admin, Teacher, Recruiter})
     public void goToCandidature(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        sendSessionUser(request);
+        SessionUser user = sendSessionUser(request);
 
         try {
             CandidatureId candidatureId = new CandidatureId();
             candidatureId.setTeacherId(getIntParameter(request, "teacherId"));
             candidatureId.setNeedId(getIntParameter(request, "needId"));
-
             Candidature candidature = candidatureService.getCandidature(candidatureId);
+
+            boolean canChoose =
+                user.getUserId() == candidatureId.getTeacherId()
+                || user.getUserId() == candidature.getNeed().getRecruiter().getId();
+
+            request.setAttribute("canChoose", canChoose);
             request.setAttribute("candidature", candidature);
             request.getRequestDispatcher(Pages.CANDIDATURE).forward(request, response);
 
@@ -716,6 +722,80 @@ public class Controller extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         } catch (EntityNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.CREATE_NEED, roles = {Recruiter})
+    public void createNeed(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException, EntityExistsException {
+        SessionUser user = getSessionUser(request);
+        if (user == null) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
+        try {
+            int needId = getIntParameter(request, "needId");
+            Recruiter recruiter = recruiterService.getRecruiter(user.getUserId());
+
+            NeedBean needBean = new NeedBean();
+            needBean.setNeedId(needId);
+            needBean.setRecruiterId(recruiter.getId());
+            needBean.setSchoolName(recruiter.getSchoolName().getSchoolName());
+            needBean.setSubject(request.getParameter("subject"));
+            needBean.setContractType(request.getParameter("contractType"));
+            needBean.setRequirements(request.getParameter("requirements"));
+            needBean.setTimePeriod(request.getParameter("timePeriod"));
+            needBean.setNotes(request.getParameter("notes"));
+
+            Need need = needService.createNeed(needBean);
+            request.setParameter("needId", need.getId().toString());
+
+            goToNeed(request, response);
+
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (IncompleteEntityException e) {
+            useParametersAsAttributes(request, response);
+            request.setAttribute("errorMessage", Messages.MISSING_FIELD);
+            goToNeedCreation(request, response);
+        } catch (IllegalArgumentException | MissingParameterException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.UPDATE_NEED, roles = {Recruiter})
+    public void updateNeed(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
+        SessionUser user = getSessionUser(request);
+        if (user == null) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
+        try {
+            Recruiter recruiter = recruiterService.getRecruiter(user.getUserId());
+
+            NeedBean needBean = new NeedBean();
+            needBean.setRecruiterId(recruiter.getId());
+            needBean.setSchoolName(recruiter.getSchoolName().getSchoolName());
+            needBean.setSubject(request.getParameter("subject"));
+            needBean.setContractType(request.getParameter("contractType"));
+            needBean.setRequirements(request.getParameter("requirements"));
+            needBean.setTimePeriod(request.getParameter("timePeriod"));
+            needBean.setNotes(request.getParameter("notes"));
+
+            Need need = needService.updateNeed(needBean);
+            request.setParameter("needId", need.getId().toString());
+
+            goToNeed(request, response);
+
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (IncompleteEntityException e) {
+            useParametersAsAttributes(request, response);
+            request.setAttribute("errorMessage", Messages.MISSING_FIELD);
+            goToNeedCreation(request, response);
+        } catch (IllegalArgumentException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }
 

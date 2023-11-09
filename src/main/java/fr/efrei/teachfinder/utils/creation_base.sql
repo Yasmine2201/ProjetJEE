@@ -122,7 +122,7 @@ INSERT INTO school (schoolName, address, specializations) VALUES
 INSERT INTO applicationuser (userId, login, password, firstname, lastname, email, phone, role) VALUES
     (1, 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'Admin', 'Test', 'admin@test.com', '', 'Admin'),
     (2, 'recruiter', '92d46204d8e9aeb3b37873c794348b3132ab9c9f33a89f2063c46180914c0104', 'Recruteur', 'Test', 'recruteur@test.com', '', 'Recruiter'),
-    (3, 'teacher', '1057a9604e04b274da5a4de0c8f4b4868d9b230989f8c8c6a28221143cc5a755', 'Eneignant', 'Test', 'teacher@test.com', '', 'Teacher');
+    (3, 'teacher', '1057a9604e04b274da5a4de0c8f4b4868d9b230989f8c8c6a28221143cc5a755', 'Enseignant', 'Test', 'teacher@test.com', '', 'Teacher');
 
 INSERT INTO recruiter (recruiterId, schoolName) VALUES (2, 'EFREI');
 

@@ -80,7 +80,7 @@
                                        value="${sessionUser.recruiter.SchoolName.schoolName}">
 
                                 <button class="button is-info" type="submit" name="action"
-                                        value="goToEvaluation">Modifier
+                                        value="goToEvaluation">Noter le Professeur
                                 </button>
                             </form>
                         </c:if>
