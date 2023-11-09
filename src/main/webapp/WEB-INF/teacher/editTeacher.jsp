@@ -11,14 +11,62 @@
 <section class="section">
     <div class="columns is-centered">
         <div class="column is-10 ">
+            <form method="post" action="controller">
+                <div class="box has-text-centered px-3">
+                    <h3 class="title is-2 has-text-left">
+                        Modification du profile Enseignant
+                    </h3>
+                    <div class="columns">
+                        <div class="column">
+                            <h3 class="title is-5 has-text-left"> Ecoles intéressées </h3>
+                            <input class="input is-rounded " name="schoolInterests" placeholder="Ecole intéressées"
+                                   value="${empty teacher.schoolInterests ? '' : teacher.schoolInterests}">
+                        </div>
+                        <div class="column">
+                            <h3 class="title is-5 has-text-left"> Certifiaction académiques </h3>
+                            <input class="input is-rounded " name="acidemicCertifications"
+                                   placeholder="Certifiaction académiques"
+                                   value="${empty teacher.acidemicCertifications ? '' : teacher.acidemicCertifications}">
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column">
+                            <h3 class="title is-5 has-text-left"> Type de contract intéressé </h3>
+                            <select name="contractType" id="constractTypeSelect">
+                                <option value="Any" ${teacher.contractType == 'Any' ? 'selected="selected"' : ''}>
+                                    CDD et/ou CDI
+                                </option>
+                                <option value="Continous" ${teacher.contractType == 'Continous' ? 'selected="selected"' : ''}>
+                                    CDI
+                                </option>
+                                <option value="Temporary" ${teacher.contractType == 'Temporary' ? 'selected="selected"' : ''}>
+                                    CDD
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h3 class="title is-5 has-text-left"> Recommendations </h3>
+                    <input class="input is-rounded " name="recommendations" placeholder="Recommendations"
+                           value="${teacher.recommendations}">
+
+                    <h3 class="title is-5 has-text-left"> autres informations </h3>
+                    <textarea class="textarea is-rounded has-fixed-size mb-3" name="otherInformations"
+                              placeholder="Autre informations">${teacher.otherInformations}</textarea>
 
 
-
-            <c:if test="${not empty message}">
-                <div class="notification" id="message">
-                        ${message}
+                    <c:if test="${not empty message}">
+                        <div class="notification" id="message">
+                                ${message}
+                        </div>
+                    </c:if>
+                    <div class="pt-6">
+                        <button class="button is-success mr-3" name="action" value="updateTeacher"> Modifier</button>
+                        <button class="button is-danger" name="action" value="cancelTeacherEdition"> Annuler</button>
+                    </div>
                 </div>
-            </c:if>
+
+            </form>
         </div>
     </div>
 </section>

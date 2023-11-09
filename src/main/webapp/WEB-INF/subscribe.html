@@ -84,7 +84,7 @@
                         <div class="is-flex is-justify-content-space-between pb-3" style="flex: 1 2 auto;">
                             <div class="control pr-4 has-text-left" style="width: 50%;">
                                 <label>
-                                    <div class="label has-text-left">Role<sup>*</sup></div>
+                                    <div class="label has-text-left">Role<sup class="has-text-danger">*</sup></div>
                                     <select class="select is-fullwidth pr-2" id="roleSelect" name="role" onchange="onRoleChange(this.value)">
                                         <option value="Teacher">Enseignant</option>
                                         <option value="Recruiter">Recruteur</option>
@@ -95,7 +95,7 @@
 
                             <div id="schoolDropdown" hidden class="px-4" style="width: 50%;">
                                 <label>
-                                    <div class="label has-text-left">École<sup>*</sup></div>
+                                    <div class="label has-text-left">École<sup class="has-text-danger">*</sup></div>
                                     <select class="select is-fullwidth pl-2" id="schoolSelect" name="schoolName">
                                         <option disabled selected value="">---</option>
                                     </select>
