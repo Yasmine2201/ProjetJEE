@@ -3,7 +3,7 @@ package fr.efrei.teachfinder.beans;
 public class NeedBean {
 
     private Integer needId;
-    private Integer recruiter;
+    private Integer recruiterId;
     private String schoolName;
     private String subject;
     private String contractType;
@@ -21,12 +21,12 @@ public class NeedBean {
         this.needId = needId;
     }
 
-    public Integer getRecruiter() {
-        return recruiter;
+    public Integer getRecruiterId() {
+        return recruiterId;
     }
 
-    public void setRecruiter(Integer recruiter) {
-        this.recruiter = recruiter;
+    public void setRecruiterId(Integer recruiterId) {
+        this.recruiterId = recruiterId;
     }
 
     public String getSchoolName() {
