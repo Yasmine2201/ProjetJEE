@@ -2,6 +2,7 @@ package fr.efrei.teachfinder;
 
 import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.DisponibilityBean;
+import fr.efrei.teachfinder.beans.NeedBean;
 import fr.efrei.teachfinder.beans.SessionUser;
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.*;
@@ -721,6 +722,42 @@ public class Controller extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         } catch (EntityNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.CREATE_NEED, roles = {Recruiter})
+    public void createNeed(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException, EntityExistsException {
+        SessionUser user = getSessionUser(request);
+        if (user == null) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
+        try {
+            Recruiter recruiter = recruiterService.getRecruiter(user.getUserId());
+
+            NeedBean needBean = new NeedBean();
+            needBean.setRecruiterId(recruiter.getId());
+            needBean.setSchoolName(recruiter.getSchoolName().getSchoolName());
+            needBean.setSubject(request.getParameter("subject"));
+            needBean.setContractType(request.getParameter("contractType"));
+            needBean.setRequirements(request.getParameter("requirements"));
+            needBean.setTimePeriod(request.getParameter("timePeriod"));
+            needBean.setNotes(request.getParameter("notes"));
+
+            Need need = needService.createNeed(needBean);
+            request.setParameter("needId", need.getId().toString());
+
+            goToNeed(request, response);
+
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (IncompleteEntityException e) {
+            useParametersAsAttributes(request, response);
+            request.setAttribute("errorMessage", Messages.MISSING_FIELD);
+            goToNeedCreation(request, response);
+        } catch (IllegalArgumentException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }
 

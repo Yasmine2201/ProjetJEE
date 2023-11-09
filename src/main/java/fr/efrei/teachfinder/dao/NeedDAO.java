@@ -29,7 +29,8 @@ public class NeedDAO implements INeedDAO {
 
     @Override
     public Need create(Need need) throws EntityExistsException {
-        if (findById(need.getId()) != null) throw new EntityExistsException("Need already exists");
+        if (need.getId() != null && findById(need.getId()) != null)
+            throw new EntityExistsException("Need already exists");
         entityManager.getTransaction().begin();
         Need createdNeed = entityManager.merge(need);
         entityManager.getTransaction().commit();

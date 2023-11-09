@@ -37,20 +37,20 @@
                             <h3 class="title is-4 has-text-left"> Matière <sup class="has-text-danger">*</sup>
                             </h3>
                             <input class="input is-rounded " name="subject" placeholder="Matière à enseigner"
-                                   value="${need.subject}">
+                                   value="${empty need ? subject : need.subject}">
                         </div>
                         <div class="column">
                             <h3 class="title is-4 has-text-left"> Type de contrat <sup
                                     class="has-text-danger">*</sup></h3>
                             <div class="select is-rounded is-fullwidth has-text-left">
                                 <select name="contractType" id="constractTypeSelect" onchange="showHideTimePeriod(this.value)">
-                                    <option value="Any" ${need.contractType == 'Any' ? 'selected="selected"' : ''}>
+                                    <option value="Any" ${(empty need ? contractType : need.contractType) == 'Any' ? 'selected="selected"' : ''}>
                                         CDD et/ou CDI
                                     </option>
-                                    <option value="Continous" ${need.contractType == 'Continous' ? 'selected="selected"' : ''}>
+                                    <option value="Continous" ${(empty need ? contractType : need.contractType) == 'Continous' ? 'selected="selected"' : ''}>
                                         CDI
                                     </option>
-                                    <option value="Temporary" ${need.contractType == 'Temporary' ? 'selected="selected"' : ''}>
+                                    <option value="Temporary" ${(empty need ? contractType : need.contractType) == 'Temporary' ? 'selected="selected"' : ''}>
                                         CDD
                                     </option>
                                 </select>
@@ -61,19 +61,19 @@
                         <div class="min-height is-2">
                             <div id="timePeriodDiv">
                                 <h3 class="title is-4 has-text-left">
-                                    Période du contrat <sup class="has-text-danger">*</sup>
+                                    Période du contrat
                                 </h3>
                                 <input id="timePeriodInput" class="input is-rounded " name="timePeriod" placeholder="XX/XX/XXXX - XX/XX/XXXX"
-                                       value="${need.timePeriod}">
+                                       value="${empty need ? timePeriod : need.timePeriod}">
                             </div>
                         </div>
                     </div>
-                    <h3 class="title is-4 has-text-left"> Prérecquis <sup class="has-text-danger">*</sup></h3>
-                    <textarea class="textarea is-rounded has-fixed-size mb-3" name="requirements">${need.requirements}</textarea>
+                    <h3 class="title is-4 has-text-left"> Prérecquis </h3>
+                    <textarea class="textarea is-rounded has-fixed-size mb-3" name="requirements">${empty need ? requirements : need.requirements}</textarea>
 
-                    <h3 class="title is-4 has-text-left"> Description <sup class="has-text-danger">*</sup></h3>
+                    <h3 class="title is-4 has-text-left"> Description </h3>
 
-                    <textarea class="textarea is-rounded has-fixed-size" name="notes">${need.notes}</textarea>
+                    <textarea class="textarea is-rounded has-fixed-size" name="notes">${empty nned ? notes : need.notes}</textarea>
 
                     <div class="pt-6">
                         <c:if test="${empty need}">
