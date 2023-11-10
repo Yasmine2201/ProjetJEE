@@ -581,12 +581,6 @@ public class Controller extends HttpServlet {
         request.getRequestDispatcher(Pages.RESEARCH).forward(request, response);
     }
 
-    @Action(action = Actions.GO_TO_DISPONIBILITIES, roles = {Teacher})
-    public void goToDisponibilities(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        SessionUser user = sendSessionUser(request);
-        request.getRequestDispatcher(Pages.DISPONIBILITIES).forward(request, response);
-    }
-
     @Action(action = Actions.CANCEL_SCHOOL_CREATION, roles = {Admin})
     public void cancelSchoolCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         goToAdminHome(request, response);
