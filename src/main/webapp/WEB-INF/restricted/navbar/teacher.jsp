@@ -25,18 +25,14 @@
             </div>
         </div>
         <div class="navbar-end">
+
             <div class="navbar-item">
-                <button class="button" type="submit" name="action" value="goToDisponibilities">
-                    Mes Dispos
-                </button>
-            </div>
-            <div class="navbar-item">
-                <button class="button" type="submit" name="action" value="goToTeacher">
+                <button class="button" type="submit" name="action" value="goToDisponibilityCreation">
                     Mes infos
                 </button>
             </div>
             <div class="navbar-item">
-                <input class="is-hidden" name="teacherId" value="${sessionuser.userId}">
+                <input class="is-hidden" name="teacherId" value="${sessionUser.id}">
                 <button class="button is-info" type="submit" name="action" value="goToUserProfile">
                     Mon Profil
                 </button>
