@@ -1,6 +1,7 @@
+CREATE DATABASE IF NOT EXISTS teach_finder_db;
+
 START TRANSACTION;
 
-CREATE DATABASE IF NOT EXISTS teach_finder_db;
 USE teach_finder_db;
 
 DROP TABLE IF EXISTS Candidature;
@@ -125,6 +126,7 @@ INSERT INTO applicationuser (userId, login, password, firstname, lastname, email
     (3, 'teacher', '1057a9604e04b274da5a4de0c8f4b4868d9b230989f8c8c6a28221143cc5a755', 'Enseignant', 'Test', 'teacher@test.com', '', 'Teacher');
 
 INSERT INTO recruiter (recruiterId, schoolName) VALUES (2, 'EFREI');
+INSERT INTO teacher (teacherId) VALUES (3);
 
 
 COMMIT;

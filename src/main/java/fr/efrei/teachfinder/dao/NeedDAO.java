@@ -46,7 +46,7 @@ public class NeedDAO implements INeedDAO {
                 throw new EntityNotFoundException("Need with ID " + need.getId() + " not found");
             }
             entityManager.getTransaction().begin();
-            Need updatedNeed = entityManager.merge(existingNeed);
+            Need updatedNeed = entityManager.merge(need);
             entityManager.getTransaction().commit();
             return updatedNeed;
 
