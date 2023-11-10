@@ -107,6 +107,7 @@ public class NeedService {
         need.setSchoolName(school);
         need.setSubject(needBean.getSubject());
         need.setContractType(ContractType.valueOf(needBean.getContractType()));
+        need.setTimePeriod(needBean.getTimePeriod());
         need.setRequirements(needBean.getRequirements());
         need.setNotes(needBean.getNotes());
 
