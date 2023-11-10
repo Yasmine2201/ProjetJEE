@@ -87,9 +87,9 @@
             <input type="hidden" name="teacherId" value="${teacher.id}" />
             <input type="hidden" name="teacherId" value="${disponibility.id}" />
             <label for="startDate">Date de début:</label>
-            <input type="datetime-local" id="startDate" name="startDate"><br>
+            <input type="datetime-local" id="startDate" name="startDate" value="${disponibility.startDate}"><br>
             <label for="endDate">Date et heure de fin:</label>
-            <input type="datetime-local" id="endDate" name="endDate"><br>
+            <input type="datetime-local" id="endDate" name="endDate" value="${disponibility.endDate}"><br>
             <c:if test="${empty disponibility}">
                 <button type="submit" name="action" value="createDisponibility">
                     Enregistrer

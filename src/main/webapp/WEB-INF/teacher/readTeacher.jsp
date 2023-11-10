@@ -105,14 +105,14 @@
                             <th>
                                 Date de fin
                             </th>
-                            <c:if test="${sessionUser.userId == teacher.id}">
-                                <th>
-                                    Modifier
-                                </th>
-                                <%--                            <th>--%>
-                                <%--                                Supprimer--%>
-                                <%--                            </th>--%>
-                            </c:if>
+<%--                            <c:if test="${sessionUser.userId == teacher.id}">--%>
+<%--                                <th>--%>
+<%--                                    Modifier--%>
+<%--                                </th>--%>
+<%--                                                            <th>--%>
+<%--                                                                Supprimer--%>
+<%--                                                            </th>--%>
+<%--                            </c:if>--%>
                         </tr>
                         </thead>
                         <tbody>
@@ -125,15 +125,15 @@
                                         ${disponibility.endDate}
                                 </td>
                                 <td>
-                                    <c:if test="${sessionUser.userId == teacher.id}">
-                                        <form method="post" action="controller">
-                                            <input class="is-hidden" name="disponibilityId" value="${disponibility.id}">
+<%--                                    <c:if test="${sessionUser.userId == teacher.id}">--%>
+<%--                                        <form method="post" action="controller">--%>
+<%--                                            <input class="is-hidden" name="disponibilityId" value="${disponibility.id}">--%>
 
-                                            <button class="button is-info" type="submit" name="action"
-                                                    value="goToDisponibilityEdition">Modifier
-                                            </button>
-                                        </form>
-                                    </c:if>
+<%--                                            <button class="button is-info" type="submit" name="action"--%>
+<%--                                                    value="goToDisponibilityEdition">Modifier--%>
+<%--                                            </button>--%>
+<%--                                        </form>--%>
+<%--                                    </c:if>--%>
                                 </td>
                                     <%--                                <td>--%>
                                     <%--                                    <form method="post" action="controller">--%>
