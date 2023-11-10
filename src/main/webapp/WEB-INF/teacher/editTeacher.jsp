@@ -26,7 +26,7 @@
                         </div>
                         <div class="column">
                             <h3 class="title is-5 has-text-left"> Certifiactions académiques </h3>
-                            <input class="input is-rounded " name="acidemicCertifications"
+                            <input class="input is-rounded " name="academicCertifications"
                                    placeholder="Certifiactions académiques"
                                    value="${empty teacher ? acidemicCertifications : teacher.acidemicCertifications}">
                         </div>
@@ -67,7 +67,7 @@
                             <h3 class="title is-5 has-text-left"> Classe voulue </h3>
                             <input class="input is-rounded " name="desiredLevels" placeholder="Classe voulue"
                                    value="${teacher.desiredLevels}">
-                            ²     </div>
+                        </div>
                     </div>
                     <h3 class="title is-5 has-text-left"> Recommendations </h3>
                     <input class="input is-rounded " name="recommendations" placeholder="Recommendations"

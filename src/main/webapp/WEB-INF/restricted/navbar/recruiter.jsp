@@ -17,7 +17,7 @@
             <div class="navbar-item">
                 <div class="control">
                     <button class="button  is-medium is-rounded" name="action"
-                            type="submit" value="research">
+                            type="submit" value="goToResearch">
                             <span class="material-symbols-outlined">
                                 search
                             </span>

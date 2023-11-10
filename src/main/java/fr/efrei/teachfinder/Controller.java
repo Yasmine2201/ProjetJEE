@@ -747,10 +747,6 @@ public class Controller extends HttpServlet {
 
             Teacher teacher = teacherService.getTeacher(teacherId);
 
-            if (teacher == null) {
-
-                throw new EntityNotFoundException("teacher not found with id : " + teacherId);
-            }
             TeacherBean teacherBean = new TeacherBean();
             teacherBean.setTeacherId(teacherId);
             teacherBean.setExperiences(experiences);
@@ -764,18 +760,58 @@ public class Controller extends HttpServlet {
             teacherBean.setOtherInformations(otherInformations);
 
 
-            teacherService.updateTeacher(teacherBean);
+            Teacher modifyTeacher = teacherService.updateTeacher(teacherBean);
             request.getSession().setAttribute("message", "Enseignant mis à jour avec succès.");
+            request.setParameter("teacherId",modifyTeacher.getId().toString());
             goToTeacher(request, response);
         } catch (EntityNotFoundException ex) {
             // Gérer l'exception selon vos besoins, par exemple, rediriger vers une page d'erreur
             throw new RuntimeException("Erreur lors de la mise à jour de l'enseignant : " + ex.getMessage(), ex);
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
         }
     }
 
 
     @Action(action = Actions.CREATE_NEED, roles = {Recruiter})
     public void createNeed(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException, EntityExistsException {
+        SessionUser user = getSessionUser(request);
+        if (user == null) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
+        try {
+            Recruiter recruiter = recruiterService.getRecruiter(user.getUserId());
+
+            NeedBean needBean = new NeedBean();
+            needBean.setRecruiterId(recruiter.getId());
+            needBean.setSchoolName(recruiter.getSchoolName().getSchoolName());
+            needBean.setSubject(request.getParameter("subject"));
+            needBean.setContractType(request.getParameter("contractType"));
+            needBean.setRequirements(request.getParameter("requirements"));
+            needBean.setTimePeriod(request.getParameter("timePeriod"));
+            needBean.setNotes(request.getParameter("notes"));
+
+            Need need = needService.createNeed(needBean);
+            request.setParameter("needId", need.getId().toString());
+
+            goToNeed(request, response);
+
+        } catch (EntityNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (IncompleteEntityException e) {
+            useParametersAsAttributes(request, response);
+            request.setAttribute("errorMessage", Messages.MISSING_FIELD);
+            goToNeedCreation(request, response);
+        } catch (IllegalArgumentException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.UPDATE_NEED, roles = {Recruiter})
+    public void updateNeed(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
         SessionUser user = getSessionUser(request);
         if (user == null) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
@@ -796,42 +832,6 @@ public class Controller extends HttpServlet {
             needBean.setTimePeriod(request.getParameter("timePeriod"));
             needBean.setNotes(request.getParameter("notes"));
 
-            Need need = needService.createNeed(needBean);
-            request.setParameter("needId", need.getId().toString());
-
-            goToNeed(request, response);
-
-        } catch (EntityNotFoundException e) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
-        } catch (IncompleteEntityException e) {
-            useParametersAsAttributes(request, response);
-            request.setAttribute("errorMessage", Messages.MISSING_FIELD);
-            goToNeedCreation(request, response);
-        } catch (IllegalArgumentException | MissingParameterException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
-        }
-    }
-
-    @Action(action = Actions.UPDATE_NEED, roles = {Recruiter})
-    public void updateNeed(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException {
-        SessionUser user = getSessionUser(request);
-        if (user == null) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
-            return;
-        }
-
-        try {
-            Recruiter recruiter = recruiterService.getRecruiter(user.getUserId());
-
-            NeedBean needBean = new NeedBean();
-            needBean.setRecruiterId(recruiter.getId());
-            needBean.setSchoolName(recruiter.getSchoolName().getSchoolName());
-            needBean.setSubject(request.getParameter("subject"));
-            needBean.setContractType(request.getParameter("contractType"));
-            needBean.setRequirements(request.getParameter("requirements"));
-            needBean.setTimePeriod(request.getParameter("timePeriod"));
-            needBean.setNotes(request.getParameter("notes"));
-
             Need need = needService.updateNeed(needBean);
             request.setParameter("needId", need.getId().toString());
 
@@ -843,7 +843,7 @@ public class Controller extends HttpServlet {
             useParametersAsAttributes(request, response);
             request.setAttribute("errorMessage", Messages.MISSING_FIELD);
             goToNeedCreation(request, response);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | MissingParameterException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }
