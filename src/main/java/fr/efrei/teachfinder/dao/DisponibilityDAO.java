@@ -52,7 +52,7 @@ public class DisponibilityDAO implements IDisponibilityDAO {
             throw new EntityNotFoundException("Disponibility with ID " + disponibility.getId() + " not found");
         }
         entityManager.getTransaction().begin();
-        Disponibility updatedDisponibility = entityManager.merge(existingDisponibility);
+        Disponibility updatedDisponibility = entityManager.merge(disponibility);
         entityManager.getTransaction().commit();
         return updatedDisponibility;
 

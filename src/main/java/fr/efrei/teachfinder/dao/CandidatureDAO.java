@@ -47,7 +47,7 @@ public class CandidatureDAO implements ICandidatureDAO {
             throw new EntityNotFoundException("Candidature with ID " + candidature.getId() + " not found");
         }
         entityManager.getTransaction().begin();
-        Candidature updatedCandidature = entityManager.merge(existingCandidature);
+        Candidature updatedCandidature = entityManager.merge(candidature);
         entityManager.getTransaction().commit();
         return updatedCandidature;
 
