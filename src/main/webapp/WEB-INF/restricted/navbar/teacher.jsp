@@ -25,13 +25,9 @@
             </div>
         </div>
         <div class="navbar-end">
+
             <div class="navbar-item">
                 <button class="button" type="submit" name="action" value="goToDisponibilityCreation">
-                    Mes Dispos
-                </button>
-            </div>
-            <div class="navbar-item">
-                <button class="button" type="submit" name="action" value="goToDisponibilities">
                     Mes infos
                 </button>
             </div>
