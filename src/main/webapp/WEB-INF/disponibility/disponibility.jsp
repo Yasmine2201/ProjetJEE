@@ -1,16 +1,10 @@
-<%@ page import="fr.efrei.teachfinder.entities.Teacher" %>
-<%@ page import="java.time.LocalDateTime" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Disponibility</title>
+    <title>Disponibilités</title>
     <style>
-        body {
+        #content body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
@@ -18,12 +12,12 @@
             color: #333;
         }
 
-        h2, h3 {
+        #content h2, h3 {
             color: #4a54f1;
             text-align: center;
         }
 
-        form {
+        #content form {
             background: white;
             max-width: 400px;
             margin: 20px auto;
@@ -31,13 +25,13 @@
             box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        label {
+        #content label {
             margin-top: 10px;
             display: block;
             color: #666;
         }
 
-        input[type="datetime-local"], input[type="submit"] {
+        #content input[type="datetime-local"], input[type="submit"] {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -46,7 +40,7 @@
             box-sizing: border-box;
         }
 
-        button {
+        #content button {
             background-color: #4a54f1;
             color: white;
             padding: 10px 15px;
@@ -56,49 +50,65 @@
             margin-top: 10px;
         }
 
-        button:hover {
+        #content button:hover {
             background-color: #3d46d6;
         }
 
-        table {
+        #content table {
             width: 80%;
             margin: 20px auto;
             border-collapse: collapse;
         }
 
-        th, td {
+        #content th, td {
             padding: 10px;
             border: 1px solid #ddd;
             text-align: left;
         }
 
-        thead {
+        #content thead {
             background-color: #4a54f1;
             color: white;
         }
 
-        tr:nth-child(even) {
+        #content tr:nth-child(even) {
             background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
+<jsp:include page="/WEB-INF/restricted/navbar/teacher.jsp"/>
+<div id="content">
 <h2>Veuillez indiquer votre disponibilité</h2>
 <c:choose>
     <c:when test="${not empty teacher}">
         <h3>Ajouter une disponibilité ${teacher.name}</h3>
         <form method="post" action="controller">
             <input type="hidden" name="teacherId" value="${teacher.id}" />
+            <input type="hidden" name="teacherId" value="${disponibility.id}" />
             <label for="startDate">Date de début:</label>
-            <input type="datetime-local" id="startDate" name="startDate" required><br>
+            <input type="datetime-local" id="startDate" name="startDate"><br>
             <label for="endDate">Date et heure de fin:</label>
-            <input type="datetime-local" id="endDate" name="endDate" required><br>
-            <button type="submit" name="action" value="createDisponibility">
-                Enregistrer
-            </button>
+            <input type="datetime-local" id="endDate" name="endDate"><br>
+            <c:if test="${empty disponibility}">
+                <button type="submit" name="action" value="createDisponibility">
+                    Enregistrer
+                </button>
+                <button type="submit" name="action" value="cancelDisponibilityCreation">
+                    Annuler
+                </button>
+            </c:if>
+            <c:if test="${not empty disponibility}">
+                <button type="submit" name="action" value="editDisponibility">
+                    Enregistrer
+                </button>
+                <button type="submit" name="action" value="cancelDisponibilityEdition">
+                    Annuler
+                </button>
+            </c:if>
         </form>
-        <h3>Disponibilités existantes:</h3>
         <c:if test="${not empty disponibilities}">
+        <h3>Disponibilités existantes:</h3>
             <table>
                 <thead>
                 <tr>
@@ -113,13 +123,13 @@
                         <td><fmt:formatDate value="${disponibility.startDate}" pattern="dd/MM/yyyy" /></td>
                         <td><fmt:formatDate value="${disponibility.endDate}" pattern="dd/MM/yyyy" /></td>
                         <td>
-                            <form action="DeleteDisponibilityServlet" method="post" style="display: inline;">
+                            <form action="controller" method="post" style="display: inline;">
                                 <input type="hidden" name="disponibilityId" value="${disponibility.id}" />
-                                <input type="submit" name="action" value="Annuler">
+                                <button type="submit" name="action" value="deleteDisponibility">Supprimer</button>
                             </form>
-                            <form action="EditDisponibilityServlet" method="get" style="display: inline;">
+                            <form action="controller" method="post" style="display: inline;">
                                 <input type="hidden" name="disponibilityId" value="${disponibility.id}" />
-                                <input type="submit" name="action" value="updateDisponibility">
+                                <button type="submit" name="action" value="updateDisponibility">Modifier</button>
                             </form>
                         </td>
                     </tr>
@@ -132,5 +142,13 @@
         <p>Enseignant non identifié. Veuillez vous connecter.</p>
     </c:otherwise>
 </c:choose>
+</div>
+<jsp:include page="/WEB-INF/footer.jsp"/>
 </body>
 </html>
+
+<style>
+    <%@include file="/WEB-INF/css/bulma/css/bulma.min.css" %>
+    <%@include file="/WEB-INF/css/style.scss" %>
+    @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+</style>

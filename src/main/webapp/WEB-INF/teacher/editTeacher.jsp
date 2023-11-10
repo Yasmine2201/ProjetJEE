@@ -12,10 +12,10 @@
     <div class="columns is-centered">
         <div class="column is-10 ">
             <form method="post" action="controller">
-                <input class="is-hidden" name="teacherId" value="${teacher.id}">
+                <input class="is-hidden" name="userId" value="${user.id}">
                 <div class="box has-text-centered px-3">
                     <h3 class="title is-2 has-text-left">
-                        Modification du profile enseignant
+                        Modification du profil enseignant
                     </h3>
                     <div class="columns">
                         <div class="column">
@@ -33,9 +33,9 @@
                     </div>
                     <div class="columns">
                         <div class="column">
-                            <h3 class="title is-5 has-text-left"> Type de contrat intéressé </h3>
+                            <h3 class="title is-5 has-text-left"> Intéressé par le type de contrat </h3>
                             <div class="select is-left has-text-left">
-                                <select name="contractType" id="constractTypeSelect">
+                                <select name="contractType" id="contractTypeSelect" class="is-fullwidth" >
                                     <option value="Any" ${teacher.contractType == 'Any' ? 'selected="selected"' : ''}>
                                         CDD et/ou CDI
                                     </option>
@@ -47,9 +47,6 @@
                                     </option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="column">
-
                         </div>
                     </div>
 
