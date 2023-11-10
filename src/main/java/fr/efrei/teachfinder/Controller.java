@@ -64,6 +64,7 @@ public class Controller extends HttpServlet {
     @EJB
     private RecruiterService recruiterService;
 
+
     private static final Logger log = LogManager.getLogger(Controller.class);
 
     public void init() {
@@ -580,6 +581,12 @@ public class Controller extends HttpServlet {
         request.getRequestDispatcher(Pages.RESEARCH).forward(request, response);
     }
 
+    @Action(action = Actions.GO_TO_DISPONIBILITIES, roles = {Teacher})
+    public void goToDisponibilities(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUser user = sendSessionUser(request);
+        request.getRequestDispatcher(Pages.DISPONIBILITIES).forward(request, response);
+    }
+
     @Action(action = Actions.CANCEL_SCHOOL_CREATION, roles = {Admin})
     public void cancelSchoolCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         goToAdminHome(request, response);
@@ -609,14 +616,12 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.CANCEL_DISPONIBILITY_CREATION, roles = {Teacher})
     public void cancelDisponibilityCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        request.setParameter("teacherId", "" + getSessionUser(request).getUserId());
-        goToTeacher(request, response);
+        goToTeacherHome(request, response);
     }
 
     @Action(action = Actions.CANCEL_DISPONIBILITY_EDITION, roles = {Teacher})
     public void cancelDisponibilityEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        request.setParameter("teacherId", "" + getSessionUser(request).getUserId());
-        goToTeacher(request, response);
+        goToTeacherHome(request, response);
     }
 
     @Action(action = Actions.CANCEL_EVALUATION_EDITION, roles = {Recruiter})
@@ -691,25 +696,19 @@ public class Controller extends HttpServlet {
             throws IOException, ServletException, EntityExistsException {
 
         try {
-            SessionUser user = getSessionUser(request);
-            if (user == null || user.getRole() != Teacher) {
-                response.sendError(HttpServletResponse.SC_FORBIDDEN);
-                return;
-            }
-
             DisponibilityBean disponibility = new DisponibilityBean();
-            disponibility.setTeacherId(user.getUserId());
+            disponibility.setTeacherId(getIntParameter(request, "teacherId"));
             disponibility.setStartDate(request.getParameter("startDate"));
             disponibility.setEndDate(request.getParameter("endDate"));
 
-            Disponibility dispo = disponibilityService.createDisponibility(disponibility);
-            request.setParameter("disponibilityId", dispo.getId().toString());
-            goToDisponibilityEdition(request, response);
+            disponibilityService.createDisponibility(disponibility);
+
+            goToTeacher(request, response);
         } catch (IncompleteEntityException e) {
             useParametersAsAttributes(request, response);
             request.setAttribute("errorMessage", Messages.MISSING_FIELD);
             goToSchoolCreation(request, response);
-        } catch (IllegalArgumentException | DateTimeParseException e) {
+        } catch (MissingParameterException | IllegalArgumentException | DateTimeParseException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         } catch (EntityNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
@@ -739,6 +738,7 @@ public class Controller extends HttpServlet {
         }
     }
 
+
     @Action(action = Actions.UPDATE_TEACHER, roles = {Teacher})
     public void updateTeacher(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -767,9 +767,10 @@ public class Controller extends HttpServlet {
             teacherBean.setRecommendations(recommendations);
             teacherBean.setOtherInformations(otherInformations);
 
+
             Teacher modifyTeacher = teacherService.updateTeacher(teacherBean);
             request.getSession().setAttribute("message", "Enseignant mis à jour avec succès.");
-            request.setParameter("teacherId",modifyTeacher.getId().toString());
+            request.setParameter("teacherId", modifyTeacher.getId().toString());
             goToTeacher(request, response);
         } catch (EntityNotFoundException e) {
             log.error(e);
@@ -870,6 +871,67 @@ public class Controller extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }
     }
+
+    @Action(action = Actions.DENY_CANDIDATURE, roles = {Teacher, Recruiter})
+    public void denyCandidature(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            SessionUser user = getSessionUser(request);
+            CandidatureId candidatureId = new CandidatureId();
+            candidatureId.setTeacherId(getIntParameter(request, "teacherId"));
+            candidatureId.setNeedId(getIntParameter(request, "needId"));
+            Candidature candidature = candidatureService.getCandidature(candidatureId);
+
+            switch (user.getRole()) {
+                case Teacher :
+                    candidatureService.refuseByTeacher(candidatureId,user);
+                    request.setAttribute("message","Candidature refusée avec succès");
+                    goToCandidature(request,response);
+
+                case Recruiter :
+                    candidatureService.refuseByRecruiter(candidatureId, user);
+                    request.setAttribute("messagee","Candidature refusée avec succès");
+                    goToCandidature(request,response);
+
+                }
+        }
+    catch (
+            MissingParameterException | EntityNotFoundException | IllegalAccessException e) {
+        throw new RuntimeException(e);
+
+    }
+
+    }
+
+    @Action(action = Actions.VALIDATE_CANDIDATURE, roles = {Teacher, Recruiter})
+    public void validateCandidature(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            SessionUser user = getSessionUser(request);
+            CandidatureId candidatureId = new CandidatureId();
+            candidatureId.setTeacherId(getIntParameter(request, "teacherId"));
+            candidatureId.setNeedId(getIntParameter(request, "needId"));
+            Candidature candidature = candidatureService.getCandidature(candidatureId);
+
+            switch (user.getRole()) {
+                case Teacher :
+                    candidatureService.acceptByTeacher(candidatureId,user);
+                    request.setAttribute("message","Candidature acceptée avec succès par l'enseignant");
+                    goToCandidature(request,response);
+
+                case Recruiter :
+                    candidatureService.acceptByRecruiter(candidatureId, user);
+                    request.setAttribute("messagee","Candidature acceptée avec succès par le recruteur");
+                    goToCandidature(request,response);
+
+            }
+        }
+        catch (
+                MissingParameterException | EntityNotFoundException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+
+        }
+
+    }
+
 
     @Action(action = Actions.RESEARCH, roles = {Admin, Recruiter, Teacher})
     public void research(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {

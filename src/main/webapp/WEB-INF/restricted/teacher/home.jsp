@@ -127,11 +127,11 @@
                             </c:if>
 
                             <c:if test="${candidature.status == 'Accepted'}">
-                                <p class="tag is-success"> Accepter </p>
+                                <p class="tag is-success"> Accepté </p>
                             </c:if>
 
                             <c:if test="${candidature.status == 'Refused'}">
-                                <p class="tag is-danger"> Refuser </p>
+                                <p class="tag is-danger"> Refusé </p>
                             </c:if>
                         </td>
                         <td class="is-narrow">

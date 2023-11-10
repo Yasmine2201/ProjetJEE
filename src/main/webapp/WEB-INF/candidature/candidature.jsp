@@ -157,13 +157,19 @@
                         <button class="button is-success mr-3" name="action" value="validateCandidature">
                             Valider
                         </button>
-                        <button class="button is-danger" name="action" value="refuseCandidature">
+                        <button class="button is-danger" name="action" value="denyCandidature">
                             Refuser
                         </button>
                     </form>
                 </c:if>
 
                 <div class="has-text-danger error-div mt-2">${errorMessage}</div>
+                <div class="has-text-sucess error-div mt-2">${successMessage}</div>
+                <c:if test="${not empty message}">
+                    <div class="notification" id="message">
+                            ${message}
+                    </div>
+                </c:if>
             </div>
         </div>
     </div>
@@ -177,3 +183,15 @@
     <%@include file="/WEB-INF/css/style.scss" %>
     @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
 </style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(hideNotification, 5000);
+    })
+
+    function hideNotification() {
+        const notification = document.getElementById("message");
+
+        if (notification === null) return;
+        notification.hidden = true;
+    }
+</script>
