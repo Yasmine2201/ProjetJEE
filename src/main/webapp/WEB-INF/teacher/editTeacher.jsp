@@ -48,9 +48,7 @@
                             </div>
                         </div>
                         <div class="column">
-                            <h3 class="title is-5 has-text-left"> Site internet </h3>
-                            <input class="input is-rounded " name="website" placeholder="Site internet"
-                                   value="${teacher.website}">
+
                         </div>
                     </div>
 
