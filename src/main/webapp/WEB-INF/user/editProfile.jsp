@@ -21,7 +21,7 @@
 <section class="section">
     <div class="columns is-centered">
         <div class="column is-10">
-            <form method="post" action="controller">
+            <form method="post" action="controller" onsubmit="validateForm()">
                 <div class="box has-text-centered px-3">
                     <h3 class="title is-2 has-text-left">
                         Edition du profil
@@ -85,8 +85,33 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(hideNotification, 5000);
+        showNotification(null);
     })
+
+    function validateForm() {
+        const password = document.getElementById("password").value;
+        const passwordVerification = document.getElementById("passwordVerification").value;
+
+        if (password !== passwordVerification) {
+            showNotification("Mot de passe de confirmation non conforme.");
+            return false;
+        }
+
+        return true;
+    }
+
+    function showNotification(message) {
+        const notification = document.getElementById("message");
+
+        if (notification === null) return;
+        notification.hidden = false;
+
+        if (message != null) {
+            notification.textContent = message;
+        }
+
+        setTimeout(hideNotification, 5000)
+    }
 
     function hideNotification() {
         const notification = document.getElementById("message");
