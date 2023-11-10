@@ -20,29 +20,62 @@
 
 <section class="section">
     <div class="columns is-centered">
-        <div class="column is-10 ">
+        <div class="column is-10">
             <form method="post" action="controller">
                 <div class="box has-text-centered px-3">
-                    <h3 class="title is-2 has-text-left">Édition du profile</h3>
+                    <h3 class="title is-2 has-text-left">
+                        Edition du profil
+                    </h3>
+                    <h3 class="title is-5 has-text-left"> Nom d'utilisateur </h3>
+                    <input class="input is-rounded " name="login" placeholder="Nom d'utilisateur"
+                           value="${user.login}">
+
                     <div class="columns">
                         <div class="column">
-                            <h3 class="title is-2 has-text-left">Nom<sup class="has-text-danger">*</sup></h3>
-                            <input class="input is-rounded " name="subject" placeholder="Nom"
-                                   value="${user.lastName}">
+                            <h3 class="title is-5 has-text-left mt-3"> Nom </h3>
+                            <input class="input is-rounded " name="lastname" placeholder="Nom"
+                                   value="${user.lastname}">
                         </div>
                         <div class="column">
-                            <h3 class="title is-2 has-text-left">Prénom<sup class="has-text-danger">*</sup></h3>
-
+                            <h3 class="title is-5 has-text-left mt-3"> Prénom </h3>
+                            <input class="input is-rounded " name="firstname" placeholder="Prénom"
+                                   value="${user.firstname}">
                         </div>
                     </div>
 
+                    <h3 class="title is-5 has-text-left"> Changer le mot de passe </h3>
+                    <input class="input is-rounded" type="password" name="password" placeholder="*********">
+
+                    <h3 class="title is-5 has-text-left mt-3"> Confirmez votre mot de passe </h3>
+                    <input class="input is-rounded" type="password" name="passwordVerification" placeholder="*********">
+
+                    <div class="columns">
+                        <div class="column">
+                            <h3 class="title is-5 has-text-left mt-3"> Email </h3>
+                            <input class="input is-rounded " name="email" placeholder="Email"
+                                   value="${user.email}">
+
+                        </div>
+                        <div class="column">
+                            <h3 class="title is-5 has-text-left mt-3"> Téléphone </h3>
+                            <input name="phone" value="${user.phone}" type="tel" class="input is-rounded"
+                                   inputmode="numeric" maxlength="30"
+                                   onkeypress="return (event.charCode !==8 && event.charCode ===0 || event.charCode ===43 || event.charCode ===32 || event.charCode ===127 || (event.charCode >= 48 && event.charCode <= 57))"
+                                   placeholder="+XX X-XX-XX-XX-XX"/>
+                        </div>
+                    </div>
+                    <c:if test="${not empty message}">
+                        <div class="notification" id="message">
+                                ${message}
+                        </div>
+                    </c:if>
+
+                    <div class="pt-6">
+                        <button class="button is-success mr-3" name="action" value="updateUserProfile"> Valider</button>
+                        <button class="button is-danger" name="action" value="cancelProfileEdition"> Annuler</button>
+                    </div>
                 </div>
             </form>
-            <c:if test="${not empty message}">
-                <div class="notification" id="message">
-                        ${message}
-                </div>
-            </c:if>
         </div>
     </div>
 </section>
