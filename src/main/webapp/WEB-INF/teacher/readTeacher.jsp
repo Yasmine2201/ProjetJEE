@@ -31,13 +31,13 @@
                         <h3 class="title is-5 has-text-left"> Certifications </h3>
                         <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${teacher.academicCertifications}</p>
 
-                        <h3 class="title is-5 has-text-left"> Experiences </h3>
+                        <h3 class="title is-5 has-text-left"> Expériences </h3>
                         <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${teacher.experiences}</p>
 
-                        <h3 class="title is-5 has-text-left"> Ecoles interresées </h3>
+                        <h3 class="title is-5 has-text-left"> Intéressé par </h3>
                         <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${teacher.schoolInterests}</p>
 
-                        <h3 class="title is-5 has-text-left"> Autre informations </h3>
+                        <h3 class="title is-5 has-text-left"> Autres informations </h3>
                         <p class="subtitle is-5 has-text-left ml-3 pb-3"> ${teacher.otherInformations}</p>
 
                         <h3 class="title is-5 has-text-left"> Contract recherché </h3>
@@ -86,14 +86,14 @@
                         </c:if>
                     </div>
                 </div>
-                <c:if test="${sessionuser.teacher.id == teacher.id}">
+                <c:if test="${sessionUser.userId == teacher.id}">
                     <form method="post" action="controller" class="has-text-left">
                         <button class="button is-success" type="submit" name="action"
                                 value="goToDisponibilityCreation">Ajouter
                         </button>
                     </form>
                 </c:if>
-                <h3 class="title is-5 has-text-left"> Disponibilité </h3>
+                <h3 class="title is-5 has-text-left"> Disponibilités </h3>
                 <c:if test="${not empty futureDisponibilities}">
                     <table class="table is-bordered is-striped is-half is-hoverable">
 
@@ -125,7 +125,7 @@
                                         ${disponibility.endDate}
                                 </td>
                                 <td>
-                                    <c:if test="${sessionuser.teacher.id == teacher.id}">
+                                    <c:if test="${sessionUser.userId == teacher.id}">
                                         <form method="post" action="controller">
                                             <input class="is-hidden" name="disponibilityId" value="${disponibility.id}">
 
