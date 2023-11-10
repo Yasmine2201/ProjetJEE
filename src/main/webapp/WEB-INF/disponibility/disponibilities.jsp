@@ -16,6 +16,9 @@
                 <button type="submit" name="action" value="goToDisponibility">
                     Ajouter une disponibilité
                 </button>
+                <button type="submit" name="action" value="goToEditdisponibility">
+                    Modifier une disponibilité
+                </button>
             </form>
             <c:if test="${not empty message}">
                 <div class="notification" id="message">
