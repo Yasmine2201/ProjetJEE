@@ -94,96 +94,99 @@
                     </form>
                 </c:if>
                 <h3 class="title is-5 has-text-left"> Disponibilité </h3>
-<c:if test="${not empty futureDisponibilities}">
-              <table class="table is-bordered is-striped is-half is-hoverable">
+                <c:if test="${not empty futureDisponibilities}">
+                    <table class="table is-bordered is-striped is-half is-hoverable">
 
-                    <thead>
-                    <tr>
-                        <th>
-                            Date de début
-                        </th>
-                        <th>
-                            Date de fin
-                        </th>
-                        <c:if test="${sessionUser.userId == teacher.id}">
-                            <th>
-                                Modifier
-                            </th>
-<%--                            <th>--%>
-<%--                                Supprimer--%>
-<%--                            </th>--%>
-                        </c:if>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${futureDisponibilities}" var="disponibility">
+                        <thead>
                         <tr>
-                            <td>
-                                    ${disponibility.startDate}
-                            </td>
-                            <td>
-                                    ${disponibility.endDate}
-                            </td>
-                                <td>
-                            <c:if test="${sessionuser.teacher.id == teacher.id}">
-                                    <form method="post" action="controller">
-                                        <input class="is-hidden" name="disponibilityId" value="${disponibility.id}">
-
-                                        <button class="button is-info" type="submit" name="action"
-                                                value="goToDisponibilityEdition">Modifier
-                                        </button>
-                                    </form>
+                            <th>
+                                Date de début
+                            </th>
+                            <th>
+                                Date de fin
+                            </th>
+                            <c:if test="${sessionUser.userId == teacher.id}">
+                                <th>
+                                    Modifier
+                                </th>
+                                <%--                            <th>--%>
+                                <%--                                Supprimer--%>
+                                <%--                            </th>--%>
                             </c:if>
-                                </td>
-<%--                                <td>--%>
-<%--                                    <form method="post" action="controller">--%>
-<%--                                        <input class="is-hidden" name="disponibilityId" value="${disponibility.id}">--%>
-
-<%--                                        <button class="button is-danger" type="submit" name="action"--%>
-<%--                                                value="disponibilityDelete">Supprimer--%>
-<%--                                        </button>--%>
-<%--                                    </form>--%>
-<%--                                </td>--%>
                         </tr>
-                    </c:forEach>
-                    </tbody>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${futureDisponibilities}" var="disponibility">
+                            <tr>
+                                <td>
+                                        ${disponibility.startDate}
+                                </td>
+                                <td>
+                                        ${disponibility.endDate}
+                                </td>
+                                <td>
+                                    <c:if test="${sessionuser.teacher.id == teacher.id}">
+                                        <form method="post" action="controller">
+                                            <input class="is-hidden" name="disponibilityId" value="${disponibility.id}">
 
-                </table>
-  <c:if test="${empty futureDisponibilities}">
-    <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> Le professeur est occupé pour le moment</p>
-  </c:if>
+                                            <button class="button is-info" type="submit" name="action"
+                                                    value="goToDisponibilityEdition">Modifier
+                                            </button>
+                                        </form>
+                                    </c:if>
+                                </td>
+                                    <%--                                <td>--%>
+                                    <%--                                    <form method="post" action="controller">--%>
+                                    <%--                                        <input class="is-hidden" name="disponibilityId" value="${disponibility.id}">--%>
+
+                                    <%--                                        <button class="button is-danger" type="submit" name="action"--%>
+                                    <%--                                                value="disponibilityDelete">Supprimer--%>
+                                    <%--                                        </button>--%>
+                                    <%--                                    </form>--%>
+                                    <%--                                </td>--%>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+
+                    </table>
+                </c:if>
+                <c:if test="${empty futureDisponibilities}">
+                    <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> Le professeur est occupé pour le
+                        moment</p>
+                </c:if>
                 <h3 class="title is-5 has-text-left"> Evaluations </h3>
                 <c:if test="${not empty evaluations}">
-                <table class="table is-bordered is-striped is-narrow is-hoverable">
-                    <thead>
-                    <tr>
-                        <th>
-                            Ecole
-                        </th>
-                        <th>
-                            Notes
-                        </th>
-                        <th>
-                            Commentaire
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${evaluations}" var="evaluation">
+                    <table class="table is-bordered is-striped is-narrow is-hoverable">
+                        <thead>
                         <tr>
-                            <td>
-                                    ${evaluation.schoolName.schoolName}
-                            </td>
-                            <td>
-                                    ${evaluation.rating}
-                            </td>
-                            <td>
-                                    ${evaluation.comment}
-                            </td>
+                            <th>
+                                Ecole
+                            </th>
+                            <th>
+                                Notes
+                            </th>
+                            <th>
+                                Commentaire
+                            </th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${evaluations}" var="evaluation">
+                            <tr>
+                                <td>
+                                        ${evaluation.schoolName.schoolName}
+                                </td>
+                                <td>
+                                        ${evaluation.rating}
+                                </td>
+                                <td>
+                                        ${evaluation.comment}
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
 
 
             </div>
