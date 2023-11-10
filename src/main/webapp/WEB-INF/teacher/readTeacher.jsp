@@ -92,6 +92,7 @@
                     </button>
                 </form>
                 <h3 class="title is-5 has-text-left"> Disponibilité </h3>
+                <c:if test="${not empty futureDisponibilities}">
                 <table class="table is-bordered is-striped is-narrow is-hoverable">
 
                     <thead>
@@ -144,10 +145,14 @@
                         </tr>
                     </c:forEach>
                     </tbody>
-
+                    </c:if>
                 </table>
+                <c:if test="${empty futureDisponibilities}">
+                    <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> Le professeur est occupé pour le moment</p>
+                </c:if>
 
                 <h3 class="title is-5 has-text-left"> Evaluations </h3>
+                <c:if test="${not empty evaluations}">
                 <table class="table is-bordered is-striped is-narrow is-hoverable">
                     <thead>
                     <tr>
@@ -178,8 +183,11 @@
                     </c:forEach>
                     </tbody>
                 </table>
+                </c:if>
+                <c:if test="${empty evaluations}">
+                    <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> Pas de d'évaluation pour le moment</p>
 
-
+                </c:if>
             </div>
 
 

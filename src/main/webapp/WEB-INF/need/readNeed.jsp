@@ -114,76 +114,81 @@
                     </div>
 
 
-                    <c:if test="${not empty candidatures}">
                     <h3 class="title is-3 has-text-left mt-6">Candidatures </h3>
-                    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-                        <thead>
-                        <tr>
-                            <th>Id du besoin</th>
-                            <th>Enseignant</th>
-                            <th>Matière</th>
-                            <th>Validations</th>
-                            <th>Statut</th>
-                            <th>Ouvrir</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${candidatures}" var="candidature">
-                            <tr id=${candidature.need.id}>
-                                <td class="is-narrow">${candidature.need.id}</td>
-                                <td>
-                                    <form method="post" action="controller">
-                                        <label>
-                                            <input class="is-hidden" name="teacherId"
-                                                   value="${candidature.teacher.id}">
-                                        </label>
-                                        <button type="submit" name="action" value="goToTeacher"
-                                                class="has-text-info">
-                                                ${candidature.teacher.applicationuser.firstname}
-                                                ${fn:toUpperCase(candidature.teacher.applicationuser.lastname)}
-                                        </button>
-                                    </form>
-                                </td>
-                                <td>${candidature.need.subject}</td>
-                                <td class="is-narrow">
-                                    <c:if test="${!candidature.isValidatedByTeacher}">
-                                        <p class="tag is-danger"> Enseignant </p></c:if>
-                                    <c:if test="${candidature.isValidatedByTeacher}">
-                                        <p class="tag is-success"> Enseignant </p></c:if>
-
-                                    <c:if test="${!candidature.isValidatedByRecruiter}">
-                                        <p class="tag is-danger"> Recruteur </p></c:if>
-                                    <c:if test="${candidature.isValidatedByRecruiter}">
-                                        <p class="tag is-success"> Recruteur </p></c:if>
-                                </td>
-                                <td class="is-narrow">
-                                    <c:if test="${candidature.status == 'Pending'}">
-                                        <p class="tag is-warning"> En cours </p>
-                                    </c:if>
-
-                                    <c:if test="${candidature.status == 'Accepted'}">
-                                        <p class="tag is-success"> Accepter </p>
-                                    </c:if>
-
-                                    <c:if test="${candidature.status == 'Refused'}">
-                                        <p class="tag is-danger"> Refuser </p>
-                                    </c:if>
-                                </td>
-                                <td class="is-narrow">
-                                    <form method="post" action="controller">
-
-                                        <input class="is-hidden" name="needId" value="${candidature.need.id}">
-                                        <input class="is-hidden" name="teacherId" value="${candidature.teacher.id}">
-                                        <button class="button is-info is-small" type="submit" name="action" value="goToCandidature">
-                                            <span class="material-symbols-outlined is-size-6">read_more</span>
-                                        </button>
-                                    </form>
-                                </td>
+                    <c:if test="${not empty candidatures}">
+                        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                            <thead>
+                            <tr>
+                                <th>Id du besoin</th>
+                                <th>Enseignant</th>
+                                <th>Matière</th>
+                                <th>Validations</th>
+                                <th>Statut</th>
+                                <th>Ouvrir</th>
                             </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </c:if>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${candidatures}" var="candidature">
+                                <tr id=${candidature.need.id}>
+                                    <td class="is-narrow">${candidature.need.id}</td>
+                                    <td>
+                                        <form method="post" action="controller">
+                                            <label>
+                                                <input class="is-hidden" name="teacherId"
+                                                       value="${candidature.teacher.id}">
+                                            </label>
+                                            <button type="submit" name="action" value="goToTeacher"
+                                                    class="has-text-info">
+                                                    ${candidature.teacher.applicationuser.firstname}
+                                                    ${fn:toUpperCase(candidature.teacher.applicationuser.lastname)}
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>${candidature.need.subject}</td>
+                                    <td class="is-narrow">
+                                        <c:if test="${!candidature.isValidatedByTeacher}">
+                                            <p class="tag is-danger"> Enseignant </p></c:if>
+                                        <c:if test="${candidature.isValidatedByTeacher}">
+                                            <p class="tag is-success"> Enseignant </p></c:if>
+
+                                        <c:if test="${!candidature.isValidatedByRecruiter}">
+                                            <p class="tag is-danger"> Recruteur </p></c:if>
+                                        <c:if test="${candidature.isValidatedByRecruiter}">
+                                            <p class="tag is-success"> Recruteur </p></c:if>
+                                    </td>
+                                    <td class="is-narrow">
+                                        <c:if test="${candidature.status == 'Pending'}">
+                                            <p class="tag is-warning"> En cours </p>
+                                        </c:if>
+
+                                        <c:if test="${candidature.status == 'Accepted'}">
+                                            <p class="tag is-success"> Accepter </p>
+                                        </c:if>
+
+                                        <c:if test="${candidature.status == 'Refused'}">
+                                            <p class="tag is-danger"> Refuser </p>
+                                        </c:if>
+                                    </td>
+                                    <td class="is-narrow">
+                                        <form method="post" action="controller">
+
+                                            <input class="is-hidden" name="needId" value="${candidature.need.id}">
+                                            <input class="is-hidden" name="teacherId" value="${candidature.teacher.id}">
+                                            <button class="button is-info is-small" type="submit" name="action"
+                                                    value="goToCandidature">
+                                                <span class="material-symbols-outlined is-size-6">read_more</span>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+                    <c:if test="${empty candidatures}">
+                        <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> Pas de candidatures pour le
+                            moment</p>
+                    </c:if>
                 </div>
             </div>
         </div>

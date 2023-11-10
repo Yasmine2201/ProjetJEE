@@ -68,72 +68,77 @@
 
                     <div class="column is-9">
                         <h3 class="title is-3 has-text-left">Besoins</h3>
-                        <table class="table is-bordered is-striped
+                        <c:if test="${not empty runningNeeds}">
+                            <table class="table is-bordered is-striped
                               is-narrow is-hoverable is-fullwidth">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Type de contrat</th>
-                                <th>Matière</th>
-                                <th>Période</th>
-                                <c:if test="${sessionUser.role eq 'Recruiter'}">
-                                    <th> Modifier</th>
-                                </c:if>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${runningNeeds}" var="need">
+                                <thead>
                                 <tr>
-                                    <td>
-                                        <form method="post" action="controller">
-                                            <label>
-                                                <input class="is-hidden" name="needId"
-                                                       value="${need.id}">
-                                            </label>
-                                            <button type="submit" name="action" value="goToNeed"
-                                                    class="has-text-info"
-                                                    style="border: none"> ${need.id}
-                                            </button>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <c:if test="${need.contractType =='Continous' }">
-                                            CDI
-                                        </c:if>
-                                        <c:if test="${need.contractType == 'Temporary' }">
-                                            CDD
-                                        </c:if>
-                                        <c:if test="${need.contractType  == 'Any'}">
-                                            CDI et/ou CDD
-                                        </c:if>
-                                    </td>
-
-                                    <td> ${need.subject} </td>
-
-                                    <td> ${need.timePeriod} </td>
-
-
-                                    <c:if test="${sessionUser.role == 'Recruiter'}">
+                                    <th>Id</th>
+                                    <th>Type de contrat</th>
+                                    <th>Matière</th>
+                                    <th>Période</th>
+                                    <c:if test="${sessionUser.role eq 'Recruiter'}">
+                                        <th> Modifier</th>
+                                    </c:if>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${runningNeeds}" var="need">
+                                    <tr>
                                         <td>
                                             <form method="post" action="controller">
                                                 <label>
                                                     <input class="is-hidden" name="needId"
                                                            value="${need.id}">
                                                 </label>
-                                                <button type="submit" name="action" value="goToNeedEdition"
-                                                        class="button is-info"
-                                                        style="border: none">
-                                                <span class="material-symbols-outlined">
-                                                    settings
-                                                </span>
+                                                <button type="submit" name="action" value="goToNeed"
+                                                        class="has-text-info"
+                                                        style="border: none"> ${need.id}
                                                 </button>
                                             </form>
                                         </td>
-                                    </c:if>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
+                                        <td>
+                                            <c:if test="${need.contractType =='Continous' }">
+                                                CDI
+                                            </c:if>
+                                            <c:if test="${need.contractType == 'Temporary' }">
+                                                CDD
+                                            </c:if>
+                                            <c:if test="${need.contractType  == 'Any'}">
+                                                CDI et/ou CDD
+                                            </c:if>
+                                        </td>
+
+                                        <td> ${need.subject} </td>
+
+                                        <td> ${need.timePeriod} </td>
+
+
+                                        <c:if test="${sessionUser.role == 'Recruiter'}">
+                                            <td>
+                                                <form method="post" action="controller">
+                                                    <label>
+                                                        <input class="is-hidden" name="needId"
+                                                               value="${need.id}">
+                                                    </label>
+                                                    <button type="submit" name="action" value="goToNeedEdition"
+                                                            class="button is-info"
+                                                            style="border: none">
+                                                <span class="material-symbols-outlined">
+                                                    settings
+                                                </span>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </c:if>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:if>
+                        <c:if test="${empty runningNeeds}">
+                            <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> Pas de poste à pourvoir</p>
+                        </c:if>
                     </div>
                 </div>
             </div>

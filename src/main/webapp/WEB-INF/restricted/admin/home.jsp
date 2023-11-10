@@ -11,66 +11,73 @@
         <div class="column is-10 ">
             <div class="box has-text-centered px-3">
                 <h3 class="title is-3 has-text-left">En attente de validation</h3>
+                <c:if test="${not empty registration}">
 
-                <table class="table is-bordered is-striped
+                    <table class="table is-bordered is-striped
                               is-narrow is-hoverable is-fullwidth">
-                    <thead>
-                    <tr>
-                        <th>Prénom</th>
-                        <th>Nom</th>
-                        <th>Courrier électronique</th>
-                        <th>N° de téléphone</th>
-                        <th>Rôle</th>
-                        <th>École</th>
-                        <th>Valider / Refuser</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${pendingRegistrations}" var="registration">
-                        <tr id= ${registration.registrationId}>
-                            <td>${registration.firstname}</td>
-                            <td>${registration.lastname}</td>
-                            <td>${registration.email}</td>
-                            <td>${registration.phone}</td>
-                            <td>${registration.role}</td>
-                            <td>
-                                <form method="post" action="controller">
-                                    <label>
-                                        <input class="is-hidden" name="schoolName"
-                                               value="${registration.schoolName.schoolName}">
-                                    </label>
-                                    <button type="submit" name="action" value="goToSchool"
-                                            class="has-text-info">
-
-                                            ${registration.schoolName.schoolName}
-                                    </button>
-                                </form>
-                            </td>
-
-                            <td>
-                                <form method="post" action="controller">
-                                    <input class="is-hidden" name="registrationId" value="${registration.registrationId}">
-
-                                    <button class="button is-success is-small" type="submit" name="action"
-                                            value="approveRegistration">
-                                    <span class="material-symbols-outlined">done</span>
-                                    </button>
-
-                                    <button class="button is-danger is-small" type="submit" name="action"
-                                            value="denyRegistration">
-                                    <span class="material-symbols-outlined">close</span>
-                                    </button>
-                                </form>
-                            </td>
-
+                        <thead>
+                        <tr>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Courrier électronique</th>
+                            <th>N° de téléphone</th>
+                            <th>Rôle</th>
+                            <th>École</th>
+                            <th>Valider / Refuser</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${pendingRegistrations}" var="registration">
+                            <tr id= ${registration.registrationId}>
+                                <td>${registration.firstname}</td>
+                                <td>${registration.lastname}</td>
+                                <td>${registration.email}</td>
+                                <td>${registration.phone}</td>
+                                <td>${registration.role}</td>
+                                <td>
+                                    <form method="post" action="controller">
+                                        <label>
+                                            <input class="is-hidden" name="schoolName"
+                                                   value="${registration.schoolName.schoolName}">
+                                        </label>
+                                        <button type="submit" name="action" value="goToSchool"
+                                                class="has-text-info">
+
+                                                ${registration.schoolName.schoolName}
+                                        </button>
+                                    </form>
+                                </td>
+
+                                <td>
+                                    <form method="post" action="controller">
+                                        <input class="is-hidden" name="registrationId"
+                                               value="${registration.registrationId}">
+
+                                        <button class="button is-success is-small" type="submit" name="action"
+                                                value="approveRegistration">
+                                            <span class="material-symbols-outlined">done</span>
+                                        </button>
+
+                                        <button class="button is-danger is-small" type="submit" name="action"
+                                                value="denyRegistration">
+                                            <span class="material-symbols-outlined">close</span>
+                                        </button>
+                                    </form>
+                                </td>
+
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
+                <c:if test="${empty registration}">
+                    <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> Rien à valider pour le moment</p>
+                </c:if>
+
             </div>
             <c:if test="${not empty message}">
                 <div class="notification" id="message">
-                    ${message}
+                        ${message}
                 </div>
             </c:if>
         </div>

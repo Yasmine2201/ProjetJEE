@@ -10,8 +10,9 @@
     <div class="columns">
         <div class="column">
             <h3 class="title is-3 has-text-left">Offres intéressantes</h3>
-            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth ">
-                <thead>
+            <c:if test="${not empty interestingNeeds}">
+                <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth ">
+                    <thead>
                     <tr>
                         <th>Id</th>
                         <th>École</th>
@@ -20,9 +21,9 @@
                         <th>Période</th>
                         <th>Ouvrir</th>
                     </tr>
-                </thead>
+                    </thead>
 
-                <tbody>
+                    <tbody>
                     <c:forEach items="${interestingNeeds}" var="need">
                         <tr id=${need.id}>
                             <td class="is-narrow">${need.id}</td>
@@ -60,19 +61,25 @@
                             <td class="is-narrow">
                                 <form method="post" action="controller">
                                     <input class="is-hidden" name="needId" value="${need.id}">
-                                    <button class="button is-info is-small" type="submit" name="action" value="goToNeed">
+                                    <button class="button is-info is-small" type="submit" name="action"
+                                            value="goToNeed">
                                         <span class="material-symbols-outlined is-size-6">read_more</span>
                                     </button>
                                 </form>
                             </td>
                         </tr>
                     </c:forEach>
-                </tbody>
-            </table>
+                    </tbody>
+                </table
+            </c:if>
+            <c:if test="${empty interestingNeeds}">
+                <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> Pas de besoins intéressants</p>
+            </c:if>
         </div>
 
         <div class="column">
             <h3 class="title is-3 has-text-left">Mes candidatures</h3>
+            <c:if test="${not empty candidatures}">
             <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                 <thead>
                 <tr>
@@ -142,6 +149,10 @@
                 </c:forEach>
                 </tbody>
             </table>
+            </c:if>
+            <c:if test="${empty candidatures}">
+                <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> Pas de candidatures pour le moment</p>
+            </c:if>
         </div>
     </div>
 </section>
