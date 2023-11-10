@@ -124,7 +124,7 @@
                                 <td>
                                         ${disponibility.endDate}
                                 </td>
-                                <td>
+<%--                                <td>--%>
 <%--                                    <c:if test="${sessionUser.userId == teacher.id}">--%>
 <%--                                        <form method="post" action="controller">--%>
 <%--                                            <input class="is-hidden" name="disponibilityId" value="${disponibility.id}">--%>
@@ -134,7 +134,7 @@
 <%--                                            </button>--%>
 <%--                                        </form>--%>
 <%--                                    </c:if>--%>
-                                </td>
+<%--                                </td>--%>
                                     <%--                                <td>--%>
                                     <%--                                    <form method="post" action="controller">--%>
                                     <%--                                        <input class="is-hidden" name="disponibilityId" value="${disponibility.id}">--%>
