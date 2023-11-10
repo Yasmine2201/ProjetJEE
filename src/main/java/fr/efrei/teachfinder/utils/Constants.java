@@ -22,6 +22,7 @@ public final class Constants {
         public static final String UPSERT_EVALUATION = "upsertEvaluation";
         public static final String APPROVE_REGISTRATION = "approveRegistration";
         public static final String DENY_REGISTRATION = "denyRegistration";
+        public static final String RESEARCH = "research";
 
         public static final String GO_TO_LOGIN = "goToLogin";
         public static final String GO_TO_HOME = "goToHome";
@@ -114,7 +115,7 @@ public final class Constants {
         public static final String NEED_FINDALL_BY_SCHOOL = "SELECT n from Need n WHERE n.schoolName.schoolName = :schoolName";
         public static final String NEED_FINDALL_BY_RECRUITER = "SELECT n from Need n WHERE n.recruiter.id = :recruiterId";
         public static final String NEED_GETALL = "SELECT n from Need n";
-        public static final String NEED_SEARCHWITH_STRING = "SELECT n FROM Need n WHERE n.schoolName.schoolName LIKE %:search% OR n.subject LIKE %:search%";
+        public static final String NEED_SEARCHWITH_STRING = "SELECT n FROM Need n WHERE lower(n.schoolName.schoolName) LIKE lower(CONCAT('%',:search,'%')) OR lower(n.subject) LIKE lower(CONCAT('%',:search,'%'))";
 
         public static final String CANDIDATURE_FINDBYID = "SELECT c FROM Candidature c WHERE c.teacher.id = :teacherId AND c.need.id = :needId";
         public static final String CANDIDATURE_FINDALL_BY_TEACHER = "SELECT c FROM Candidature c WHERE c.teacher.id = :teacherId";
@@ -126,7 +127,8 @@ public final class Constants {
 
         public static final String DISPONIBILITY_FINDBYID = "SELECT d from Disponibility d WHERE d.id = :disponibilityId";
         public static final String DISPONIBILITY_FINDALL_BY_TEACHER = "SELECT d from Disponibility d WHERE d.teacher.id = :teacherId";
-        public static final String SCHOOL_SEARCHWITH_STRING = "SELECT s FROM School s WHERE s.schoolName.schoolName LIKE %:search% OR s.address LIKE %:search% OR s.specializations LIKE %:search%";
-        public static final String TEACHER_SEARCHWITH_SKILLS = " SELECT t FROM Teacher t WHERE t.skills LIKE %:search%";
+
+        public static final String SCHOOL_SEARCHWITH_STRING = "SELECT s FROM School s WHERE lower(s.schoolName) LIKE lower(CONCAT('%',:search,'%')) OR lower(s.address) LIKE lower(CONCAT('%',:search,'%')) OR lower(s.specializations) LIKE lower(CONCAT('%',:search,'%'))";
+        public static final String TEACHER_SEARCHWITH_STRING = "SELECT t FROM Teacher t WHERE lower(t.skills) LIKE concat('%', lower(:search), '%') OR lower(t.applicationuser.lastname) LIKE concat('%', lower(:search), '%') OR lower(t.applicationuser.firstname) LIKE concat('%', lower(:search), '%')";
     }
 }
