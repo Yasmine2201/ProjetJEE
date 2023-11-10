@@ -751,8 +751,6 @@ public class Controller extends HttpServlet {
                 throw new EntityNotFoundException("Enseignant non trouvé pour l'ID : " + teacherId);
             }
 
-
-
             teacherService.updateTeacher(teacher);
 
             request.getSession().setAttribute("message", "Enseignant mis à jour avec succès.");
