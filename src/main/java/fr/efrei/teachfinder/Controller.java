@@ -4,6 +4,7 @@ import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.DisponibilityBean;
 import fr.efrei.teachfinder.beans.NeedBean;
 import fr.efrei.teachfinder.beans.SessionUser;
+import fr.efrei.teachfinder.beans.TeacherBean;
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.Teacher;
 import fr.efrei.teachfinder.entities.*;
@@ -754,18 +755,29 @@ public class Controller extends HttpServlet {
 
             Teacher teacher = teacherService.getTeacher(teacherId);
 
-            if (teacher == null) {
-                // Gérer la situation où l'enseignant n'est pas trouvé
-                throw new EntityNotFoundException("Enseignant non trouvé pour l'ID : " + teacherId);
-            }
+            TeacherBean teacherBean = new TeacherBean();
+            teacherBean.setTeacherId(teacherId);
+            teacherBean.setExperiences(experiences);
+            teacherBean.setSkills(skills);
+            teacherBean.setPersonnalInterests(personnalInterests);
+            teacherBean.setSchoolInterests(schoolInterests);
+            teacherBean.setDesiredLevels(desiredLevels);
+            teacherBean.setContractType(contractType);
+            teacherBean.setAcademicCertifications(academicCertifications);
+            teacherBean.setRecommendations(recommendations);
+            teacherBean.setOtherInformations(otherInformations);
 
-            teacherService.updateTeacher(teacher);
 
+            Teacher modifyTeacher = teacherService.updateTeacher(teacherBean);
             request.getSession().setAttribute("message", "Enseignant mis à jour avec succès.");
+            request.setParameter("teacherId",modifyTeacher.getId().toString());
             goToTeacher(request, response);
         } catch (EntityNotFoundException ex) {
             // Gérer l'exception selon vos besoins, par exemple, rediriger vers une page d'erreur
             throw new RuntimeException("Erreur lors de la mise à jour de l'enseignant : " + ex.getMessage(), ex);
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
         }
     }
 

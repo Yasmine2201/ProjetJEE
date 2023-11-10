@@ -48,7 +48,7 @@ public class EvaluationDAO implements IEvaluationDAO{
             throw new EntityNotFoundException("Evaluation with ID " + ev.getId() + " not found");
         }
         entityManager.getTransaction().begin();
-        Evaluation updatedEvaluation = entityManager.merge(existingEvaluation);
+        Evaluation updatedEvaluation = entityManager.merge(ev);
         entityManager.getTransaction().commit();
         return updatedEvaluation;
     }

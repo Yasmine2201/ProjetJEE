@@ -47,7 +47,7 @@ public class TeacherDAO implements ITeacherDAO {
         }
 
         entityManager.getTransaction().begin();
-        Teacher updatedTeacher = entityManager.merge(existingTeacher);
+        Teacher updatedTeacher = entityManager.merge(teacher);
         entityManager.getTransaction().commit();
         return updatedTeacher;
     }
