@@ -20,6 +20,8 @@ public class TeacherDashboardService {
 
     public List<Need> getInterestingNeeds(int teacherId) throws EntityNotFoundException {
         Teacher teacher = teacherDAO.findById(teacherId);
+        if (teacher == null) throw new EntityNotFoundException("Teacher not found with id " + teacherId);
+
         List<Need> needs = needDAO.getAll();
 
         // We consider ContractType - schooInterests - personnalInterests
