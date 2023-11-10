@@ -33,7 +33,15 @@
                 </h3>
 
                 <h3 class="title is-4 has-text-left"> Note </h3>
-                <input type="range" min="0" max="5" value="3"  oninput="${this.nextElementSibling.value = this.value}">
+                <div class="select is-left has-text-left">
+                    <select name="" id="constractTypeSelect">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
 
                 <h3 class="title is-4 has-text-left"> Commentaire </h3>
                 <textarea class="textarea is-rounded has-fixed-size" name="comment">${empty evaluation ? '' : evaluation.comment}</textarea>
