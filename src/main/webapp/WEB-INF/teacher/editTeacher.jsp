@@ -21,13 +21,13 @@
                             <h3 class="title is-5 has-text-left"> Intéressé par les écoles </h3>
                             <input class="input is-rounded " name="schoolInterests"
                                    placeholder="Intéressé par les écoles"
-                                   value="${empty teacher ? '' : teacher.schoolInterests}">
+                                   value="${empty teacher ? schoolInterests : teacher.schoolInterests}">
                         </div>
                         <div class="column">
                             <h3 class="title is-5 has-text-left"> Certifiactions académiques </h3>
                             <input class="input is-rounded " name="acidemicCertifications"
                                    placeholder="Certifiactions académiques"
-                                   value="${empty teacher ? '' : teacher.acidemicCertifications}">
+                                   value="${empty teacher ? acidemicCertifications : teacher.acidemicCertifications}">
                         </div>
                     </div>
                     <div class="columns">
@@ -55,11 +55,11 @@
 
                     <h3 class="title is-5 has-text-left"> Loisirs </h3>
                     <input class="input is-rounded " name="personnalInterests" placeholder="Loisirs"
-                           value="${teacher.personnalInterests}">
+                           value="${empty teacher ? personnalInterests : teacher.personnalInterests}">
 
                     <h3 class="title is-5 has-text-left"> Qualitées </h3>
                     <input class="input is-rounded " name="skills" placeholder="Qualitées"
-                           value="${teacher.skills}">
+                           value="${empty teacher ? skills : teacher.skills}">
 
                     <div class="columns">
                         <div class="column">
@@ -70,7 +70,7 @@
                     </div>
                     <h3 class="title is-5 has-text-left"> Recommendations </h3>
                     <input class="input is-rounded " name="recommendations" placeholder="Recommendations"
-                           value="${teacher.recommendations}">
+                           value="${empty teacher ? recommendations : teacher.recommendations}">
 
                     <h3 class="title is-5 has-text-left"> Experiences </h3>
                     <textarea class="textarea is-rounded has-fixed-size mb-3" name="experiences"
@@ -78,7 +78,8 @@
 
                     <h3 class="title is-5 has-text-left"> Autres informations </h3>
                     <textarea class="textarea is-rounded has-fixed-size mb-3" name="otherInformations"
-                              placeholder="Autre informations">${teacher.otherInformations}</textarea>
+                              placeholder="Autre informations">
+                        ${empty teacher ? otherInformations : teacher.otherInformations}</textarea>
 
 
                     <c:if test="${not empty message}">
