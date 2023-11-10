@@ -18,12 +18,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.ws.rs.core.Request;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -724,6 +727,42 @@ public class Controller extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }
     }
+
+
+
+    @Action(action = Actions.UPDATE_TEACHER, roles = {Teacher})
+    public void updateTeacher(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int teacherId = Integer.parseInt(request.getParameter("teacherId"));
+            String schoolInterests = request.getParameter("schoolInterests");
+            String academicCertifications = request.getParameter("academicCertifications");
+            String contractType = request.getParameter("contractType");
+            String personnalInterests = request.getParameter("personnalInterests");
+            String skills = request.getParameter("skills");
+            String desiredLevels = request.getParameter("desiredLevels");
+            String recommendations = request.getParameter("recommendations");
+            String experiences = request.getParameter("experiences");
+            String otherInformations = request.getParameter("otherInformations");
+
+            Teacher teacher = teacherService.getTeacher(teacherId);
+
+            if (teacher == null) {
+                // Gérer la situation où l'enseignant n'est pas trouvé
+                throw new EntityNotFoundException("Enseignant non trouvé pour l'ID : " + teacherId);
+            }
+
+
+
+            teacherService.updateTeacher(teacher);
+
+            request.getSession().setAttribute("message", "Enseignant mis à jour avec succès.");
+            goToTeacher(request, response);
+        } catch (EntityNotFoundException ex) {
+            // Gérer l'exception selon vos besoins, par exemple, rediriger vers une page d'erreur
+            throw new RuntimeException("Erreur lors de la mise à jour de l'enseignant : " + ex.getMessage(), ex);
+        }
+    }
+
 
     @Action(action = Actions.CREATE_NEED, roles = {Recruiter})
     public void createNeed(RequestWrapper request, HttpServletResponse response) throws IOException, ServletException, EntityExistsException {
