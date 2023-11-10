@@ -65,6 +65,7 @@ public class Controller extends HttpServlet {
     @EJB
     private RecruiterService recruiterService;
 
+
     private static final Logger log = LogManager.getLogger(Controller.class);
 
     public void init() {
@@ -770,13 +771,12 @@ public class Controller extends HttpServlet {
 
             Teacher modifyTeacher = teacherService.updateTeacher(teacherBean);
             request.getSession().setAttribute("message", "Enseignant mis à jour avec succès.");
-            request.setParameter("teacherId",modifyTeacher.getId().toString());
+            request.setParameter("teacherId", modifyTeacher.getId().toString());
             goToTeacher(request, response);
         } catch (EntityNotFoundException ex) {
             // Gérer l'exception selon vos besoins, par exemple, rediriger vers une page d'erreur
             throw new RuntimeException("Erreur lors de la mise à jour de l'enseignant : " + ex.getMessage(), ex);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
         }
     }
@@ -874,6 +874,67 @@ public class Controller extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }
     }
+
+    @Action(action = Actions.DENY_CANDIDATURE, roles = {Teacher, Recruiter})
+    public void denyCandidature(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            SessionUser user = getSessionUser(request);
+            CandidatureId candidatureId = new CandidatureId();
+            candidatureId.setTeacherId(getIntParameter(request, "teacherId"));
+            candidatureId.setNeedId(getIntParameter(request, "needId"));
+            Candidature candidature = candidatureService.getCandidature(candidatureId);
+
+            switch (user.getRole()) {
+                case Teacher :
+                    candidatureService.refuseByTeacher(candidatureId,user);
+                    request.setAttribute("message","Candidature refusée avec succès");
+                    goToCandidature(request,response);
+
+                case Recruiter :
+                    candidatureService.refuseByRecruiter(candidatureId, user);
+                    request.setAttribute("messagee","Candidature refusée avec succès");
+                    goToCandidature(request,response);
+
+                }
+        }
+    catch (
+            MissingParameterException | EntityNotFoundException | IllegalAccessException e) {
+        throw new RuntimeException(e);
+
+    }
+
+    }
+
+    @Action(action = Actions.VALIDATE_CANDIDATURE, roles = {Teacher, Recruiter})
+    public void validateCandidature(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            SessionUser user = getSessionUser(request);
+            CandidatureId candidatureId = new CandidatureId();
+            candidatureId.setTeacherId(getIntParameter(request, "teacherId"));
+            candidatureId.setNeedId(getIntParameter(request, "needId"));
+            Candidature candidature = candidatureService.getCandidature(candidatureId);
+
+            switch (user.getRole()) {
+                case Teacher :
+                    candidatureService.acceptByTeacher(candidatureId,user);
+                    request.setAttribute("message","Candidature acceptée avec succès par l'enseignant");
+                    goToCandidature(request,response);
+
+                case Recruiter :
+                    candidatureService.acceptByRecruiter(candidatureId, user);
+                    request.setAttribute("messagee","Candidature acceptée avec succès par le recruteur");
+                    goToCandidature(request,response);
+
+            }
+        }
+        catch (
+                MissingParameterException | EntityNotFoundException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+
+        }
+
+    }
+
 
     @Action(action = Actions.RESEARCH, roles = {Admin, Recruiter, Teacher})
     public void research(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
