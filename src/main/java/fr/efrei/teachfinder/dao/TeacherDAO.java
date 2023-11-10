@@ -63,7 +63,7 @@ public class TeacherDAO implements ITeacherDAO {
     @Override
     public List<Teacher> searchWithSkills(String research) {
         TypedQuery<Teacher> query = entityManager.createQuery(
-                        QueryRequests.TEACHER_SEARCHWITH_SKILLS, Teacher.class)
+                    QueryRequests.TEACHER_SEARCHWITH_STRING, Teacher.class)
                 .setParameter("search", research);
 
         return query.getResultList();

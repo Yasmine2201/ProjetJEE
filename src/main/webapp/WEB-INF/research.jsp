@@ -30,18 +30,20 @@
                         <label for="researchText">
                             <input id="researchText" name="researchText" type="text"
                                    class="input is-medium is-rounded"
-                                   placeholder="Votre recherche..."/>
+                                   placeholder="Votre recherche..."
+                                   value="${researchText}"
+                            />
                         </label>
                     </div>
                     <div class="column is-2">
                         <select class="select is-fullwidth pr-2" name="researchType">
-                            <option value="Teachers">Enseignant</option>
-                            <option value="Schools">École</option>
-                            <option value="Needs">Besoins</option>
+                            <option value="Teacher" ${researchType == 'Teacher' ? 'selected="selected"' : ''}>Enseignants</option>
+                            <option value="School"${researchType == 'School' ? 'selected="selected"' : ''}>Écoles</option>
+                            <option value="Need"${researchType == 'Need' ? 'selected="selected"' : ''}>Besoins</option>
                         </select>
                     </div>
                     <div class="column">
-                        <button class="button is-success mr-3" name="action" value="sendResearch">
+                        <button class="button is-success mr-3" name="action" value="research">
                             Rechercher
                         </button>
                     </div>
@@ -56,34 +58,14 @@
                             <form method="post" action="controller" class="has-text-left">
                                 <input class="is-hidden" name="teacherId" value="${teacher.id}">
                                 <button class="title-button is-5 " name="action" value="goToTeacher">
-                                    <sup>⇱</sup>${teacher.aplicationuser.firstname} ${teacher.aplicationuser.lastname}
+                                    <sup>⇱</sup>${teacher.applicationuser.firstname} ${teacher.applicationuser.lastname}
                                 </button>
                             </form>
                             <div class="level">
                                 <div class="level-left">
                                     <div class="level-item">
-                                        <c:if test="${teacher.contractType =='Continous'}">
-                                            <p class="subtitle is-5 has-text-left ml-2 pb-3">
-                                                CDI
-                                            </p>
-                                        </c:if>
-                                        <c:if test="${teacher.contractType == 'Temporary'}">
-
-                                            <p class="subtitle is-5 has-text-left ml-2 pb-3">
-                                                CDD
-                                            </p>
-                                        </c:if>
-                                        <c:if test="${teacher.contractType == 'Any'}">
-
-                                            <p class="subtitle is-5 has-text-left ml-2 pb-3">
-                                                CDI et/ou CDD
-                                            </p>
-                                        </c:if>
-                                    </div>
-                                    <div class="level-item">
-                                        <p class="subtitle is-5 has-text-left ml-2 pb-3">
-                                            ${teacher.schoolInterests}
-                                        </p>
+                                        <p class="title is-5 has-text-left ml-2 pb-3">Compétences</p>
+                                        <p class="subtitle is-5 has-text-left ml-2 pb-3">${teacher.subject}</p>
                                     </div>
                                 </div>
                             </div>
@@ -156,12 +138,12 @@
                                 <div class="level-left">
                                     <div class="level-item">
                                         <p class="subtitle is-5 has-text-left ml-2 pb-3">
-                                                ${fn:length(school.needs)} Besoins
+                                                ${fn:length(school.needs)} besoins trouvés
                                         </p>
                                     </div>
                                     <div class="level-item">
                                         <p class="subtitle is-5 has-text-left ml-2 pb-3">
-                                                ${school.specialisation}
+                                                ${school.specializations}
                                         </p>
                                     </div>
                                 </div>

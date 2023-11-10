@@ -5,6 +5,7 @@ import fr.efrei.teachfinder.beans.DisponibilityBean;
 import fr.efrei.teachfinder.beans.NeedBean;
 import fr.efrei.teachfinder.beans.SessionUser;
 import fr.efrei.teachfinder.entities.Recruiter;
+import fr.efrei.teachfinder.entities.Teacher;
 import fr.efrei.teachfinder.entities.*;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
@@ -18,19 +19,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.ws.rs.core.Request;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 import static fr.efrei.teachfinder.entities.RoleType.*;
 import static fr.efrei.teachfinder.utils.Constants.*;
@@ -38,19 +37,32 @@ import static fr.efrei.teachfinder.utils.Constants.*;
 
 public class Controller extends HttpServlet {
 
-    @EJB private CandidatureService candidatureService;
-    @EJB private DisponibilityService disponibilityService;
-    @EJB private EvaluationService evaluationService;
-    @EJB private NeedService needService;
-    @EJB private RecruiterDashboardService recruiterDashboardService;
-    @EJB private RegistrationService registrationService;
-    @EJB private ResearchService researchService;
-    @EJB private SchoolService schoolService;
-    @EJB private SecurityService securityService;
-    @EJB private TeacherDashboardService teacherDashboardService;
-    @EJB private TeacherService teacherService;
-    @EJB private UserService userService;
-    @EJB private RecruiterService recruiterService;
+    @EJB
+    private CandidatureService candidatureService;
+    @EJB
+    private DisponibilityService disponibilityService;
+    @EJB
+    private EvaluationService evaluationService;
+    @EJB
+    private NeedService needService;
+    @EJB
+    private RecruiterDashboardService recruiterDashboardService;
+    @EJB
+    private RegistrationService registrationService;
+    @EJB
+    private ResearchService researchService;
+    @EJB
+    private SchoolService schoolService;
+    @EJB
+    private SecurityService securityService;
+    @EJB
+    private TeacherDashboardService teacherDashboardService;
+    @EJB
+    private TeacherService teacherService;
+    @EJB
+    private UserService userService;
+    @EJB
+    private RecruiterService recruiterService;
 
     private static final Logger log = LogManager.getLogger(Controller.class);
 
@@ -84,9 +96,9 @@ public class Controller extends HttpServlet {
         SessionUser sessionUser = getSessionUser(request);
 
         log.info("HTTP request. \n\tSERVLET: " + path +
-                 "\n\tMETHOD: " + httpMethod +
-                 "\n\tACTION: " + action +
-                 "\n\tUSER: " + sessionUser
+                "\n\tMETHOD: " + httpMethod +
+                "\n\tACTION: " + action +
+                "\n\tUSER: " + sessionUser
         );
 
         if (action == null) {
@@ -95,7 +107,7 @@ public class Controller extends HttpServlet {
         }
 
         if (isActionRestricted(action)
-            && (sessionUser == null || session == null || !session.getId().equals(sessionUser.getSessionId()))
+                && (sessionUser == null || session == null || !session.getId().equals(sessionUser.getSessionId()))
         ) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
@@ -121,10 +133,10 @@ public class Controller extends HttpServlet {
 
     public Method findActionMethod(String action) {
         return Arrays.stream(getClass().getDeclaredMethods())
-            .filter(m -> m.getAnnotation(Action.class) != null
-                         && m.getAnnotation(Action.class).action().equals(action))
-            .findFirst()
-            .orElse(null);
+                .filter(m -> m.getAnnotation(Action.class) != null
+                        && m.getAnnotation(Action.class).action().equals(action))
+                .findFirst()
+                .orElse(null);
     }
 
     public boolean isActionRestricted(String action) {
@@ -150,10 +162,8 @@ public class Controller extends HttpServlet {
                 int userId = sessionUser.getUserId();
 
                 switch (sessionUser.getRole()) {
-                    case Teacher
-                        -> request.setAttribute("teacher", teacherService.getTeacher(userId));
-                    case Recruiter
-                        -> request.setAttribute("recruiter", recruiterService.getRecruiter(userId));
+                    case Teacher -> request.setAttribute("teacher", teacherService.getTeacher(userId));
+                    case Recruiter -> request.setAttribute("recruiter", recruiterService.getRecruiter(userId));
                 }
             } catch (EntityNotFoundException e) {
                 log.error("User not found\n" + e.getMessage());
@@ -168,17 +178,17 @@ public class Controller extends HttpServlet {
         String strValue = request.getParameter(parameter);
 
         if (strValue == null) {
-            throw new MissingParameterException("Parameter '"+ parameter +"' is missing");
+            throw new MissingParameterException("Parameter '" + parameter + "' is missing");
         }
 
         return Integer.parseInt(strValue);
     }
 
-    public String getStringParameter(RequestWrapper request, String parameter) throws MissingParameterException{
+    public String getStringParameter(RequestWrapper request, String parameter) throws MissingParameterException {
         String strValue = request.getParameter(parameter);
 
         if (StringUtils.isNullOrEmpty(strValue)) {
-            throw new MissingParameterException("Parameter '"+ parameter +"' is missing");
+            throw new MissingParameterException("Parameter '" + parameter + "' is missing");
         }
 
         return strValue;
@@ -379,8 +389,7 @@ public class Controller extends HttpServlet {
 
             // Candidatures are sent only to recruiter who manage the need or an admin. Otherwise, it is hidden
             if ((user.getRole() == Recruiter && need.getRecruiter().getId() == user.getUserId())
-                || user.getRole() == Admin)
-            {
+                    || user.getRole() == Admin) {
                 request.setAttribute("candidatures", need.getCandidatures());
             } else {
                 need.setCandidatures(new HashSet<>());
@@ -429,8 +438,8 @@ public class Controller extends HttpServlet {
             Candidature candidature = candidatureService.getCandidature(candidatureId);
 
             boolean canChoose =
-                user.getUserId() == candidatureId.getTeacherId()
-                || user.getUserId() == candidature.getNeed().getRecruiter().getId();
+                    user.getUserId() == candidatureId.getTeacherId()
+                            || user.getUserId() == candidature.getNeed().getRecruiter().getId();
 
             request.setAttribute("canChoose", canChoose);
             request.setAttribute("candidature", candidature);
@@ -668,7 +677,7 @@ public class Controller extends HttpServlet {
             school.setSpecializations(specializations);
             schoolService.updateSchool(school);
 
-            goToSchool(request,response);
+            goToSchool(request, response);
 
         } catch (IncompleteEntityException e) {
             useParametersAsAttributes(request, response);
@@ -683,7 +692,7 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.CREATE_DISPONIBILITY, roles = {Teacher})
     public void createDisponibility(RequestWrapper request, HttpServletResponse response)
-        throws IOException, ServletException, EntityExistsException {
+            throws IOException, ServletException, EntityExistsException {
 
         try {
             DisponibilityBean disponibility = new DisponibilityBean();
@@ -727,7 +736,6 @@ public class Controller extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }
     }
-
 
 
     @Action(action = Actions.UPDATE_TEACHER, roles = {Teacher})
@@ -852,6 +860,31 @@ public class Controller extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         } catch (EntityNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @Action(action = Actions.RESEARCH, roles = {Admin, Recruiter, Teacher})
+    public void research(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            String researchText = getStringParameter(request, "researchText");
+            String researchType = getStringParameter(request, "researchType");
+
+            switch (researchType) {
+                case "Need" ->
+                    request.setAttribute("needs", researchService.researchNeed(researchText));
+                case "Teacher" ->
+                    request.setAttribute("teachers", researchService.researchSkills(researchText));
+                case "School" ->
+                    request.setAttribute("schools", researchService.researchSchool(researchText));
+                default ->
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid research type");
+            }
+
+            useParametersAsAttributes(request, response);
+            goToResearch(request, response);
+
+        } catch (MissingParameterException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 }
