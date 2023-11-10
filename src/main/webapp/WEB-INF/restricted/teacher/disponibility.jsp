@@ -93,7 +93,7 @@
             <input type="datetime-local" id="startDate" name="startDate" required><br>
             <label for="endDate">Date et heure de fin:</label>
             <input type="datetime-local" id="endDate" name="endDate" required><br>
-            <button type="submit" name="action" value="saveDisponibility">
+            <button type="submit" name="action" value="createDisponibility">
                 Enregistrer
             </button>
         </form>
@@ -119,7 +119,7 @@
                             </form>
                             <form action="EditDisponibilityServlet" method="get" style="display: inline;">
                                 <input type="hidden" name="disponibilityId" value="${disponibility.id}" />
-                                <input type="submit" name="action" value="Modifier">
+                                <input type="submit" name="action" value="updateDisponibility">
                             </form>
                         </td>
                     </tr>
