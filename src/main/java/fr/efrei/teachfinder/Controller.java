@@ -528,8 +528,6 @@ public class Controller extends HttpServlet {
         try {
             ApplicationUser applicationUser = userService.getUser(user.getUserId());
 
-            // hide password
-            applicationUser.setPassword("");
             request.setAttribute("user", applicationUser);
             request.getRequestDispatcher(Pages.USER_VIEW).forward(request, response);
 
@@ -545,8 +543,6 @@ public class Controller extends HttpServlet {
         try {
             ApplicationUser applicationUser = userService.getUser(user.getUserId());
 
-            // hide password
-            applicationUser.setPassword("");
             request.setAttribute("user", applicationUser);
             request.getRequestDispatcher(Pages.USER_EDIT).forward(request, response);
 
@@ -888,11 +884,11 @@ public class Controller extends HttpServlet {
 
                 }
         }
-    catch (
-            MissingParameterException | EntityNotFoundException | IllegalAccessException e) {
-        throw new RuntimeException(e);
+        catch (
+                MissingParameterException | EntityNotFoundException | IllegalAccessException e) {
+            throw new RuntimeException(e);
 
-    }
+        }
 
     }
 
@@ -926,7 +922,6 @@ public class Controller extends HttpServlet {
 
     }
 
-
     @Action(action = Actions.RESEARCH, roles = {Admin, Recruiter, Teacher})
     public void research(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -951,4 +946,64 @@ public class Controller extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
+
+    @Action(action = Actions.UPDATE_USER, roles = {Admin, Recruiter, Teacher})
+    public void updateUser(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUser sessionUser = getSessionUser(request);
+
+        if (sessionUser == null) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
+        try {
+            String password = request.getParameter("password");
+            String passwordVerification = request.getParameter("passwordVerification");
+
+            ApplicationUser user = new ApplicationUser();
+            user.setId(sessionUser.getUserId());
+            user.setLogin(request.getParameter("login"));
+            user.setLastname(request.getParameter("lastname"));
+            user.setFirstname(request.getParameter("firstname"));
+            user.setPassword(password);
+            user.setEmail(request.getParameter("email"));
+            user.setPhone(request.getParameter("phone"));
+
+            if (StringUtils.isNotNullOrEmpty(passwordVerification)
+                    && !passwordVerification.equals(password)) {
+                request.setAttribute("message", Messages.PASSWORD_MISMATCH);
+                return;
+            }
+
+            userService.updateUser(user);
+
+            goToProfile(request, response);
+
+        } catch (EntityNotFoundException e) {
+            log.error(e.getMessage());
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        } catch (IncompleteEntityException e) {
+            request.setAttribute("message", Messages.MISSING_FIELD);
+            goToProfileEdit(request, response);
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

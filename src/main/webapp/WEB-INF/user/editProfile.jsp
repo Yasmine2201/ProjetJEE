@@ -21,7 +21,7 @@
 <section class="section">
     <div class="columns is-centered">
         <div class="column is-10">
-            <form method="post" action="controller" onsubmit="validateForm()">
+            <form method="post" action="controller" onsubmit="return validateForm()">
                 <div class="box has-text-centered px-3">
                     <h3 class="title is-2 has-text-left">
                         Edition du profil
