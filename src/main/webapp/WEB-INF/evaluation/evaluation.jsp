@@ -25,30 +25,34 @@
 
 <section class="section">
     <div class="columns is-centered">
-        <div class="column is-10 ">
+        <form method="post" action="controller">
+            <div class="column is-10 ">
+                <div class="box has-text-centered px-3">
+                    <h3 class="title is-2 has-text-left">
+                        Evaluation de ${teacher.applicationuser.firstname} ${teacher.applicationuser.lastname}
+                    </h3>
+                    <h3 class="title is-4 has-text-left"> Note </h3>
+                    <div class="select is-left has-text-left">
+                        <select name="" id="constractTypeSelect">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
 
-            <div class="box has-text-centered px-3">
-                <h3 class="title is-2 has-text-left">
-                    Evaluation de ${teacher.applicationuser.firstname} ${teacher.applicationuser.lastname}
-                </h3>
-
-                <h3 class="title is-4 has-text-left"> Note </h3>
-                <div class="select is-left has-text-left">
-                    <select name="" id="constractTypeSelect">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
+                    <h3 class="title is-4 has-text-left"> Commentaire </h3>
+                    <textarea class="textarea is-rounded has-fixed-size"
+                              name="comment">${empty evaluation ? '' : evaluation.comment}</textarea>
+                    <div class="pt-6">
+                        <button class="button is-success mr-3" name="action" value="upsertEvaluation"> Evaluer</button>
+                        <button class="button is-danger" name="action" value="cancelTeacherEdition"> Annuler</button>
+                    </div>
                 </div>
-
-                <h3 class="title is-4 has-text-left"> Commentaire </h3>
-                <textarea class="textarea is-rounded has-fixed-size" name="comment">${empty evaluation ? '' : evaluation.comment}</textarea>
             </div>
+        </form>
 
-
-        </div>
     </div>
 </section>
 
