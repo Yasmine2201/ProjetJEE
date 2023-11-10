@@ -24,10 +24,17 @@
             <div class="title is-1 has-text-dark">
                 Recherche
             </div>
-            <form method="post" action="controller">
+            <form method="post" action="controller" class="is-align-content-center ">
                 <div class="columns">
+                    <div class="column">
+                        <label for="researchText">
+                            <input id="researchText" name="researchText" type="text"
+                                   class="input is-medium is-rounded"
+                                   placeholder="Votre recherche..."/>
+                        </label>
+                    </div>
                     <div class="column is-2">
-                        <select class="select is-fullwidth pr-2" name="reseach">
+                        <select class="select is-fullwidth pr-2" name="researchType">
                             <option value="Teachers">Enseignant</option>
                             <option value="Schools">École</option>
                             <option value="Needs">Besoins</option>

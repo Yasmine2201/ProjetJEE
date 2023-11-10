@@ -94,7 +94,7 @@ public final class Constants {
     }
 
     public static final class QueryRequests {
-        public static final String APPLICATIONUSER_FINDBYID = "SELECT u from ApplicationUser u WHERE u.userId = :id";
+        public static final String APPLICATIONUSER_FINDBYID = "SELECT u from ApplicationUser u WHERE u.id = :id";
         public static final String APPLICATIONUSER_FINDBYLOGIN = "SELECT u from ApplicationUser u WHERE u.login = :login";
 
         public static final String REGISTRATION_FINDBYID = "SELECT r from Registration r WHERE r.registrationId = :registrationId";
