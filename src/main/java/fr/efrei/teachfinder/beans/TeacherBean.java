@@ -6,14 +6,22 @@ public class TeacherBean {
     private String experiences;
     private String skills;
     private String personnalInterests;
+
+    private String schoolInterests;
     private String desiredLevels;
     private String contractType;
     private String academicCertifications;
     private String otherInformations;
-    private String references;
+    private String recommendations;
 
     public Integer getTeacherId() {
         return teacherId;
+    }
+
+    public String getSchoolInterests(){return schoolInterests;}
+
+    public void setSchoolInterests(String schoolInterests) {
+        this.schoolInterests = schoolInterests;
     }
 
     public void setTeacherId(Integer teacherId) {
@@ -76,11 +84,11 @@ public class TeacherBean {
         this.otherInformations = otherInformations;
     }
 
-    public String getReferences() {
-        return references;
+    public String getRecommendations() {
+        return recommendations;
     }
 
-    public void setReferences(String references) {
-        this.references = references;
+    public void setRecommendations(String references) {
+        this.recommendations = references;
     }
 }

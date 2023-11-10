@@ -4,6 +4,7 @@ import fr.efrei.teachfinder.annotations.Action;
 import fr.efrei.teachfinder.beans.DisponibilityBean;
 import fr.efrei.teachfinder.beans.NeedBean;
 import fr.efrei.teachfinder.beans.SessionUser;
+import fr.efrei.teachfinder.beans.TeacherBean;
 import fr.efrei.teachfinder.entities.Recruiter;
 import fr.efrei.teachfinder.entities.*;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
@@ -747,12 +748,23 @@ public class Controller extends HttpServlet {
             Teacher teacher = teacherService.getTeacher(teacherId);
 
             if (teacher == null) {
-                // Gérer la situation où l'enseignant n'est pas trouvé
-                throw new EntityNotFoundException("Enseignant non trouvé pour l'ID : " + teacherId);
+
+                throw new EntityNotFoundException("teacher not found with id : " + teacherId);
             }
+            TeacherBean teacherBean = new TeacherBean();
+            teacherBean.setTeacherId(teacherId);
+            teacherBean.setExperiences(experiences);
+            teacherBean.setSkills(skills);
+            teacherBean.setPersonnalInterests(personnalInterests);
+            teacherBean.setSchoolInterests(schoolInterests);
+            teacherBean.setDesiredLevels(desiredLevels);
+            teacherBean.setContractType(contractType);
+            teacherBean.setAcademicCertifications(academicCertifications);
+            teacherBean.setRecommendations(recommendations);
+            teacherBean.setOtherInformations(otherInformations);
 
-            teacherService.updateTeacher(teacher);
 
+            teacherService.updateTeacher(teacherBean);
             request.getSession().setAttribute("message", "Enseignant mis à jour avec succès.");
             goToTeacher(request, response);
         } catch (EntityNotFoundException ex) {
