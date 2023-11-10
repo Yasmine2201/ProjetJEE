@@ -5,6 +5,7 @@ import fr.efrei.teachfinder.beans.TeacherBean;
 import fr.efrei.teachfinder.dao.IDisponibilityDAO;
 import fr.efrei.teachfinder.dao.IEvaluationDAO;
 import fr.efrei.teachfinder.dao.ITeacherDAO;
+import fr.efrei.teachfinder.dao.IUserDAO;
 import fr.efrei.teachfinder.entities.*;
 import fr.efrei.teachfinder.exceptions.EntityExistsException;
 import fr.efrei.teachfinder.exceptions.EntityNotFoundException;
@@ -25,9 +26,8 @@ public class TeacherService {
     IDisponibilityDAO disponibilityDAO;
     @Inject
     IEvaluationDAO evaluationDAO;
-
-
-
+    @Inject
+    IUserDAO userDAO;
 
 
     public Teacher getTeacher(int teacherId)  throws EntityNotFoundException {
@@ -37,8 +37,9 @@ public class TeacherService {
     }
 
     public Teacher updateTeacher(TeacherBean teacherBean)  throws EntityNotFoundException{
-            Teacher teacher = mapBeanToTeacher(teacherBean);
-            return teacherDAO.update(teacher);
+        Teacher teacher = mapBeanToTeacher(teacherBean);
+
+        return teacherDAO.update(teacher);
 
     }
     public List<Disponibility> getTeacherFutureDisponibilities(int teacherId) throws EntityNotFoundException {
@@ -73,6 +74,12 @@ public class TeacherService {
             throws EntityNotFoundException, IllegalArgumentException {
 
       Teacher teacher = new Teacher();
+
+        if (teacherBean.getTeacherId() != null) {
+            ApplicationUser user = userDAO.findById(teacherBean.getTeacherId());
+            teacher.setApplicationuser(user);
+        }
+
       teacher.setId(teacherBean.getTeacherId());
       teacher.setExperiences(teacherBean.getExperiences());
       teacher.setSkills(teacherBean.getSkills());

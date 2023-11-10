@@ -747,10 +747,6 @@ public class Controller extends HttpServlet {
 
             Teacher teacher = teacherService.getTeacher(teacherId);
 
-            if (teacher == null) {
-
-                throw new EntityNotFoundException("teacher not found with id : " + teacherId);
-            }
             TeacherBean teacherBean = new TeacherBean();
             teacherBean.setTeacherId(teacherId);
             teacherBean.setExperiences(experiences);
@@ -764,12 +760,16 @@ public class Controller extends HttpServlet {
             teacherBean.setOtherInformations(otherInformations);
 
 
-            teacherService.updateTeacher(teacherBean);
+            Teacher modifyTeacher = teacherService.updateTeacher(teacherBean);
             request.getSession().setAttribute("message", "Enseignant mis à jour avec succès.");
+            request.setParameter("teacherId",modifyTeacher.getId().toString());
             goToTeacher(request, response);
         } catch (EntityNotFoundException ex) {
             // Gérer l'exception selon vos besoins, par exemple, rediriger vers une page d'erreur
             throw new RuntimeException("Erreur lors de la mise à jour de l'enseignant : " + ex.getMessage(), ex);
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
         }
     }
 
