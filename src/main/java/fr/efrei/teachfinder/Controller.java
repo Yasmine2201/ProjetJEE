@@ -30,7 +30,6 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 
 import static fr.efrei.teachfinder.entities.RoleType.*;
 import static fr.efrei.teachfinder.utils.Constants.*;
@@ -610,12 +609,14 @@ public class Controller extends HttpServlet {
 
     @Action(action = Actions.CANCEL_DISPONIBILITY_CREATION, roles = {Teacher})
     public void cancelDisponibilityCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        goToTeacherHome(request, response);
+        request.setParameter("teacherId", "" + getSessionUser(request).getUserId());
+        goToTeacher(request, response);
     }
 
     @Action(action = Actions.CANCEL_DISPONIBILITY_EDITION, roles = {Teacher})
     public void cancelDisponibilityEdition(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        goToTeacherHome(request, response);
+        request.setParameter("teacherId", "" + getSessionUser(request).getUserId());
+        goToTeacher(request, response);
     }
 
     @Action(action = Actions.CANCEL_EVALUATION_EDITION, roles = {Recruiter})
@@ -738,7 +739,6 @@ public class Controller extends HttpServlet {
         }
     }
 
-
     @Action(action = Actions.UPDATE_TEACHER, roles = {Teacher})
     public void updateTeacher(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -767,17 +767,13 @@ public class Controller extends HttpServlet {
             teacherBean.setRecommendations(recommendations);
             teacherBean.setOtherInformations(otherInformations);
 
-
             Teacher modifyTeacher = teacherService.updateTeacher(teacherBean);
             request.getSession().setAttribute("message", "Enseignant mis à jour avec succès.");
             request.setParameter("teacherId",modifyTeacher.getId().toString());
             goToTeacher(request, response);
-        } catch (EntityNotFoundException ex) {
-            // Gérer l'exception selon vos besoins, par exemple, rediriger vers une page d'erreur
-            throw new RuntimeException("Erreur lors de la mise à jour de l'enseignant : " + ex.getMessage(), ex);
-        }
-        catch (Exception e){
-            log.error(e.getMessage());
+        } catch (EntityNotFoundException e) {
+            log.error(e);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }
     }
 

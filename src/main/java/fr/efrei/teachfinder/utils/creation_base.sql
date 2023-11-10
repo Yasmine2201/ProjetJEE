@@ -127,10 +127,10 @@ CREATE TABLE Candidature
 
 
 INSERT INTO school (schoolName, address, specializations)
-VALUES ('EFREI', '30-32 Av. de la République, 94800 Villejuif', 'Informatique'),
+VALUES ('EFREI', '30-32 Av. de la République, 94800 Villejuif', 'Informatique, Electronique'),
        ('MINE', '123 Rue Saint-Jacques, 75005 Paris', 'Littérature, Sciences'),
        ('Polytech', '1 Rue Clovis, 75005 Paris', 'Mathématiques, Histoire'),
-       ('ESME', '106 Rue de la Pompe, 75116 Paris', 'Sciences, Économie'),
+       ('ESME', '106 Rue de la Pompe, 75116 Paris', 'Sciences, Economie'),
        ('HEC', '44 Boulevard Saint-Michel, 75006 Paris', 'Commerce, Langues');
 
 INSERT INTO registration(login, password, firstname, lastname, email, phone, role,status, schoolName)
@@ -184,14 +184,14 @@ INSERT INTO teacher (teacherId)
 VALUES (3);
 
 INSERT INTO need(needId, recruiterId, schoolName, contractType, subject, requirements, timePeriod, notes) VALUES
--- Besoins pour École primaire A
+
 (1, 2,'EFREI', 'Temporary', 'Mathématiques', 'Licence en mathématiques requise', '2023-01-01 to 2023-06-30', 'Besoin urgent'),
 (2, 2,'EFREI', 'Temporary', 'Français', 'Expérience dans l\'enseignement du français', '2023-02-15 to 2023-05-15', 'Besoin ponctuel'),
 (3, 2,'EFREI', 'Continous', 'Sciences', 'Master en sciences requis', '', 'Poste permanent'),
 (4, 2,'EFREI', 'Any', 'Éducation physique', 'Expérience dans l\'enseignement de l\'éducation physique', '', 'Flexibilité requise'),
 (5, 2,'EFREI', 'Temporary', 'Arts', 'Expérience dans l\'enseignement des arts visuels', '2023-05-20 to 2023-08-20', 'Besoin temporaire'),
 
--- Besoins pour Collège B
+
 (6, 4,'MINE', 'Temporary', 'Histoire-Géographie', 'Licence en histoire-géographie requise', '2023-02-01 to 2023-06-30', 'Besoin ponctuel'),
 (7, 4,'MINE', 'Continous', 'Mathématiques', 'Master en mathématiques requis', '', 'Poste permanent'),
 (8, 4,'MINE', 'Any', 'Anglais', 'Certification d\'enseignement de l\'anglais', '', 'Poste flexible'),
@@ -199,21 +199,20 @@ INSERT INTO need(needId, recruiterId, schoolName, contractType, subject, require
 (10,4,'MINE', 'Temporary', 'Musique', 'Diplôme en éducation musicale requis', '2023-06-01 to 2023-06-30', 'Besoin ponctuel'),
 
 
--- Besoins pour Lycée C
 (11,5, 'Polytech', 'Temporary', 'Informatique', 'Expérience dans l\'enseignement de l\'informatique', '2023-01-10 to 2023-06-10', 'Besoin ponctuel'),
 (12,5, 'Polytech', 'Continous', 'Langues étrangères', 'Certification d\'enseignement des langues étrangères', '', 'Poste permanent'),
 (13,5, 'Polytech', 'Any', 'Philosophie', 'Master en philosophie requis', '', 'Poste flexible'),
 (14,5, 'Polytech', 'Temporary', 'Arts plastiques', 'Diplôme en arts plastiques requis', '2023-04-10 to 2023-07-10', 'Besoin temporaire'),
 (15,5, 'Polytech', 'Continous', 'Économie', 'Licence en économie requise', '', 'Besoin urgent'),
 
--- Besoins pour Lycée C
+
 (16, 6,'ESME', 'Temporary', 'Informatique', 'Expérience dans l\'enseignement de l\'informatique', '2023-01-10 to 2023-06-10', 'Besoin ponctuel'),
 (17, 6,'ESME', 'Continous', 'Langues étrangères', 'Certification d\'enseignement des langues étrangères', '', 'Poste permanent'),
 (18, 6,'ESME', 'Any', 'Philosophie', 'Master en philosophie requis', '2023-03-15 to 2023-09-15', 'Poste flexible'),
 (19, 6,'ESME', 'Temporary', 'Arts plastiques', 'Diplôme en arts plastiques requis', '2023-04-10 to 2023-07-10', 'Besoin temporaire'),
 (20, 6,'ESME', 'Temporary', 'Économie', 'Licence en économie requise', '2023-05-20 to 2023-08-20', 'Besoin urgent'),
 
--- Besoins pour Lycée C
+
 (21, 7,'HEC', 'Temporary', 'Informatique', 'Expérience dans l\'enseignement de l\'informatique', '2023-01-10 to 2023-06-10', 'Besoin ponctuel'),
 (22, 7,'HEC', 'Continous', 'Langues étrangères', 'Certification d\'enseignement des langues étrangères', '', 'Poste permanent'),
 (23, 7,'HEC', 'Any', 'Philosophie', 'Master en philosophie requis', '2023-03-15 to 2023-09-15', 'Poste flexible'),
