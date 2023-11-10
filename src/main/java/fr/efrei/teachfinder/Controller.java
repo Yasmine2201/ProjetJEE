@@ -581,12 +581,6 @@ public class Controller extends HttpServlet {
         request.getRequestDispatcher(Pages.RESEARCH).forward(request, response);
     }
 
-    @Action(action = Actions.GO_TO_DISPONIBILITIES, roles = {Teacher})
-    public void goToDisponibilities(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
-        SessionUser user = sendSessionUser(request);
-        request.getRequestDispatcher(Pages.DISPONIBILITIES).forward(request, response);
-    }
-
     @Action(action = Actions.CANCEL_SCHOOL_CREATION, roles = {Admin})
     public void cancelSchoolCreation(RequestWrapper request, HttpServletResponse response) throws ServletException, IOException {
         goToAdminHome(request, response);
@@ -696,19 +690,25 @@ public class Controller extends HttpServlet {
             throws IOException, ServletException, EntityExistsException {
 
         try {
+            SessionUser user = getSessionUser(request);
+            if (user == null || user.getRole() != Teacher) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN);
+                return;
+            }
+
             DisponibilityBean disponibility = new DisponibilityBean();
-            disponibility.setTeacherId(getIntParameter(request, "teacherId"));
+            disponibility.setTeacherId(user.getUserId());
             disponibility.setStartDate(request.getParameter("startDate"));
             disponibility.setEndDate(request.getParameter("endDate"));
 
-            disponibilityService.createDisponibility(disponibility);
-
-            goToTeacher(request, response);
+            Disponibility dispo = disponibilityService.createDisponibility(disponibility);
+            request.setParameter("disponibilityId", dispo.getId().toString());
+            goToDisponibilityEdition(request, response);
         } catch (IncompleteEntityException e) {
             useParametersAsAttributes(request, response);
             request.setAttribute("errorMessage", Messages.MISSING_FIELD);
             goToSchoolCreation(request, response);
-        } catch (MissingParameterException | IllegalArgumentException | DateTimeParseException e) {
+        } catch (IllegalArgumentException | DateTimeParseException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         } catch (EntityNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());

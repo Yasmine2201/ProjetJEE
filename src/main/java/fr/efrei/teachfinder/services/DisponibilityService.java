@@ -29,7 +29,7 @@ public class DisponibilityService {
         return disponibility;
     }
 
-    public void createDisponibility(DisponibilityBean disponibilityBean)
+    public Disponibility createDisponibility(DisponibilityBean disponibilityBean)
         throws EntityExistsException, EntityNotFoundException, IncompleteEntityException, IllegalArgumentException {
 
         if (disponibilityBean.getTeacherId() == null
@@ -39,10 +39,10 @@ public class DisponibilityService {
         }
 
         Disponibility disponibility = mapBeanToDisponibility(disponibilityBean);
-        disponibilityDAO.create(disponibility);
+        return disponibilityDAO.create(disponibility);
     }
 
-    public void editDisponibility(DisponibilityBean disponibilityBean)
+    public Disponibility editDisponibility(DisponibilityBean disponibilityBean)
         throws EntityNotFoundException, IncompleteEntityException, IllegalArgumentException {
 
         if (disponibilityBean.getDisponibilityId() == null
@@ -53,7 +53,7 @@ public class DisponibilityService {
         }
 
         Disponibility disponibility = mapBeanToDisponibility(disponibilityBean);
-        disponibilityDAO.update(disponibility);
+        return disponibilityDAO.update(disponibility);
     }
 
     public Disponibility mapBeanToDisponibility(DisponibilityBean disponibilityBean)
@@ -62,12 +62,10 @@ public class DisponibilityService {
         Disponibility disponibility = new Disponibility();
 
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
-            LocalDateTime startDate = LocalDateTime.parse(disponibilityBean.getStartDate(), formatter);
-            LocalDateTime endDate = LocalDateTime.parse(disponibilityBean.getEndDate(), formatter);
+            LocalDateTime startDate = LocalDateTime.parse(disponibilityBean.getStartDate());
+            LocalDateTime endDate = LocalDateTime.parse(disponibilityBean.getEndDate());
 
             Teacher teacher = teacherService.getTeacher(disponibilityBean.getTeacherId());
-
 
             disponibility.setId(disponibilityBean.getDisponibilityId());
             disponibility.setTeacher(teacher);

@@ -86,14 +86,16 @@
                         </c:if>
                     </div>
                 </div>
-                <form method="post" action="controller" class="has-text-left">
-                    <button class="button is-success" type="submit" name="action"
-                            value="goToDisponibilityCreation">Ajouter
-                    </button>
-                </form>
+                <c:if test="${sessionuser.teacher.id == teacher.id}">
+                    <form method="post" action="controller" class="has-text-left">
+                        <button class="button is-success" type="submit" name="action"
+                                value="goToDisponibilityCreation">Ajouter
+                        </button>
+                    </form>
+                </c:if>
                 <h3 class="title is-5 has-text-left"> Disponibilité </h3>
-                <c:if test="${not empty futureDisponibilities}">
-                <table class="table is-bordered is-striped is-narrow is-hoverable">
+<c:if test="${not empty futureDisponibilities}">
+              <table class="table is-bordered is-striped is-half is-hoverable">
 
                     <thead>
                     <tr>
@@ -107,50 +109,49 @@
                             <th>
                                 Modifier
                             </th>
-                            <th>
-                                Supprimer
-                            </th>
+<%--                            <th>--%>
+<%--                                Supprimer--%>
+<%--                            </th>--%>
                         </c:if>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${futureDisponibilities}" var="disponibiliter">
+                    <c:forEach items="${futureDisponibilities}" var="disponibility">
                         <tr>
-                            <th>
-                                    ${disponibiliter.startDate}
-                            </th>
-                            <th>
-                                    ${disponibilitert.endDate}
-                            </th>
-                            <c:if test="${sessionUser.teacher.id == teacher.id}">
-                                <th>
+                            <td>
+                                    ${disponibility.startDate}
+                            </td>
+                            <td>
+                                    ${disponibility.endDate}
+                            </td>
+                                <td>
+                            <c:if test="${sessionuser.teacher.id == teacher.id}">
                                     <form method="post" action="controller">
-                                        <input class="is-hidden" name="disponibilityId" value="${disponibiliter.id}">
+                                        <input class="is-hidden" name="disponibilityId" value="${disponibility.id}">
 
                                         <button class="button is-info" type="submit" name="action"
                                                 value="goToDisponibilityEdition">Modifier
                                         </button>
                                     </form>
-                                </th>
-                                <th>
-                                    <form method="post" action="controller">
-                                        <input class="is-hidden" name="disponibilityId" value="${disponibiliter.id}">
-
-                                        <button class="button is-danger" type="submit" name="action"
-                                                value="disponibilityDeletec">Supprimer
-                                        </button>
-                                    </form>
-                                </th>
                             </c:if>
+                                </td>
+<%--                                <td>--%>
+<%--                                    <form method="post" action="controller">--%>
+<%--                                        <input class="is-hidden" name="disponibilityId" value="${disponibility.id}">--%>
+
+<%--                                        <button class="button is-danger" type="submit" name="action"--%>
+<%--                                                value="disponibilityDelete">Supprimer--%>
+<%--                                        </button>--%>
+<%--                                    </form>--%>
+<%--                                </td>--%>
                         </tr>
                     </c:forEach>
                     </tbody>
-                    </c:if>
-                </table>
-                <c:if test="${empty futureDisponibilities}">
-                    <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> Le professeur est occupé pour le moment</p>
-                </c:if>
 
+                </table>
+  <c:if test="${empty futureDisponibilities}">
+    <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> Le professeur est occupé pour le moment</p>
+  </c:if>
                 <h3 class="title is-5 has-text-left"> Evaluations </h3>
                 <c:if test="${not empty evaluations}">
                 <table class="table is-bordered is-striped is-narrow is-hoverable">
@@ -183,11 +184,8 @@
                     </c:forEach>
                     </tbody>
                 </table>
-                </c:if>
-                <c:if test="${empty evaluations}">
-                    <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> Pas de d'évaluation pour le moment</p>
 
-                </c:if>
+
             </div>
 
 

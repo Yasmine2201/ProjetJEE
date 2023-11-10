@@ -28,7 +28,7 @@ public class DisponibilityDAO implements IDisponibilityDAO {
 
     @Override
     public Disponibility create(Disponibility disponibility) throws EntityExistsException {
-        if (findById(disponibility.getId()) != null) throw new EntityExistsException("Disponibility already exists");
+        if (disponibility.getId() != null && findById(disponibility.getId()) != null) throw new EntityExistsException("Disponibility already exists");
         entityManager.getTransaction().begin();
         Disponibility createdDisponibility = entityManager.merge(disponibility);
         entityManager.getTransaction().commit();
