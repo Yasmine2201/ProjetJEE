@@ -46,7 +46,7 @@ public class RecruiterDAO implements IRecruiterDAO {
                 throw new EntityNotFoundException("Recruiter with ID " + recruiter.getId() + " not found");
             }
             entityManager.getTransaction().begin();
-            Recruiter updatedRecruiter = entityManager.merge(existingRecruiter);
+            Recruiter updatedRecruiter = entityManager.merge(recruiter);
             entityManager.getTransaction().commit();
             return updatedRecruiter;
     }

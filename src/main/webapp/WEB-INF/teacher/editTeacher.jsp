@@ -12,6 +12,7 @@
     <div class="columns is-centered">
         <div class="column is-10 ">
             <form method="post" action="controller">
+                <input class="is-hidden" name="teacherId" value="${teacher.id}">
                 <div class="box has-text-centered px-3">
                     <h3 class="title is-2 has-text-left">
                         Modification du profile enseignant
@@ -25,7 +26,7 @@
                         </div>
                         <div class="column">
                             <h3 class="title is-5 has-text-left"> Certifiactions académiques </h3>
-                            <input class="input is-rounded " name="acidemicCertifications"
+                            <input class="input is-rounded " name="academicCertifications"
                                    placeholder="Certifiactions académiques"
                                    value="${empty teacher ? acidemicCertifications : teacher.acidemicCertifications}">
                         </div>
