@@ -21,13 +21,13 @@
                             <h3 class="title is-5 has-text-left"> Intéressé par les écoles </h3>
                             <input class="input is-rounded " name="schoolInterests"
                                    placeholder="Intéressé par les écoles"
-                                   value="${empty teacher.schoolInterests ? '' : teacher.schoolInterests}">
+                                   value="${empty teacher ? '' : teacher.schoolInterests}">
                         </div>
                         <div class="column">
                             <h3 class="title is-5 has-text-left"> Certifiactions académiques </h3>
                             <input class="input is-rounded " name="acidemicCertifications"
                                    placeholder="Certifiactions académiques"
-                                   value="${empty teacher.acidemicCertifications ? '' : teacher.acidemicCertifications}">
+                                   value="${empty teacher ? '' : teacher.acidemicCertifications}">
                         </div>
                     </div>
                     <div class="columns">
@@ -48,9 +48,7 @@
                             </div>
                         </div>
                         <div class="column">
-                            <h3 class="title is-5 has-text-left"> Site internet </h3>
-                            <input class="input is-rounded " name="website" placeholder="Site internet"
-                                   value="${teacher.website}">
+
                         </div>
                     </div>
 
@@ -98,8 +96,8 @@
         </div>
     </div>
 </section>
-</body>
 <jsp:include page="/WEB-INF/footer.jsp"/>
+</body>
 </html>
 
 <script>
