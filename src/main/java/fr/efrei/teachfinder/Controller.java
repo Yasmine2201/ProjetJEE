@@ -771,11 +771,9 @@ public class Controller extends HttpServlet {
         }
 
         try {
-            int needId = getIntParameter(request, "needId");
             Recruiter recruiter = recruiterService.getRecruiter(user.getUserId());
 
             NeedBean needBean = new NeedBean();
-            needBean.setNeedId(needId);
             needBean.setRecruiterId(recruiter.getId());
             needBean.setSchoolName(recruiter.getSchoolName().getSchoolName());
             needBean.setSubject(request.getParameter("subject"));
@@ -795,7 +793,7 @@ public class Controller extends HttpServlet {
             useParametersAsAttributes(request, response);
             request.setAttribute("errorMessage", Messages.MISSING_FIELD);
             goToNeedCreation(request, response);
-        } catch (IllegalArgumentException | MissingParameterException e) {
+        } catch (IllegalArgumentException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }
@@ -809,9 +807,11 @@ public class Controller extends HttpServlet {
         }
 
         try {
+            int needId = getIntParameter(request, "needId");
             Recruiter recruiter = recruiterService.getRecruiter(user.getUserId());
 
             NeedBean needBean = new NeedBean();
+            needBean.setNeedId(needId);
             needBean.setRecruiterId(recruiter.getId());
             needBean.setSchoolName(recruiter.getSchoolName().getSchoolName());
             needBean.setSubject(request.getParameter("subject"));
@@ -831,7 +831,7 @@ public class Controller extends HttpServlet {
             useParametersAsAttributes(request, response);
             request.setAttribute("errorMessage", Messages.MISSING_FIELD);
             goToNeedCreation(request, response);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | MissingParameterException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }

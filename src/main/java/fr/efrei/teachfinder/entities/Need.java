@@ -38,7 +38,7 @@ public class Need {
     private String requirements;
 
     @Size(max = 32)
-    @Column(name = "timePeriod", nullable = false, length = 32)
+    @Column(name = "timePeriod", nullable = true, length = 32)
     private String timePeriod;
 
     @Lob

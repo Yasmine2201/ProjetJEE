@@ -1,6 +1,7 @@
+CREATE DATABASE IF NOT EXISTS teach_finder_db;
+
 START TRANSACTION;
 
-CREATE DATABASE IF NOT EXISTS teach_finder_db;
 USE teach_finder_db;
 
 DROP TABLE IF EXISTS Candidature;
