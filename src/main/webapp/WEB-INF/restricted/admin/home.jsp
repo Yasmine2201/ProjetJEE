@@ -11,7 +11,7 @@
         <div class="column is-10 ">
             <div class="box has-text-centered px-3">
                 <h3 class="title is-3 has-text-left">En attente de validation</h3>
-                <c:if test="${not empty registration}">
+                <c:if test="${not empty pendingRegistrations}">
 
                     <table class="table is-bordered is-striped
                               is-narrow is-hoverable is-fullwidth">
@@ -70,7 +70,7 @@
                         </tbody>
                     </table>
                 </c:if>
-                <c:if test="${empty registration}">
+                <c:if test="${empty pendingRegistrations}">
                     <p class="subtitle is-5 has-text-left ml-3 pb-3 is-wrapped"> Rien à valider pour le moment</p>
                 </c:if>
 
